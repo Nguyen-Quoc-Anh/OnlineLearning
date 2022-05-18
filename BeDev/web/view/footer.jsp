@@ -209,11 +209,11 @@
 
 <!-- Footer End here -->
 
-<script src="src/js/jquery.min.js"></script>
-<script src="src/js/bootstrap.bundle.min.js"></script>
-<script src="src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
-<script src="src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
-<script src="src/scss/vendors/plugin/js/slick.min.js"></script>
-<script src="src/scss/vendors/plugin/js/jquery.nice-select.min.js"></script>
-<script src="src/js/app.js"></script>
-<script src="dist/main.js"></script>
+<script src="../BeDev/view/src/js/jquery.min.js"></script>
+<script src="../BeDev/view/src/js/bootstrap.bundle.min.js"></script>
+<script src="../BeDev/view/src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
+<script src="../BeDev/view/src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
+<script src="../BeDev/view/src/scss/vendors/plugin/js/slick.min.js"></script>
+<script src="../BeDev/view/src/scss/vendors/plugin/js/jquery.nice-select.min.js"></script>
+<script src="../BeDev/view/src/js/app.js"></script>
+<script src="../BeDev/view/dist/main.js"></script>
