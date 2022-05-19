@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bean;
+package dao;
 
 /**
  *
- * @author Admin
+ * @author ACER
  */
-public class Account {
+public class StudentDAO {
     
 }
