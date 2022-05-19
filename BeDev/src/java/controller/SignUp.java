@@ -5,6 +5,7 @@
  */
 package controller;
 
+import email.Email;
 import dao.AccountDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
