@@ -27,7 +27,7 @@
                                 <a href="index.html" class="fs-6 text-secondary">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="course-search.html" class="fs-6 text-secondary">course</a>
+                                <a href="" class="fs-6 text-secondary">course</a>
                             </li>
                         </ol>
                     </nav>
@@ -156,65 +156,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Level  -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="levelAcc">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#levelCollapse" aria-expanded="false" aria-controls="levelCollapse">
-                                            Level
-                                        </button>
-                                    </h2>
-                                    <div id="levelCollapse" class="accordion-collapse collapse" aria-labelledby="levelAcc" data-bs-parent="#sidebarFilter">
-                                        <div class="accordion-body">
-                                            <form action="#">
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> All </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        1,54,750
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> Beginner </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        45,770
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> Intermediate </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        35,790
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> Advanced </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        5,770
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> Expert </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        765
-                                                    </p>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                                 <!-- Price  -->
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingThree">
@@ -333,65 +274,6 @@
                                                     </div>
                                                     <p class="check-details">
                                                         45,770
-                                                    </p>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Duration  -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="durationAcc">
-                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#durationCollapse" aria-expanded="false" aria-controls="durationCollapse">
-                                            Duration
-                                        </button>
-                                    </h2>
-                                    <div id="durationCollapse" class="accordion-collapse collapse" aria-labelledby="durationAcc" data-bs-parent="#sidebarFilter">
-                                        <div class="accordion-body">
-                                            <form action="#">
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> All </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        1,54,750
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> 0 - 5 minutes </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        45,770
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> 5 - 10 minutes </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        35,790
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> 10 - 15 minutes </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        5,770
-                                                    </p>
-                                                </div>
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="checkbox" class="checkbox-primary" />
-                                                        <label> 15+ minutes </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        765
                                                     </p>
                                                 </div>
                                             </form>

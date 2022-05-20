@@ -16,12 +16,12 @@ import modal.Student;
  *
  * @author ACER
  */
-public class AccountDAO extends DBContext {
+public class AccountDAO {
 
     public boolean validEmail(String email) {
         try {
             String sql = "select * from Account where email = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -36,7 +36,7 @@ public class AccountDAO extends DBContext {
     public int signup(Student student) {
         try {
             String sql = "insert into Account(email, password) values (?, ?); ";
-            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, student.getAccount().getEmail());
             stm.setString(2, student.getAccount().getPassword());
             stm.executeUpdate();
@@ -45,7 +45,7 @@ public class AccountDAO extends DBContext {
                 student.getAccount().setAccountID(rs.getInt(1));
             }
             sql = "insert into Student(studentID, name, imageURL) values (?, ?, ?)";
-            stm = connection.prepareStatement(sql);
+            stm = new DBContext().connection.prepareStatement(sql);
             stm.setInt(1, student.getAccount().getAccountID());
             stm.setNString(2, student.getName());
             stm.setNString(3, "../BeDev/view/dist/images/avatar/user_avatar.png");
@@ -60,7 +60,7 @@ public class AccountDAO extends DBContext {
     public boolean checkAccount(Account account) {
         try {
             String sql = "select * from Account where email = ? and accountID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             stm.setString(1, account.getEmail());
             stm.setInt(2, account.getAccountID());
             ResultSet rs = stm.executeQuery();
@@ -76,7 +76,7 @@ public class AccountDAO extends DBContext {
     public boolean accountVerification(int id) {
         try {
             String sql = "update Account set status = 1 where accountID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.executeUpdate();
             return true;
