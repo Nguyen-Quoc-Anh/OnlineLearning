@@ -11,21 +11,20 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import modal.Category;
-import modal.Course;
 
 /**
  *
  * @author Admin
  */
-public class CourseDAO {
-    public List<Course> listCourseUser() {
-        List<Course> list = new ArrayList<>();
+public class CategoryDAO {
+    public List<Category> listCategory() {
+        List<Category> list = new ArrayList<>();
         try {
-            String sql = "select * from Course";
+            String sql = "select * from Category";
             PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(4), rs.getDouble(6)));
+                list.add(new Category(rs.getInt(1), rs.getString(2)));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -33,12 +32,11 @@ public class CourseDAO {
         return list;
     }
     
-    
-    
     public static void main(String[] args) {
-        CourseDAO dao = new CourseDAO();
-        for (Course category : dao.listCourseUser()) {
+        CategoryDAO dao = new CategoryDAO();
+        for (Category category : dao.listCategory()) {
             System.out.println(category.toString());
         }
     }
 }
+

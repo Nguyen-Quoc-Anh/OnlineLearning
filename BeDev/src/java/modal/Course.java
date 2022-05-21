@@ -41,4 +41,9 @@ public class Course {
         this.releasedDate = releasedDate;
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", description=" + description + ", courseImage=" + courseImage + ", expertID=" + expertID + ", money=" + money + ", releasedDate=" + releasedDate + ", status=" + status + '}';
+    }
 }
