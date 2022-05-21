@@ -13,15 +13,19 @@ public class Account {
     private int accountID;
     private String email;
     private String password;
+    private boolean emailVeriFy;
+    private Role role;
     private boolean status;
 
     public Account() {
     }
 
-    public Account(int accountID, String email, String password, boolean status) {
+    public Account(int accountID, String email, String password, boolean emailVeriFy, Role role, boolean status) {
         this.accountID = accountID;
         this.email = email;
         this.password = password;
+        this.emailVeriFy = emailVeriFy;
+        this.role = role;
         this.status = status;
     }
 
@@ -55,5 +59,21 @@ public class Account {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public boolean isEmailVeriFy() {
+        return emailVeriFy;
+    }
+
+    public void setEmailVeriFy(boolean emailVeriFy) {
+        this.emailVeriFy = emailVeriFy;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

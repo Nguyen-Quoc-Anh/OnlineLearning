@@ -98,8 +98,8 @@
                                         </div>
                                     </div>
                                     <div class="form-element text-center">
-                                        <div class="success">${success}</div>
-                                        <div class="error">${failed}</div>
+                                        <div>${success}</div>
+                                        <div>${failed}</div>
                                     </div>
                                     <div class="form-element">
                                         <button onclick="submitForm()" class="button button-lg button--primary w-100">Sign UP</button>

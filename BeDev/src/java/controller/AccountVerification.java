@@ -37,7 +37,10 @@ public class AccountVerification extends HttpServlet {
         try {
             String email = request.getParameter("email");
             int id = Integer.parseInt(request.getParameter("uid"));
-            boolean valid = accountDAO.checkAccount(new Account(id, email, "", true));
+            Account account = new Account();
+            account.setAccountID(id);
+            account.setEmail(email);
+            boolean valid = accountDAO.checkAccount(account);
             if (valid) {
                 boolean success = accountDAO.accountVerification(id);
                 if (success) {

@@ -66,7 +66,7 @@
                                         <ul>
                                             <li><a href="students-profile.html">Students Profile</a></li>
                                             <li><a href="signin.html">Sign in</a></li>
-                                            <li><a href="signup.html">Sign up</a></li>
+                                            <li><a href="SignUp">Sign up</a></li>
                                             <li><a href="verify.html">Verify Email</a></li>
                                             <li><a href="forget-password.html">Forget Password</a></li>
                                             <li><a href="reset-password.html">Reset Password</a></li>
@@ -122,7 +122,7 @@
                         </div>
                     </form>
                     <a href="signin.html" class="button button--text">Sign in</a>
-                    <a href="signup.html" class="button button--dark">Sign Up</a>
+                    <a href="SignUp" class="button button--dark">Sign Up</a>
                 </div>
             </div>
 

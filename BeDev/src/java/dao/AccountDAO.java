@@ -14,10 +14,9 @@ import modal.Student;
 
 /**
  *
- * @author ACER
+ * @author Admin
  */
 public class AccountDAO {
-
     public boolean validEmail(String email) {
         try {
             String sql = "select * from Account where email = ?";
@@ -35,10 +34,11 @@ public class AccountDAO {
 
     public int signup(Student student) {
         try {
-            String sql = "insert into Account(email, password) values (?, ?); ";
+            String sql = "insert into Account(email, password, role) values (?, ?, ?); ";
             PreparedStatement stm = new DBContext().connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, student.getAccount().getEmail());
             stm.setString(2, student.getAccount().getPassword());
+            stm.setInt(3, student.getAccount().getRole().getRoleID());
             stm.executeUpdate();
             ResultSet rs = stm.getGeneratedKeys();
             while (rs.next()) {
@@ -75,7 +75,7 @@ public class AccountDAO {
 
     public boolean accountVerification(int id) {
         try {
-            String sql = "update Account set status = 1 where accountID = ?";
+            String sql = "update Account set emailVerify = 1 where accountID = ?";
             PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.executeUpdate();
@@ -85,4 +85,19 @@ public class AccountDAO {
         }
         return false;
     }
+
+    public boolean resetPassword(Account account) {
+        try {
+            String sql = "update Account set password = ? where email = ?";
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            stm.setString(1, account.getPassword());
+            stm.setString(2, account.getEmail());
+            stm.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
 }
