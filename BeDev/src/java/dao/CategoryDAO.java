@@ -6,6 +6,7 @@
 package dao;
 
 import context.DBContext;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -19,9 +20,10 @@ import modal.Category;
 public class CategoryDAO {
     public List<Category> listCategory() {
         List<Category> list = new ArrayList<>();
+        String sql = "select * from Category";
         try {
-            String sql = "select * from Category";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            Connection con = new DBContext().connection;
+            PreparedStatement stm = con.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new Category(rs.getInt(1), rs.getString(2)));
@@ -31,7 +33,7 @@ public class CategoryDAO {
         }
         return list;
     }
-    
+
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();
         for (Category category : dao.listCategory()) {
@@ -39,4 +41,3 @@ public class CategoryDAO {
         }
     }
 }
-

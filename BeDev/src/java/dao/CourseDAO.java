@@ -10,7 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import modal.Category;
 import modal.Course;
 
 /**
@@ -18,10 +17,12 @@ import modal.Course;
  * @author Admin
  */
 public class CourseDAO {
-    public List<Course> listCourseUser() {
+    public List<Course> listCoursePart(int page) {
+        int number = 6;
         List<Course> list = new ArrayList<>();
         try {
-            String sql = "select * from Course";
+            String sql = "select * from Course order by releasedDate desc "
+                    + " offset " + (page - 1) * number + " rows fetch next " + page * number + " rows only";
             PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -37,7 +38,7 @@ public class CourseDAO {
     
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        for (Course category : dao.listCourseUser()) {
+        for (Course category : dao.listCoursePart(1)) {
             System.out.println(category.toString());
         }
     }

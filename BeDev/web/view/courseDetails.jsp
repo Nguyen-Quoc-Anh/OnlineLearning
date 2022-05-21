@@ -3,7 +3,7 @@
     Created on : May 18, 2022, 10:07:38 AM
     Author     : Admin
 --%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Course details</title>
-        <link rel="stylesheet" href="dist/main.css" />
-        <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
     <body onload="loader()">
@@ -41,7 +41,7 @@
                             </h3>
                             <div class="created-by d-flex align-items-center">
                                 <div class="created-by-image me-3">
-                                    <img src="dist/images/courses/profile.png" alt="" />
+                                    <img src="../BeDev/view/dist/images/courses/profile.png" alt="" />
                                 </div>
                                 <div class="created-by-text">
                                     <p>Created by</p>
@@ -126,7 +126,7 @@
                         <div class="col-lg-8">
                             <div class="course-overview">
                                 <div class="course-overview-image">
-                                    <img src="dist/images/courses/thumb.jpg" alt="img" />
+                                    <img src="../BeDev/view/dist/images/courses/thumb.jpg" alt="img" />
                                     <a class="popup-video play-button" href="https://www.youtube.com/watch?v=3CvFz5j1Krk">
                                         <svg width="23" height="27" viewBox="0 0 23 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path
@@ -807,7 +807,7 @@
                                                 <div class="course-instructor">
                                                     <div class="course-instructor-info">
                                                         <div class="instructor-image">
-                                                            <img src="dist/images/courses/courseinstructor.png" alt="Instructor" />
+                                                            <img src="../BeDev/view/dist/images/courses/courseinstructor.png" alt="Instructor" />
                                                         </div>
                                                         <div class="instructor-text">
                                                             <h6 class="font-title--xs mb-0">
@@ -873,7 +873,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -883,7 +883,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -978,7 +978,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -988,7 +988,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1083,7 +1083,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1093,7 +1093,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1188,7 +1188,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1198,7 +1198,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1293,7 +1293,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/8.jpg" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/8.jpg" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1303,7 +1303,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1398,7 +1398,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1408,7 +1408,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1503,7 +1503,7 @@
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1513,7 +1513,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -1608,7 +1608,7 @@
                                                     <div class="col-lg-6">
                                                         <div class="course">
                                                             <div class="course__img">
-                                                                <a href="#"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                                <a href="#"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                                             </div>
                                                             <div class="course__content">
                                                                 <div class="course__content_title">
@@ -1618,7 +1618,7 @@
                                                                 </div>
                                                                 <div class="course__content_author">
                                                                     <div class="info">
-                                                                        <a href="#" class="info_img"><img src="dist/images/courses/7.png" alt="client-image" /></a>
+                                                                        <a href="#" class="info_img"><img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" /></a>
 
                                                                         <a href="#">Brandon Dias</a>
                                                                     </div>
@@ -2319,7 +2319,7 @@
                                                                 <div class="feedback-rating">
                                                                     <div class="feedback-rating-start">
                                                                         <div class="image">
-                                                                            <img src="dist/images/ellipse/user.jpg" alt="Image" />
+                                                                            <img src="../BeDev/view/dist/images/ellipse/user.jpg" alt="Image" />
                                                                         </div>
                                                                         <div class="text">
                                                                             <h6 class="font-para--md">
@@ -2421,7 +2421,7 @@
                                                                 <div class="feedback-rating">
                                                                     <div class="feedback-rating-start">
                                                                         <div class="image">
-                                                                            <img src="dist/images/ellipse/1.png" alt="Image" />
+                                                                            <img src="../BeDev/view/dist/images/ellipse/1.png" alt="Image" />
                                                                         </div>
                                                                         <div class="text">
                                                                             <h6><a href="#">Harry Pinsky</a></h6>
@@ -2521,7 +2521,7 @@
                                                                 <div class="feedback-rating">
                                                                     <div class="feedback-rating-start">
                                                                         <div class="image">
-                                                                            <img src="dist/images/ellipse/2.png" alt="Image" />
+                                                                            <img src="../BeDev/view/dist/images/ellipse/2.png" alt="Image" />
                                                                         </div>
                                                                         <div class="text">
                                                                             <h6><a href="#">Watcraz Eggsy</a></h6>
@@ -2621,7 +2621,7 @@
                                                                 <div class="feedback-rating">
                                                                     <div class="feedback-rating-start">
                                                                         <div class="image">
-                                                                            <img src="dist/images/ellipse/3.png" alt="Image" />
+                                                                            <img src="../BeDev/view/dist/images/ellipse/3.png" alt="Image" />
                                                                         </div>
                                                                         <div class="text">
                                                                             <h6><a href="#">Watcraz Eggsy</a></h6>
@@ -2759,23 +2759,23 @@
                                         <h6 class="font-title--card">This course includes:</h6>
                                         <ul>
                                             <li>
-                                                <span><img src="dist/images/icon/dollar.png" alt="dollar" /></span>
+                                                <span><img src="../BeDev/view/dist/images/icon/dollar.png" alt="dollar" /></span>
                                                 <p class="font-para--md">Full Lifetime Access</p>
                                             </li>
                                             <li>
-                                                <span><img src="dist/images/icon/clock-2.png" alt="clock" /></span>
+                                                <span><img src="../BeDev/view/dist/images/icon/clock-2.png" alt="clock" /></span>
                                                 <p class="font-para--md">30 Days Money Back Guarantee</p>
                                             </li>
                                             <li>
-                                                <span><img src="dist/images/icon/paper-plus.png" alt="paper-plus" /></span>
+                                                <span><img src="../BeDev/view/dist/images/icon/paper-plus.png" alt="paper-plus" /></span>
                                                 <p class="font-para--md">Free Exercises File</p>
                                             </li>
                                             <li>
-                                                <span><img src="dist/images/icon/airplay.png" alt="airplay" /></span>
+                                                <span><img src="../BeDev/view/dist/images/icon/airplay.png" alt="airplay" /></span>
                                                 <p class="font-para--md">Access on Mobile , Tablet and TV</p>
                                             </li>
                                             <li>
-                                                <span><img src="dist/images/icon/clipboard.png" alt="clipboard" /></span>
+                                                <span><img src="../BeDev/view/dist/images/icon/clipboard.png" alt="clipboard" /></span>
                                                 <p class="font-para--md">Certificate of Completion</p>
                                             </li>
                                         </ul>
@@ -2869,7 +2869,7 @@
                                 <div class="new__courses">
                                     <div class="contentCard contentCard--course contentCard--space">
                                         <div class="contentCard-top">
-                                            <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                            <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                         </div>
                                         <div class="contentCard-bottom">
                                             <h5>
@@ -2877,7 +2877,7 @@
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                    <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                    <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">Brandon Dias</p>
                                                 </a>
                                                 <div class="price">
@@ -2888,25 +2888,25 @@
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/star.png" alt="star" />
+                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
                                                     </div>
                                                     <span>4.5</span>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/eye.png" alt="eye" />
+                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
                                                     </div>
                                                     <span>24,517</span>
                                                 </div>
                                                 <div class="book d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/book.png" alt="location" />
+                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
                                                     </div>
                                                     <span>37 Lesson</span>
                                                 </div>
                                                 <div class="clock d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/Clock.png" alt="clock" />
+                                                        <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
                                                     </div>
                                                     <span>3 Hours</span>
                                                 </div>
@@ -2915,7 +2915,7 @@
                                     </div>
                                     <div class="contentCard contentCard--course contentCard--space">
                                         <div class="contentCard-top">
-                                            <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                            <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                         </div>
                                         <div class="contentCard-bottom">
                                             <h5>
@@ -2923,7 +2923,7 @@
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                    <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                    <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">Brandon Dias</p>
                                                 </a>
                                                 <div class="price">
@@ -2934,25 +2934,25 @@
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/star.png" alt="star" />
+                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
                                                     </div>
                                                     <span>4.5</span>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/eye.png" alt="eye" />
+                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
                                                     </div>
                                                     <span>24,517</span>
                                                 </div>
                                                 <div class="book d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/book.png" alt="location" />
+                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
                                                     </div>
                                                     <span>37 Lesson</span>
                                                 </div>
                                                 <div class="clock d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/Clock.png" alt="clock" />
+                                                        <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
                                                     </div>
                                                     <span>3 Hours</span>
                                                 </div>
@@ -2961,7 +2961,7 @@
                                     </div>
                                     <div class="contentCard contentCard--course contentCard--space">
                                         <div class="contentCard-top">
-                                            <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                            <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                         </div>
                                         <div class="contentCard-bottom">
                                             <h5>
@@ -2969,7 +2969,7 @@
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                    <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                    <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">Brandon Dias</p>
                                                 </a>
                                                 <div class="price">
@@ -2980,25 +2980,25 @@
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/star.png" alt="star" />
+                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
                                                     </div>
                                                     <span>4.5</span>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/eye.png" alt="eye" />
+                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
                                                     </div>
                                                     <span>24,517</span>
                                                 </div>
                                                 <div class="book d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/book.png" alt="location" />
+                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
                                                     </div>
                                                     <span>37 Lesson</span>
                                                 </div>
                                                 <div class="clock d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/Clock.png" alt="clock" />
+                                                        <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
                                                     </div>
                                                     <span>3 Hours</span>
                                                 </div>
@@ -3007,7 +3007,7 @@
                                     </div>
                                     <div class="contentCard contentCard--course contentCard--space">
                                         <div class="contentCard-top">
-                                            <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                            <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                         </div>
                                         <div class="contentCard-bottom">
                                             <h5>
@@ -3015,7 +3015,7 @@
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                    <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                    <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">Brandon Dias</p>
                                                 </a>
                                                 <div class="price">
@@ -3026,25 +3026,25 @@
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/star.png" alt="star" />
+                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
                                                     </div>
                                                     <span>4.5</span>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/eye.png" alt="eye" />
+                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
                                                     </div>
                                                     <span>24,517</span>
                                                 </div>
                                                 <div class="book d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/book.png" alt="location" />
+                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
                                                     </div>
                                                     <span>37 Lesson</span>
                                                 </div>
                                                 <div class="clock d-flex align-items-center">
                                                     <div class="icon">
-                                                        <img src="dist/images/icon/Clock.png" alt="clock" />
+                                                        <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
                                                     </div>
                                                     <span>3 Hours</span>
                                                 </div>
@@ -3057,8 +3057,8 @@
                     </div>
                 </div>
                 <div class="new-course-overlay">
-                    <img src="dist/images/shape/circle5.png" alt="shape" class="img-fluid shape01" />
-                    <img src="dist/images/shape/dots/dots-img-15.png" alt="shape" class="img-fluid shape02" />
+                    <img src="../BeDev/view/dist/images/shape/circle5.png" alt="shape" class="img-fluid shape01" />
+                    <img src="../BeDev/view/dist/images/shape/dots/dots-img-15.png" alt="shape" class="img-fluid shape02" />
                 </div>
             </section>
         <jsp:include page="footer.jsp"></jsp:include>

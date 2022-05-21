@@ -10,7 +10,7 @@
             <div class="col-lg-6">
                 <div class="footer__wrapper">
                     <div class="footer__wrapper_logo">
-                        <img src="dist/images/logo/footerlogo.png" alt="logo" class="img-fluid" />
+                        <img src="../BeDev/view/dist/images/logo/footerlogo.png" alt="logo" class="img-fluid" />
                     </div>
                     <p>
                         Duis posuere maximus arcu eu tincidunt. Nam rutrum, nibh vitae tempus venenatis, ex tortor ultricies magna.
