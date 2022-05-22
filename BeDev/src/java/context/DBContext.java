@@ -21,9 +21,11 @@ public class DBContext {
     public DBContext() {
         try {
             String user = "sa";
-            String pass = "12345";
+//            String pass = "12345";
+            String pass = "123456789";// Huy pass
 //            String url = "jdbc:sqlserver://LAPTOP-TNC3HU99\\QUOCANH:1433;databaseName=OnlineLearn";//Quoc Anh
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=OnlineLearn";
+            String url = "jdbc:sqlserver://LAPTOP-0GU2ESDG\\SQLEXPRESS:1433;databaseName=OnlineLearn";// huy
+            
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connection = DriverManager.getConnection(url, user, pass);
         } catch (Exception ex) {

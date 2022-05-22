@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import modal.Account;
+import modal.Role;
 import modal.Student;
 
 /**
@@ -17,6 +18,7 @@ import modal.Student;
  * @author Admin
  */
 public class AccountDAO {
+
     public boolean validEmail(String email) {
         try {
             String sql = "select * from Account where email = ?";
@@ -98,6 +100,44 @@ public class AccountDAO {
             System.out.println(e);
         }
         return false;
+    }
+
+    public Account signIn(String email, String password) {
+        try {
+            String sql = "select * from Account a\n"
+                    + "where a.email = ? and a.password = ?";
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, password);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), new Role(rs.getInt(5)), rs.getBoolean(6));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public boolean changePassword(String email, String newPass) {
+        try {
+            String sql = "update  Account  \n"
+                    + "set password = ? where  email = ?";
+            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            stm.setString(1, newPass);
+            stm.setString(2, email);
+            stm.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        AccountDAO accountDAO = new AccountDAO();
+        Account a = accountDAO.signIn("huytqhe151216@fpt.edu.vn", "123");
+        System.out.println(a.getRole().getRoleID());
     }
 
 }

@@ -27,7 +27,7 @@
                                     ${mess}
                                 </p>
                                 <div class="text-center">
-                                    <a class="btn btn-lg btn-primary text-white" href="Login">Login now</a>
+                                    <a class="btn btn-lg btn-primary text-white" href="SignIn">SignIn now</a>
                                 </div>
                             </div>
                         </div>

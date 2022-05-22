@@ -10,13 +10,17 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modal.Account;
 
 /**
  *
@@ -37,7 +41,8 @@ public class SignIn extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-       
+        request.getRequestDispatcher("//view//signin.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,6 +57,7 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 
@@ -66,6 +72,26 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        AccountDAO accountDAO = new AccountDAO();
+        HttpSession session = request.getSession();
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        Account account = new Account();
+        account = accountDAO.signIn(email, password);
+        String mess = null;
+        if (account == null) {
+            mess = "Invalid email or password. Please enter again.";
+        } else {
+            if (!account.isEmailVeriFy()) {
+                mess = " Please verify youre email.";
+            } else {
+                session.setAttribute("account", account);
+                
+                response.sendRedirect("HomeControl");
+                return;
+            }
+        }
+        request.setAttribute("mess", mess);
         processRequest(request, response);
     }
 
