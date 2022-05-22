@@ -1,22 +1,32 @@
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C) 2005, FPT university
+ * ...
+ * ...
+ *
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2018-09-10      1.0                 HuyTQ           First Implement
  */
 package controller;
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modal.Account;
 
 /**
  *
- * @author Admin
+ * @author ADMIN
  */
-public class HomeControl extends HttpServlet {
+@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
+public class ChangePassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,7 +40,7 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view//home.jsp").forward(request, response);
+        request.getRequestDispatcher("//view//changepassword.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -45,6 +55,13 @@ public class HomeControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+
+        } else {
+            response.sendRedirect("HomeControl");
+            return;
+        }
         processRequest(request, response);
     }
 
@@ -59,6 +76,31 @@ public class HomeControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String curPass = request.getParameter("curPass");
+        String newPass = request.getParameter("newPass");
+        String confirmNewPass = request.getParameter("confirmNewPass");
+
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = (Account) session.getAttribute("account");
+        String mess = null;
+        if (!account.getPassword().equals(curPass)) {
+            mess = "Current password is incorrect.";
+        } else {
+            if (!newPass.equals(confirmNewPass)) {
+                mess = "Confirm new passsword is incorrect";
+            } else {
+                if (accountDAO.changePassword(account.getEmail(), newPass)) {
+                    mess = "Change password successfully.";
+                    account.setPassword(newPass);
+                    session.setAttribute("account", account);
+                } else {
+                    mess = "Something went wrong.";
+                }
+            }
+        }
+        request.setAttribute("mess", mess);
+
         processRequest(request, response);
     }
 

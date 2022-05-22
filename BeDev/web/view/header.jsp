@@ -4,6 +4,9 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="loader">
     <span class="loader-spinner">Loading...</span>
 </div>
@@ -65,7 +68,7 @@
                                     <div class="nav-item--subDropdown">
                                         <ul>
                                             <li><a href="students-profile.html">Students Profile</a></li>
-                                            <li><a href="signin.html">Sign in</a></li>
+                                            <li><a href="SignIn>Sign in</a></li>
                                             <li><a href="SignUp">Sign up</a></li>
                                             <li><a href="verify.html">Verify Email</a></li>
                                             <li><a href="forget-password.html">Forget Password</a></li>
@@ -121,8 +124,15 @@
                             </div>
                         </div>
                     </form>
-                    <a href="signin.html" class="button button--text">Sign in</a>
+                    
+                    <c:if test="${sessionScope.account==null}">
+                        <a href="SignIn" class="button button--text">Sign in</a>
                     <a href="SignUp" class="button button--dark">Sign Up</a>
+                    </c:if>
+                    <c:if test="${sessionScope.account!=null}">
+                        <a class="button button--text" href="#">${sessionScope.account.email}</a>
+                        <a class="button button--dark" href="LogOut">Log out</a>
+                    </c:if>
                 </div>
             </div>
 
@@ -218,7 +228,8 @@
                                     <li><a href="cart.html">Cart</a></li>
                                     <li><a href="checkout.html">Check out</a></li>
                                     <li><a href="faq.html">Faq</a></li>
-                                    <li><a href="signin.html">Sign in</a></li>
+                                    <li><a href="signin.html">
+                                            Sign in</a></li>
                                     <li><a href="signup.html">Sign up</a></li>
                                     <li><a href="verify.html">Verify Email</a></li>
                                     <li><a href="forget-password.html">Forget Password</a></li>
