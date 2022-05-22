@@ -42,9 +42,9 @@
                     <div class="row">
                         <div class="col-lg-9 mx-auto">
                             <div class="event-search-bar">
-                                <form action="#">
+                                <form action="">
                                     <div class="form-input-group">
-                                        <input type="text" class="form-control" placeholder="Search Course..." />
+                                        <input type="text" class="form-control" placeholder="Search Course..." name="search"/>
                                         <button class="button button-lg button--primary" type="submit" id="button-addon2">
                                             Search
                                         </button>
@@ -80,19 +80,13 @@
                                     </h2>
                                     <div id="categoryCollapse" class="accordion-collapse collapse show" aria-labelledby="categoryAcc" data-bs-parent="#sidebarFilter">
                                         <div class="accordion-body">
-                                            <form action="#">
-                                            <c:forEach items="${listCategory}" var="category">
-                                                <div class="accordion-body__item">
-                                                    <div class="check-box">
-                                                        <input type="radio" class="checkbox-primary" name="category" value="${category.categoryID}"/>
-                                                        <label> ${category.categoryName} </label>
-                                                    </div>
-                                                    <p class="check-details">
-                                                        10
-                                                    </p>
+                                        <c:forEach items="${listCategory}" var="category">
+                                            <div class="accordion-body__item">
+                                                <div class="check-box">
+                                                    <a href="CourseSearch?categoryID=${category.categoryID}"> ${category.categoryName} </a>
                                                 </div>
-                                            </c:forEach>
-                                        </form>
+                                            </div>
+                                        </c:forEach>
                                     </div>
                                 </div>
                             </div>
@@ -110,22 +104,38 @@
                                                 <div class="price-range-block">
                                                     <form class="d-flex price-range-block__inputWrapper" action="#">
                                                         <input
+                                                            name="lowPrice"
+                                                            <c:if test="${lowPrice == null}">
+                                                                value="0"
+                                                            </c:if>
+                                                            <c:if test="${lowPrice != null}">
+                                                                value="${lowPrice}"
+                                                            </c:if>
                                                             type="number"
                                                             min="0"
                                                             max="5000"
                                                             oninput="validity.valid||(value='0');"
                                                             id="min_price"
                                                             class="price-range-field"
+                                                            required=""
                                                             style="width: 105px; height: 50px; border-radius: 4px; padding: 15px;"
                                                             />
                                                         <span>to</span>
                                                         <input
+                                                            name="highPrice"
+                                                            <c:if test="${highPrice == null}">
+                                                                value="100"
+                                                            </c:if>
+                                                            <c:if test="${highPrice != null}">
+                                                                value="${highPrice}"
+                                                            </c:if>
                                                             type="number"
                                                             min="0"
                                                             max="5000"
                                                             oninput="validity.valid||(value='5000');"
                                                             id="max_price"
                                                             class="price-range-field"
+                                                            required=""
                                                             style="width: 125px; height: 50px; padding: 15px; border-radius: 4px;"
                                                             />
                                                         <button class="angle-btn">
@@ -161,62 +171,26 @@
                                 </h2>
                                 <div id="ratingCollapse" class="accordion-collapse collapse" aria-labelledby="ratingAcc" data-bs-parent="#sidebarFilter">
                                     <div class="accordion-body">
-                                        <form action="#">
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> All </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    1,54,750
-                                                </p>
+                                        <div class="accordion-body__item">
+                                            <div class="check-box">
+                                                <a href="#star=1"> 1 Star and higher </a>
                                             </div>
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> 1 Star and higher </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    45,770
-                                                </p>
+                                        </div>
+                                        <div class="accordion-body__item">
+                                            <div class="check-box">
+                                                <a href="#star=2"> 2 Star and higher </a>
                                             </div>
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> 2 Star and higher </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    45,770
-                                                </p>
+                                        </div>
+                                        <div class="accordion-body__item">
+                                            <div class="check-box">
+                                                <a href="#star=3"> 3 Star and higher </a>
                                             </div>
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> 3 Star and higher </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    45,770
-                                                </p>
+                                        </div>
+                                        <div class="accordion-body__item">
+                                            <div class="check-box">
+                                                <a href="#star=4"> 4 Star and higher </a>
                                             </div>
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> 4 Star and higher </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    45,770
-                                                </p>
-                                            </div>
-                                            <div class="accordion-body__item">
-                                                <div class="check-box">
-                                                    <input type="checkbox" class="checkbox-primary" />
-                                                    <label> 5 Star </label>
-                                                </div>
-                                                <p class="check-details">
-                                                    45,770
-                                                </p>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -226,21 +200,24 @@
                         <div class="event-search-results">
                             <div class="event-search-results-heading">
                                 <div class="nice-select" tabindex="0">
-                                    <span class="current">Most Viewed</span>
+                                    <span class="current"> View </span>
                                     <ul class="list">
-                                        <li data-value="Nothing" data-display="category" class="option selected focus">
-                                            Nothing
+                                        <li data-value="4" class="option selected focus">
+                                            <a href="${url}&numberProduct=4">4 Product</a>
                                         </li>
-                                        <li data-value="1" class="option">Some option</li>
-                                        <li data-value="2" class="option">Another option</li>
-                                        <li data-value="4" class="option">Potato</li>
+                                        <li data-value="6" class="option">
+                                            <a href="${url}&numberProduct=6">6 Product</a>
+                                        </li>
+                                        <li data-value="8" class="option">
+                                            <a href="${url}&numberProduct=8">8 Product</a>
+                                        </li>
                                     </ul>
                                 </div>
-                                <p>1, 254 results found.</p>
+                                <p>${listCourse.size()} results found.</p>
                             </div>
                         </div>
                         <div class="row event-search-content">
-                            <c:forEach items="${listCourse}" var="course">
+                            <c:forEach items="${listCourse}" var="course" begin="${(pagePosition - 1) * numberProduct}" end="${pagePosition * numberProduct - 1}">
                                 <div class="col-md-6 mb-4">
                                     <div class="contentCard contentCard--course">
                                         <div class="contentCard-top">
@@ -291,20 +268,26 @@
                             </c:forEach>
                         </div>
                         <div class="pagination-group mt-lg-5 mt-2 d-flex justify-content-center">
-                            <a href="#" class="p_prev">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.828" viewBox="0 0 9.414 16.828">
-                                <path data-name="Icon feather-chevron-left" d="M20.5,23l-7-7,7-7" transform="translate(-12.5 -7.586)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
-                                </svg>
-                            </a>
-                            <a href="#" class="cdp_i active">01</a>
-                            <a href="#" class="cdp_i">02</a>
-                            <a href="#" class="cdp_i">03</a>
-
-                            <a href="#" class="p_next">
-                                <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1.5 1L8.5 8L1.5 15" stroke="#35343E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </a>
+                            <c:if test="${pagePosition > 1}">
+                                <a href="${url}&pagePosition=${pagePosition-1}&numberProduct=${numberProduct}" class="p_prev">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.828" viewBox="0 0 9.414 16.828">
+                                    <path data-name="Icon feather-chevron-left" d="M20.5,23l-7-7,7-7" transform="translate(-12.5 -7.586)" fill="none" stroke="#1a2224" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                                    </svg>
+                                </a>
+                            </c:if>
+                            <c:forEach begin="1" end="${pageMax}" var="number">
+                                <a href="${url}&pagePosition=${number}&numberProduct=${numberProduct}" 
+                                   class="cdp_i <c:if test="${number == pagePosition}"> active </c:if> ">
+                                    ${number}
+                                </a>
+                            </c:forEach>
+                            <c:if test="${pagePosition < pageMax}">
+                                <a href="${url}&pagePosition=${pagePosition+1}&numberProduct=${numberProduct}" class="p_next">
+                                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M1.5 1L8.5 8L1.5 15" stroke="#35343E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </a>
+                            </c:if>
                         </div>
                     </div>
                 </div>
