@@ -3,7 +3,7 @@
     Created on : May 18, 2022, 10:10:19 AM
     Author     : Admin
 --%>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,23 +12,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Student profile</title>
-        <link rel="stylesheet" href="dist/main.css" />
-        <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
     <body onload="loader()">
         <jsp:include page="header.jsp"></jsp:include>
-            <!-- Breadcrumb Starts Here -->
-            <div class="py-0">
-                <div class="container">
-                    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                        <ol class="breadcrumb align-items-center bg-transparent mb-0">
-                            <li class="breadcrumb-item"><a href="index.html" class="fs-6 text-secondary">Home</a></li>
-                            <li class="breadcrumb-item fs-6 text-secondary" aria-current="page">My Profile</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div>
+           
 
             <!-- Students Info area Starts Here -->
             <section class="section students-info">
@@ -39,11 +29,11 @@
                             <div>
                                 <div class="students-info-intro-start">
                                     <div class="image">
-                                        <img src="dist/images/user/user-img-01.jpg" alt="Student" />
+                                        <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="Student" />
                                     </div>
                                     <div class="text">
-                                        <h5>Phillip Bergson</h5>
-                                        <p>UI/UX Designer</p>
+                                        <h5>${student.getName()}</h5>
+                                        <p>Student</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +59,7 @@
                                             </svg>
                                         </div>
                                         <div class="enrolled-courses-text">
-                                            <h6 class="font-title--xs">24</h6>
+                                            <h6 class="font-title--xs">${countEnroll}</h6>
                                             <p class="fs-6 mt-1">Enrolled Courses</p>
                                         </div>
                                     </div>
@@ -114,8 +104,7 @@
                                 <button class="nav-link" id="nav-purchase-tab" data-bs-toggle="tab" data-bs-target="#nav-purchase" type="button" role="tab" aria-controls="nav-purchase" aria-selected="false">Purchase History</button>
 
                                 <button class="nav-link" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Setting</button>
-
-                                <button class="nav-link" id="nav-logout-tab" data-bs-toggle="tab" data-bs-target="#nav-logout" type="button" role="tab" aria-controls="nav-logout-tab" aria-selected="false">Logout</button>
+                               
                             </div>
                         </nav>
                     </div>
@@ -124,11 +113,11 @@
                         <div class="col-lg-6">
                             <div class="students-info-intro-start">
                                 <div class="image">
-                                    <img src="dist/images/user/user-img-01.jpg" alt="Student" />
+                                    <img src="../BeDev/view/dist/images/user/user-img-01.jpg" alt="Student" />
                                 </div>
                                 <div class="text">
-                                    <h5>Phillip Bergson</h5>
-                                    <p>UI/UX Designer</p>
+                                    <h5>${student.getName()} Information</h5>
+                                    <p>Student</p>
                                 </div>
                             </div>
                         </div>
@@ -209,24 +198,14 @@
                             <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                 <div class="tab-content__profile">
                                     <div class="tab-content__profile-content">
-                                        <div class="about-student">
-                                            <h6 class="font-title--card">About Me</h6>
-                                            <p class="font-para--md">
-                                                Hello my name is Tanya. I am a designer. My personal qualities are responsibility, as I bring everything to its logical conclusion, determination, never rest on my laurels, always open to change
-                                                and something new. In my arsenal there are such programs as Adobe Photoshop, Illustrator, InDesign, Figma, also some Maya, 3ds Max ZBrush, Substance Painter, Marvelous Designer. Lorem ipsum dolor
-                                                sit amet consectetur, adipisicing elit. Animi, voluptatum.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="tab-content__profile-content">
                                         <div class="info-student">
-                                            <h6 class="font-title--card">Philip Information</h6>
+                                            <h6 class="font-title--card">${student.getName()} Information</h6>
                                             <dl class="row my-0 info-student-topic">
                                                 <dt class="col-sm-4">
                                                     <span>Name</span>
                                                 </dt>
                                                 <dd class="col-sm-8">
-                                                    <p>Phillip Bergson</p>
+                                                    <p>${student.getName()}</p>
                                                 </dd>
                                             </dl>
                                             <dl class="row my-0 info-student-topic">
@@ -234,31 +213,16 @@
                                                     <span>E-mail</span>
                                                 </dt>
                                                 <dd class="col-sm-8">
-                                                    <p>phillip.bergson@gmail.com</p>
+                                                    <p>${student.getAccount().getEmail()}</p>
                                                 </dd>
                                             </dl>
                                             <dl class="row my-0 info-student-topic">
                                                 <dt class="col-sm-4">
-                                                    <span>What do you do</span>
+                                                    <span>Cash In Wallet</span>
                                                 </dt>
                                                 <dd class="col-sm-8">
-                                                    <p>UI/UX Designer</p>
-                                                </dd>
-                                            </dl>
-                                            <dl class="row my-0 info-student-topic">
-                                                <dt class="col-sm-4">
-                                                    <span>Phone Number</span>
-                                                </dt>
-                                                <dd class="col-sm-8">
-                                                    <p>+8801236 968966</p>
-                                                </dd>
-                                            </dl>
-                                            <dl class="row my-0 info-student-topic">
-                                                <dt class="col-sm-4">
-                                                    <span>Nationality</span>
-                                                </dt>
-                                                <dd class="col-sm-8">
-                                                    <p>Bangladesh</p>
+                                                    <p><fmt:formatNumber type = "number" value = "${student.getCashInWallet()}"/> VND</p>
+                                                    
                                                 </dd>
                                             </dl>
                                         </div>
@@ -271,7 +235,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -279,7 +243,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -297,7 +261,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -305,7 +269,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -323,7 +287,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -331,7 +295,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -349,7 +313,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -357,7 +321,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -375,7 +339,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -383,7 +347,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -401,7 +365,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -409,7 +373,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -427,7 +391,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -435,7 +399,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -453,7 +417,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -461,7 +425,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -479,7 +443,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -487,7 +451,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -538,7 +502,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -546,7 +510,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -564,7 +528,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -572,7 +536,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -590,7 +554,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -598,7 +562,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -616,7 +580,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -624,7 +588,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -642,7 +606,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -650,7 +614,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -668,7 +632,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -676,7 +640,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -694,7 +658,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -702,7 +666,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -720,7 +684,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -728,7 +692,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -746,7 +710,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -754,7 +718,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -805,7 +769,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -813,7 +777,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -831,7 +795,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -839,7 +803,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -857,7 +821,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -865,7 +829,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -883,7 +847,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -891,7 +855,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -909,7 +873,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -917,7 +881,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -935,7 +899,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -943,7 +907,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -961,7 +925,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-02.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -969,7 +933,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -987,7 +951,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -995,7 +959,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -1013,7 +977,7 @@
                                     <div class="col-lg-4 col-md-6 col-md-6 mb-4">
                                         <div class="contentCard contentCard--watch-course">
                                             <div class="contentCard-top">
-                                                <a href="course-details.html"><img src="dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
+                                                <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-04.png" alt="images" class="img-fluid" /></a>
                                             </div>
                                             <div class="contentCard-bottom">
                                                 <h5>
@@ -1021,7 +985,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
                                                         <p class="font-para--md">Brandon Dias</p>
                                                     </a>
                                                     <div class="contentCard-course--status d-flex align-items-center">
@@ -1084,7 +1048,7 @@
                                                     <div class="purchase-area-items-start d-flex align-items-lg-center flex-column flex-lg-row">
                                                         <div class="image">
                                                             <a href="#">
-                                                                <img src="dist/images/courses/demo-img-03.png" alt="Image" />
+                                                                <img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="Image" />
                                                             </a>
                                                         </div>
                                                         <div class="text d-flex flex-column flex-lg-row">
@@ -1100,7 +1064,7 @@
                                                     <div class="purchase-area-items-start d-flex align-items-lg-center flex-column flex-lg-row">
                                                         <div class="image">
                                                             <a href="#">
-                                                                <img src="dist/images/courses/demo-img-05.png" alt="Image" />
+                                                                <img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="Image" />
                                                             </a>
                                                         </div>
                                                         <div class="text d-flex flex-column flex-lg-row">
@@ -1116,7 +1080,7 @@
                                                     <div class="purchase-area-items-start mb-0 pb-2 d-flex align-items-lg-center flex-column flex-lg-row">
                                                         <div class="image">
                                                             <a href="#">
-                                                                <img src="dist/images/courses/8.jpg" alt="Image" />
+                                                                <img src="../BeDev/view/dist/images/courses/8.jpg" alt="Image" />
                                                             </a>
                                                         </div>
                                                         <div class="text d-flex flex-column flex-lg-row">
@@ -1167,7 +1131,7 @@
                                                     <div class="purchase-area-items-start mb-0 d-flex align-items-lg-center flex-column flex-lg-row">
                                                         <div class="image">
                                                             <a href="#">
-                                                                <img src="dist/images/courses/8.jpg" alt="Image" />
+                                                                <img src="../BeDev/view/dist/images/courses/8.jpg" alt="Image" />
                                                             </a>
                                                         </div>
                                                         <div class="text d-flex flex-column flex-lg-row">
@@ -1287,136 +1251,33 @@
                                         <div class="white-bg">
                                             <div class="students-info-form">
                                                 <h6 class="font-title--card">Your Information</h6>
-                                                <form action="#">
+                                                <form method="post">
                                                     <div class="row g-3">
                                                         <div class="col-lg-6">
-                                                            <label for="fname">First Name</label>
-                                                            <input type="text" class="form-control" placeholder="Phillip" id="fname" />
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="lname">Last Name</label>
-                                                            <input type="text" class="form-control" placeholder="Bergson" id="lname" />
+                                                            <label for="fname">Your Name</label>
+                                                            <input type="text" class="form-control" name="name" placeholder="${student.getName()}" id="fname" />
                                                         </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <label for="email">Email</label>
-                                                            <input type="email" id="email" class="form-control" placeholder="phillip.bergson@gmail.com" />
+                                                            <input readonly="" type="email" id="email" name="email" class="form-control" placeholder="${student.getAccount().getEmail()}" />
                                                         </div>
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label for="do">What Do You Do</label>
-                                                            <input type="text" id="do" class="form-control" placeholder="UI/UX Designer" />
-                                                        </div>
-                                                    </div>
-                                                    <div class="row g-3">
-                                                        <div class="col-lg-6">
-                                                            <label for="pnumber">Phone Number</label>
-                                                            <input type="text" class="form-control" placeholder="+8801236-858966" id="pnumber" />
-                                                        </div>
-                                                        <div class="col-lg-6">
-                                                            <label for="nationality">Nationality</label>
-                                                            <input type="text" class="form-control" placeholder="Bangladesh" id="nationality" />
-                                                        </div>
-                                                    </div>
+                                                  
                                                     <div class="d-flex justify-content-lg-end justify-content-center mt-2">
                                                         <button class="button button-lg button--primary" type="submit">Save Changes</button>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
-                                        <div class="white-bg mt-4">
-                                            <div class="students-info-form">
-                                                <h6 class="font-title--card">Change Password</h6>
-                                                <form action="#">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label for="cpass">Current Password</label>
-                                                            <div class="input-with-icon">
-                                                                <input type="password" id="cpass" class="form-control" placeholder="Enter Password" />
-                                                                <div class="input-icon" onclick="showPassword('cpass', this)">
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        width="24"
-                                                                        height="24"
-                                                                        viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        stroke-width="2"
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        class="feather feather-eye"
-                                                                        >
-                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label for="npass">New Password</label>
-                                                            <div class="input-with-icon">
-                                                                <input type="password" id="npass" class="form-control" placeholder="Enter Password" />
-                                                                <div class="input-icon" onclick="showPassword('npass', this)">
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        width="24"
-                                                                        height="24"
-                                                                        viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        stroke-width="2"
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        class="feather feather-eye"
-                                                                        >
-                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <label for="cnpass">Confirm New Password</label>
-                                                            <div class="input-with-icon">
-                                                                <input type="password" id="cnpass" class="form-control" placeholder="Enter Password" />
-                                                                <div class="input-icon" onclick="showPassword('cnpass', this)">
-                                                                    <svg
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        width="24"
-                                                                        height="24"
-                                                                        viewBox="0 0 24 24"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        stroke-width="2"
-                                                                        stroke-linecap="round"
-                                                                        stroke-linejoin="round"
-                                                                        class="feather feather-eye"
-                                                                        >
-                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                                    <circle cx="12" cy="12" r="3"></circle>
-                                                                    </svg>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex justify-content-lg-end justify-content-center mt-2">
-                                                        <button class="button button-lg button--primary" type="submit">Save Changes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                     <div class="col-lg-3 order-1 order-lg-0 mt-4 mt-lg-0">
                                         <div class="white-bg">
                                             <div class="change-image-wizard">
                                                 <div class="image mx-auto">
-                                                    <img src="dist/images/user/user-img-01.jpg" alt="User" />
+                                                    <img src="https://www.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="User" />
                                                 </div>
                                                 <form action="#">
                                                     <div class="d-flex justify-content-center">

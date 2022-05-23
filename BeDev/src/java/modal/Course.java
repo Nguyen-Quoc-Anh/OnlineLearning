@@ -16,32 +16,71 @@ public class Course {
     private String courseName;
     private String description;
     private String courseImage;
-    private int expertID;
+    private Expert expert;
     private double money;
     private Date releasedDate;
     private boolean status;
-
+    private int numberRegister;
+    private int numberLesson;
     public Course() {
     }
 
-    public Course(int courseID, String courseName, String courseImage, double money) {
-        this.courseID = courseID;
-        this.courseName = courseName;
-        this.courseImage = courseImage;
-        this.money = money;
-    }
-
-    public Course(int courseID, String courseName, String description, String courseImage, int expertID, double money, Date releasedDate, boolean status) {
+    public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, boolean status) {
         this.courseID = courseID;
         this.courseName = courseName;
         this.description = description;
         this.courseImage = courseImage;
-        this.expertID = expertID;
+        this.expert = expert;
         this.money = money;
         this.releasedDate = releasedDate;
         this.status = status;
     }
 
+    public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, boolean status, int numberRegister) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.expert = expert;
+        this.money = money;
+        this.releasedDate = releasedDate;
+        this.status = status;
+        this.numberRegister = numberRegister;
+    }
+
+    public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, boolean status, int numberRegister, int numberLesson) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.expert = expert;
+        this.money = money;
+        this.releasedDate = releasedDate;
+        this.status = status;
+        this.numberRegister = numberRegister;
+        this.numberLesson = numberLesson;
+    }
+
+    public int getNumberLesson() {
+        return numberLesson;
+    }
+
+    public void setNumberLesson(int numberLesson) {
+        this.numberLesson = numberLesson;
+    }
+    
+    
+
+    public int getNumberRegister() {
+        return numberRegister;
+    }
+
+    public void setNumberRegister(int numberRegister) {
+        this.numberRegister = numberRegister;
+    }
+    
+    
+    
     public int getCourseID() {
         return courseID;
     }
@@ -74,12 +113,12 @@ public class Course {
         this.courseImage = courseImage;
     }
 
-    public int getExpertID() {
-        return expertID;
+    public Expert getExpert() {
+        return expert;
     }
 
-    public void setExpertID(int expertID) {
-        this.expertID = expertID;
+    public void setExpert(Expert expert) {
+        this.expert = expert;
     }
 
     public double getMoney() {
@@ -105,11 +144,6 @@ public class Course {
     public void setStatus(boolean status) {
         this.status = status;
     }
-    
-    
-
-    @Override
-    public String toString() {
-        return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", description=" + description + ", courseImage=" + courseImage + ", expertID=" + expertID + ", money=" + money + ", releasedDate=" + releasedDate + ", status=" + status + '}';
-    }
+        
+   
 }

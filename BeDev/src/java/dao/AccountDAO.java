@@ -58,7 +58,7 @@ public class AccountDAO {
             return 0;
         }
     }
-
+    
     public boolean checkAccount(Account account) {
         try {
             String sql = "select * from Account where email = ? and accountID = ?";

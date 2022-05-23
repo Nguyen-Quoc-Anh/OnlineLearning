@@ -10,8 +10,10 @@ package modal;
  * @author Admin
  */
 public class Category {
+
     private int categoryID;
     private String categoryName;
+    private int numberCourse;
 
     public Category() {
     }
@@ -19,6 +21,12 @@ public class Category {
     public Category(int categoryID, String categoryName) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
+    }
+
+    public Category(int categoryID, String categoryName, int numberCourse) {
+        this.categoryID = categoryID;
+        this.categoryName = categoryName;
+        this.numberCourse = numberCourse;
     }
 
     public int getCategoryID() {
@@ -36,8 +44,14 @@ public class Category {
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
     }
-    
-    
+
+    public int getNumberCourse() {
+        return numberCourse;
+    }
+
+    public void setNumberCourse(int numberCourse) {
+        this.numberCourse = numberCourse;
+    }
 
     @Override
     public String toString() {

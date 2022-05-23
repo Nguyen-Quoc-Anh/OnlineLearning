@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Instructor profile</title>
-        <link rel="stylesheet" href="dist/main.css" />
-        <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
     <body onload="loader()">
@@ -1205,7 +1205,7 @@
                                                         <div class="feedback-rating">
                                                             <div class="feedback-rating-start">
                                                                 <div class="image">
-                                                                    <img src="dist/images/ellipse/3.png" alt="Image" />
+                                                                    <img src="../BeDev/view/dist/images/ellipse/3.png" alt="Image" />
                                                                 </div>
                                                                 <div class="text">
                                                                     <h6><a href="#">Watcraz Eggsy</a></h6>
