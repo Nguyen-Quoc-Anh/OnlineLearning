@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Watch</title>
-        <link rel="stylesheet" href="dist/main.css" />
-        <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
     <body onload="loader()">
@@ -804,15 +804,7 @@
             </div>
         </div>
 
-        <script src="src/js/jquery.min.js"></script>
-        <script src="src/js/bootstrap.bundle.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/video.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/slick.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/jquery.nice-select.min.js"></script>
-        <script src="src/scss/vendors/plugin/js/jquery.star-rating-svg.js"></script>
-        <script src="src/js/app.js"></script>
+        <jsp:include page="footer.jsp"></jsp:include>
         <script>
         $(".my-rating").starRating({
             starSize: 30,
