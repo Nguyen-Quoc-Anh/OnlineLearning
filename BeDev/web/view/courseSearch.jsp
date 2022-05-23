@@ -173,22 +173,22 @@
                                     <div class="accordion-body">
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="#star=1"> 1 Star and higher </a>
+                                                <a href="${url}&star=1"> 1 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="#star=2"> 2 Star and higher </a>
+                                                <a href="${url}&star=2"> 2 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="#star=3"> 3 Star and higher </a>
+                                                <a href="${url}&star=3"> 3 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="#star=4"> 4 Star and higher </a>
+                                                <a href="${url}&star=4"> 4 Star and higher </a>
                                             </div>
                                         </div>
                                     </div>

@@ -17,12 +17,12 @@ import modal.Student;
  *
  * @author Admin
  */
-public class AccountDAO {
+public class AccountDAO extends DBContext {
 
     public boolean validEmail(String email) {
         try {
             String sql = "select * from Account where email = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -37,7 +37,7 @@ public class AccountDAO {
     public int signup(Student student) {
         try {
             String sql = "insert into Account(email, password, role) values (?, ?, ?); ";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, student.getAccount().getEmail());
             stm.setString(2, student.getAccount().getPassword());
             stm.setInt(3, student.getAccount().getRole().getRoleID());
@@ -47,7 +47,7 @@ public class AccountDAO {
                 student.getAccount().setAccountID(rs.getInt(1));
             }
             sql = "insert into Student(studentID, name, imageURL) values (?, ?, ?)";
-            stm = new DBContext().connection.prepareStatement(sql);
+            stm = connection.prepareStatement(sql);
             stm.setInt(1, student.getAccount().getAccountID());
             stm.setNString(2, student.getName());
             stm.setNString(3, "../BeDev/view/dist/images/avatar/user_avatar.png");
@@ -62,7 +62,7 @@ public class AccountDAO {
     public boolean checkAccount(Account account) {
         try {
             String sql = "select * from Account where email = ? and accountID = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getEmail());
             stm.setInt(2, account.getAccountID());
             ResultSet rs = stm.executeQuery();
@@ -78,7 +78,7 @@ public class AccountDAO {
     public boolean accountVerification(int id) {
         try {
             String sql = "update Account set emailVerify = 1 where accountID = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.executeUpdate();
             return true;
@@ -91,7 +91,7 @@ public class AccountDAO {
     public boolean resetPassword(Account account) {
         try {
             String sql = "update Account set password = ? where email = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, account.getPassword());
             stm.setString(2, account.getEmail());
             stm.executeUpdate();
@@ -106,7 +106,7 @@ public class AccountDAO {
         try {
             String sql = "select * from Account a\n"
                     + "where a.email = ? and a.password = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             stm.setString(2, password);
             ResultSet rs = stm.executeQuery();
@@ -123,7 +123,7 @@ public class AccountDAO {
         try {
             String sql = "update  Account  \n"
                     + "set password = ? where  email = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, newPass);
             stm.setString(2, email);
             stm.executeUpdate();

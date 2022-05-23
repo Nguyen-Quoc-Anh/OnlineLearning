@@ -5,10 +5,12 @@
  */
 package dao;
 
+import context.DBContext;
+
 /**
  *
  * @author admin
  */
-public class ChapterDAO {
+public class ChapterDAO extends DBContext {
     
 }

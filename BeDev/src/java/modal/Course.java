@@ -144,6 +144,11 @@ public class Course {
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", description=" + description + ", courseImage=" + courseImage + ", expert=" + expert + ", money=" + money + ", releasedDate=" + releasedDate + ", status=" + status + ", numberRegister=" + numberRegister + ", numberLesson=" + numberLesson + '}';
+    }
         
    
 }

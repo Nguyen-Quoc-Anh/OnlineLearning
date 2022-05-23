@@ -4,18 +4,9 @@
         <servlet-name>HomeControl</servlet-name>
         <servlet-class>controller.HomeControl</servlet-class>
     </servlet>
-
-    <servlet>
-        <servlet-name>CourseSearchControl</servlet-name>
-        <servlet-class>controller.CourseSearchControl</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/HomeControl</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CourseSearchControl</servlet-name>
-        <url-pattern>/course-search</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

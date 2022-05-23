@@ -76,7 +76,7 @@ public class CourseSearch extends HttpServlet {
             request.setAttribute("lowPrice", lowPrice);
             request.setAttribute("highPrice", highPrice);
         } else if (star != null) {
-            listCourse = courseDAO.listCourseBySearch(search);
+            listCourse = courseDAO.listCourseByStar(star);
             url += "star=" + star;
             request.setAttribute("star", star);
         }

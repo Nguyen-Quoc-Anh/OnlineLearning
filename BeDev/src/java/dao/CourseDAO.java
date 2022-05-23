@@ -17,13 +17,13 @@ import modal.Expert;
  *
  * @author Admin
  */
-public class CourseDAO {
+public class CourseDAO extends DBContext {
 
     public List<Course> listCourse() {
         List<Course> list = new ArrayList<>();
         try {
             String sql = "select * from Course";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new Course());
@@ -38,7 +38,7 @@ public class CourseDAO {
         List<Course> list = new ArrayList<>();
         try {
             String sql = "select * from Course c inner join Course_Category cc on c.courseID = cc.courseID where categoryID = ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, categoryID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -54,7 +54,7 @@ public class CourseDAO {
         List<Course> list = new ArrayList<>();
         try {
             String sql = "select * from Course where courseName like ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, "%" + search + "%");
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -70,9 +70,25 @@ public class CourseDAO {
         List<Course> list = new ArrayList<>();
         try {
             String sql = "select * from Course where price between ? and ?";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, lowPrice);
             stm.setString(2, highPrice);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new Course());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public List<Course> listCourseByStar(String star) {
+        List<Course> list = new ArrayList<>();
+        try {
+            String sql = "select * from Course";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, star);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new Course());
@@ -93,7 +109,7 @@ public class CourseDAO {
                     + "	where e.courseID = c.courseID\n"
                     + "	group by e.courseID\n"
                     + "	order by Number_Registed desc ) as a) and co.expertID = e.expertID";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), "", "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));
@@ -106,7 +122,7 @@ public class CourseDAO {
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
-        for (Course category : dao.listCourse()) {
+        for (Course category : dao.listFeatureCourse()) {
             System.out.println(category.toString());
         }
     }
