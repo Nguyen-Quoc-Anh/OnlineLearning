@@ -5,7 +5,12 @@
  */
 package dao;
 
+<<<<<<< OURS
+
+import dal.DBContext;
+=======
 import context.DBContext;
+>>>>>>> THEIRS
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
