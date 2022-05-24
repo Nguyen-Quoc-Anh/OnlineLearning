@@ -27,6 +27,11 @@ public class Rate {
         this.course = course;
     }
 
+    public Rate(int star, Course course) {
+        this.star = star;
+        this.course = course;
+    }
+
     public int getRateID() {
         return rateID;
     }

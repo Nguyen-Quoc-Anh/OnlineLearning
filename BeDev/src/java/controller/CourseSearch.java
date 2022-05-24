@@ -7,6 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
+import dao.RateDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
+import modal.Rate;
 
 /**
  *
@@ -40,7 +42,11 @@ public class CourseSearch extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-
+        
+        RateDAO rateDAO = new RateDAO();
+        List<Rate> listRate = rateDAO.starCourse();
+        request.setAttribute("listRate", listRate);
+        
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";

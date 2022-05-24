@@ -25,6 +25,12 @@ public class Course {
     public Course() {
     }
 
+    public Course(int courseID) {
+        this.courseID = courseID;
+    }
+    
+    
+
     public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, boolean status) {
         this.courseID = courseID;
         this.courseName = courseName;

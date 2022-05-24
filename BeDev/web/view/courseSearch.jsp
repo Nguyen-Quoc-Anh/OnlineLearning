@@ -44,7 +44,7 @@
                             <div class="event-search-bar">
                                 <form action="">
                                     <div class="form-input-group">
-                                        <input type="text" class="form-control" placeholder="Search Course..." name="search"/>
+                                        <input type="text" class="form-control" placeholder="Search Course..." name="search" required=""/>
                                         <button class="button button-lg button--primary" type="submit" id="button-addon2">
                                             Search
                                         </button>
@@ -113,7 +113,7 @@
                                                             </c:if>
                                                             type="number"
                                                             min="0"
-                                                            max="5000"
+                                                            max="1000000"
                                                             oninput="validity.valid||(value='0');"
                                                             id="min_price"
                                                             class="price-range-field"
@@ -124,14 +124,14 @@
                                                         <input
                                                             name="highPrice"
                                                             <c:if test="${highPrice == null}">
-                                                                value="100"
+                                                                value="100000"
                                                             </c:if>
                                                             <c:if test="${highPrice != null}">
                                                                 value="${highPrice}"
                                                             </c:if>
                                                             type="number"
                                                             min="0"
-                                                            max="5000"
+                                                            max="1000000"
                                                             oninput="validity.valid||(value='5000');"
                                                             id="max_price"
                                                             class="price-range-field"
@@ -173,22 +173,22 @@
                                     <div class="accordion-body">
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="${url}&star=1"> 1 Star and higher </a>
+                                                <a href="CourseSearch?star=1"> 1 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="${url}&star=2"> 2 Star and higher </a>
+                                                <a href="CourseSearch?star=2"> 2 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="${url}&star=3"> 3 Star and higher </a>
+                                                <a href="CourseSearch?star=3"> 3 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="${url}&star=4"> 4 Star and higher </a>
+                                                <a href="CourseSearch?star=4"> 4 Star and higher </a>
                                             </div>
                                         </div>
                                     </div>
@@ -230,36 +230,37 @@
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="#" class="contentCard-user d-flex align-items-center">
                                                     <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
-                                                    <p class="font-para--md">Brandon Dias</p>
+                                                    <p class="font-para--md">${course.getExpert().getExpertName()}</p>
                                                 </a>
                                                 <div class="price">
-                                                    <span>$12</span>
+                                                    <span>${course.getMoney()} VND</span>
                                                 </div>
                                             </div>
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
-                                                    </div>
-                                                    <span>4.5</span>
+
+                                                    <c:forEach items="${listRate}" var="rate">
+                                                        <c:if test="${rate.getCourse().courseID == course.courseID}">
+                                                            <div class="icon">
+                                                                <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
+                                                            </div>
+                                                            <span>
+                                                                ${rate.star}
+                                                            </span>
+                                                        </c:if>
+                                                    </c:forEach>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">
                                                         <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
-                                                    </div>
-                                                    <span>24,517</span>
+                                                    </div>                                                   
+                                                    <span>${course.getNumberRegister()} Register</span>                                                                                                    
                                                 </div>
                                                 <div class="book d-flex align-items-center">
                                                     <div class="icon">
                                                         <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
                                                     </div>
-                                                    <span>37 Lesson</span>
-                                                </div>
-                                                <div class="clock d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
-                                                    </div>
-                                                    <span>3 Hours</span>
+                                                    <span>${course.getNumberLesson()} Lesson</span>
                                                 </div>
                                             </div>
                                         </div>
