@@ -8,6 +8,8 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modal.Expert;
@@ -21,14 +23,20 @@ public class ExpertDAO extends DBContext{
         List<Expert> list = new ArrayList<>();
         try {         
             String sql = "select * from Expert";
-            PreparedStatement stm = new DBContext().connection.prepareStatement(sql);
+            PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 list.add(new Expert(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
+    }
+    
+    public static void main(String[] args) {
+        ExpertDAO dao =  new ExpertDAO();
+        List<Expert> list = dao.listExpert();
+        System.out.println(list.size());
     }
 }

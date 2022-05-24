@@ -22,7 +22,7 @@
             <div class="collapse navbar-collapse d-none d-xl-block d-none d-xl-block" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" href="HomeControl">
                             Home
                         </a>
                     </li>
