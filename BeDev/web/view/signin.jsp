@@ -39,7 +39,7 @@
                                     <div class="form-element active">
                                         <div class="d-flex justify-content-between">
                                             <label for="confirm-password">Password</label>
-                                            <a href="ResetPasssword" class="text-primary fs-6">Forget Password</a>
+                                            <a href="ResetPassword" class="text-primary fs-6">Forget Password</a>
                                         </div>
 
                                         <div class="form-alert-input">

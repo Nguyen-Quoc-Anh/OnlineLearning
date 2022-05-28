@@ -12,10 +12,46 @@
 </div>
 <!-- Header Starts Here -->
 <header>
+    <style>
+        .dropbtn {
+            background-color: #1089FF;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #ddd;}
+
+        .dropdown:hover .dropdown-content {display: block;}
+
+        /*        .dropdown:hover .dropbtn {background-color: #3e8e41;}*/
+    </style>
     <nav class="navbar navbar-expand-xl navbar-light bg-transparent">
         <div class="container">
             <!-- Logo -->
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="HomeControl">
                 <img src="../BeDev/view/dist/images/logo/logo.png" alt="Logo" class="img-fluid" />
             </a>
             <button class="menu-icon-container">
@@ -55,40 +91,12 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">
-                            Pages
-                        </a>
-                        <div class="nav-item--dropdown">
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        My Account
-                                    </a>
-                                    <div class="nav-item--subDropdown">
-                                        <ul>
-                                            <li><a href="students-profile.html">Students Profile</a></li>
-                                            <li><a href="SignIn>Sign in</a></li>
-                                            <li><a href="SignUp">Sign up</a></li>
-                                            <li><a href="verify.html">Verify Email</a></li>
-                                            <li><a href="forget-password.html">Forget Password</a></li>
-                                            <li><a href="reset-password.html">Reset Password</a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li><a href="instructor-profile.html">Instructor Profile</a></li>
-                                <li><a href="become-instructor.html">Become Instructor</a></li>
-                                <li><a href="cart.html">cart</a></li>
-                                <li><a href="checkout.html">Check out</a></li>
-                                <li><a href="faq.html">Faq</a></li>
-                                <li class="active"><a href="404.html">404</a></li>
-                                <li><a href="comingsoon.html">Coming Soon</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
+                    <c:if test="${sessionScope.account!=null && sessionScope.admin!=null}">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="about.html">Admin Dashboard</a>
+                        </li>
+                    </c:if>
+
                 </ul>
                 <div class="d-flex align-items-center justify-content-between rightContent">
                     <form class="header__Search-form" id="searchForm">
@@ -124,15 +132,48 @@
                             </div>
                         </div>
                     </form>
-                    
                     <c:if test="${sessionScope.account==null}">
                         <a href="SignIn" class="button button--text">Sign in</a>
-                    <a href="SignUp" class="button button--dark">Sign Up</a>
+                        <a href="SignUp" class="button button--dark">Sign Up</a>
                     </c:if>
-                    <c:if test="${sessionScope.account!=null}">
-                        <a class="button button--text" href="#">${sessionScope.account.email}</a>
-                        <a class="button button--dark" href="LogOut">Log out</a>
+                    <c:if test="${sessionScope.account!=null && sessionScope.student!=null}">
+                        <div class="dropdown">
+                            <button class="dropbtn" type="button" >
+                                ${sessionScope.student.name}
+                            </button>
+                            <div class="dropdown-content" >
+                                <a class="dropdown-item" href="StudentProfile">My Profile</a>
+                                <a class="dropdown-item" href="ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="LogOut">Logout</a>
+                            </div>
+                        </div>
                     </c:if>
+                    <c:if test="${sessionScope.account!=null && sessionScope.expert!=null}">
+                        <div class="dropdown">
+                            <button class="dropbtn" type="button" >
+                                ${sessionScope.expert.expertName}
+                            </button>
+                            <div class="dropdown-content" >
+                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="LogOut">Logout</a>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="${sessionScope.account!=null && sessionScope.admin!=null}">
+                        <div class="dropdown">
+                            <button class="dropbtn" type="button" >
+                                ${sessionScope.admin.name}
+                            </button>
+                            <div class="dropdown-content" >
+                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="LogOut">Logout</a>
+                            </div>
+                        </div>
+                    </c:if>
+
+
                 </div>
             </div>
 

@@ -8,8 +8,11 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import modal.Account;
+import modal.Admin;
+import modal.Expert;
 import modal.Role;
 import modal.Student;
 
@@ -58,7 +61,7 @@ public class AccountDAO extends DBContext {
             return 0;
         }
     }
-    
+
     public boolean checkAccount(Account account) {
         try {
             String sql = "select * from Account where email = ? and accountID = ?";
@@ -113,7 +116,7 @@ public class AccountDAO extends DBContext {
             while (rs.next()) {
                 return new Account(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), new Role(rs.getInt(5)), rs.getBoolean(6));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return null;
@@ -134,10 +137,63 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
+    public Student getStudentByAccountID(int id) {
+        try {
+            String sql = "select * from Account a , Student s\n"
+                    + "where a.accountId = s.studentId\n"
+                    + "and a.accountId = ?";
+            PreparedStatement stm = connection.prepareCall(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Student(new Account(id, rs.getString(2), rs.getString(3), rs.getBoolean(4), new Role(rs.getInt(5)), rs.getBoolean(6)), rs.getString(8), rs.getDouble(9), rs.getString(10));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public Expert getExpertByAccountID(int id) {
+        try {
+            String sql = "select * from Account a , Expert e\n"
+                    + "where a.accountId = e.expertId\n"
+                    + "and a.accountId = ?";
+            PreparedStatement stm = connection.prepareCall(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Expert(id, rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    public Admin getAdminByAccountID(int id) {
+        try {
+            String sql = "select * from Admin a , Account acc\n"
+                    + "where a.adminID = acc.accountID and a.adminID= ?";
+            PreparedStatement stm  = connection.prepareCall(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Admin(new Account(id, rs.getString(6), rs.getString(7), rs.getBoolean(8), new Role(rs.getInt(9)), rs.getBoolean(10)), rs.getString(2), rs.getString(3), rs.getString(4));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
-        Account a = accountDAO.signIn("huytqhe151216@fpt.edu.vn", "123");
-        System.out.println(a.getRole().getRoleID());
+        Expert a = accountDAO.getExpertByAccountID(2);
+        Student s1 = accountDAO.getStudentByAccountID(9);
+        Admin admin = accountDAO.getAdminByAccountID(1);
+        Account s = accountDAO.signIn("huytqhe151216@fpt.edu.vn", "123");
+        System.out.println(admin.getName());
     }
 
 }

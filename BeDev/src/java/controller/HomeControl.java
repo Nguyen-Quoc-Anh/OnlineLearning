@@ -14,9 +14,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Category;
 import modal.Course;
 import modal.Expert;
+import modal.Student;
 
 /**
  *
@@ -51,6 +53,13 @@ public class HomeControl extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
+            HttpSession session = request.getSession();
+        Student s = (Student) session.getAttribute("student");
+        System.out.println(s.getName());
+        } catch (Exception e) {
+            System.out.println("chua co student");
+        }
         CategoryDAO dao = new CategoryDAO();
         CourseDAO courseDao =  new CourseDAO();
         ExpertDAO expertDao = new ExpertDAO();
