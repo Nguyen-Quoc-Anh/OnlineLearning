@@ -14,6 +14,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Home</title>
         <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="dist/images/favicon/favicon.png" />
         <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
@@ -161,8 +162,8 @@
                                                     <a href="course-details.html" class="font-title--card">${co.getCourseName()}</a>
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                    <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                        <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                    <a href="ExpertProfile?id=${co.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
+                                                        <img src="${co.getExpert().getImg()}" alt="loading" class="rounded-circle" />
                                                         <p class="font-para--md">${co.getExpert().getExpertName()}</p>
 
                                                     </a>
@@ -282,11 +283,10 @@
                                     <div class="mentor">
                                         <div class="mentor__img">
                                             <img src="${ex.getImg()}" alt="Mentor image" />
-
                                         </div>
                                         <div class="mentor__title">
                                             <h6>
-                                                <a href="instructor-profile.html" tabindex="0">${ex.getExpertName()}</a>
+                                                <a href="ExpertProfile?id=${ex.getExpertID()}" tabindex="0">${ex.getExpertName()}</a>
                                             </h6>
                                             <p>Instructor</p>
                                         </div>

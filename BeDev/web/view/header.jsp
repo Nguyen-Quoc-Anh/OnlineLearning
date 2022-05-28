@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </form>
-                    <a href="signin.html" class="button button--text">Sign in</a>
+                    <a href="SignIn" class="button button--text">Sign in</a>
                     <a href="SignUp" class="button button--dark">Sign Up</a>
                 </div>
             </div>

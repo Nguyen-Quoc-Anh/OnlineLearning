@@ -5,13 +5,17 @@
  */
 package controller;
 
+import dao.CourseDAO;
+import dao.ExpertDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modal.Course;
+import modal.Expert;
 
 /**
  *
@@ -33,7 +37,7 @@ public class ExpertProfile extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("/view/instructorProfile.jsp").forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,6 +52,23 @@ public class ExpertProfile extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        ExpertDAO expertDAO = new ExpertDAO();
+        CourseDAO courseDAO = new CourseDAO();       
+        try {
+            int id = Integer.parseInt(request.getParameter("id"));
+            Expert expert = expertDAO.profile(id);
+            List<Course> listCourse = courseDAO.listCourseByExpert(id);
+            int count = courseDAO.countCourseOfExpert(id);
+            System.out.println(expert.getDescription());
+            request.setAttribute("expert", expert);
+            request.setAttribute("count", count);
+            request.setAttribute("listCourse", listCourse);
+
+        } catch (Exception e) {
+            response.sendRedirect("Error");
+            return;
+        }
+
         processRequest(request, response);
     }
 

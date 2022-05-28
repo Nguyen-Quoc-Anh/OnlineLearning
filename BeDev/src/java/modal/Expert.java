@@ -9,15 +9,27 @@ package modal;
  *
  * @author admin
  */
-public class Expert {
+public class Expert {  
     private int expertID;
     private String expertName;
     private String img;
     private String phone;
     private String description;
+    private Account account;
 
     public Expert() {
     }
+
+    public Expert(String expertName, String img, String phone, String description, Account account) {
+        this.expertName = expertName;
+        this.img = img;
+        this.phone = phone;
+        this.description = description;
+        this.account = account;
+    }
+
+    
+    
     
     public Expert(int expertID, String expertName, String img, String phone, String description) {
         this.expertID = expertID;
@@ -26,6 +38,7 @@ public class Expert {
         this.phone = phone;
         this.description = description;
     }
+
     
     public int getExpertID() {
         return expertID;
@@ -66,6 +79,15 @@ public class Expert {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+    
     
     
     

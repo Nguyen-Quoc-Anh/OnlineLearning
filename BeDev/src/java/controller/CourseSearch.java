@@ -41,8 +41,8 @@ public class CourseSearch extends HttpServlet {
         request.setAttribute("listCategory", listCategory);
         
         CourseDAO courseDAO = new CourseDAO();
-        List<Course> listCourse = courseDAO.listCoursePart(1);
-        request.setAttribute("listCourse", listCourse);
+        //List<Course> listCourse = courseDAO.listCoursePart(1);
+        //request.setAttribute("listCourse", listCourse);
         
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }

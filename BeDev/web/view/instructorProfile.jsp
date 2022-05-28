@@ -3,7 +3,8 @@
     Created on : May 18, 2022, 10:09:05 AM
     Author     : Admin
 --%>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,16 +40,16 @@
                         <div class="col-lg-4">
                             <div class="instructor-courses-instructor">
                                 <div class="instructor-image mx-auto text-center">
-                                    <img src="../BeDev/view/dist/images/hero/hero-img-02.png" alt="Instructor" />
+                                    <img src="${expert.getImg()}" alt="Instructor" />
                                 </div>
                                 <div class="instructor-info text-center">
-                                    <h5 class="font-title--sm">Kevin Gilbert</h5>
+                                    <h5 class="font-title--sm">${expert.getExpertName()}</h5>
                                     <p class="text-secondary mb-3"> Instructor</p>
-                                    
+
                                 </div>
                                 <div class="instructor-course-info d-flex justify-content-center">
-                                    
-                                 
+
+
                                     <div class="instructor-course-info-courses">
                                         <div class="icon d-flex align-items-center justify-content-center">
                                             <svg width="32" height="28" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -69,41 +70,19 @@
                                             </svg>
                                         </div>
                                         <div class="text text-center">
-                                            <h6>35</h6>
+                                            <h6>${count}</h6>
                                             <p>Courses</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="about-instructor">
-                                    <h6>About Me</h6>
+                                    <h6>About Instructor</h6>
                                     <p>
-                                        Sharing is who I am, and teaching is where I am at my best, because I've been on both sides of that equation, and getting to deliver useful training is my meaningful way to be a part of the creative
-                                        community. I've spent a long time watching others learn, and teach, to refine how I work with you to be efficient, useful and, most importantly, memorable.I want you to carry what I've shown you into a
-                                        bright future.
+                                        ${expert.getDescription()}
                                     </p>
                                 </div>
-                              
-                                <div class="instructor-qualification mb-0 pb-0 border-0">
-                                    <h6>Experiences</h6>
-                                    <div class="qualification-info">
-                                        <div class="qualification-info-title">
-                                            <h6>Typeface Design</h6>
-                                            <p>2008 - 2010</p>
-                                        </div>
-                                        <p>
-                                            Integer ultricies a turpis ac mattis. Integer auctor eleifend diam vitae sodales. Nullam mollis semper rutrum. Vestibulum hendrerit nulla vitae velit semper.
-                                        </p>
-                                    </div>
-                                    <div class="qualification-info pb-0 mb-0 border-0">
-                                        <div class="qualification-info-title">
-                                            <h6>Graphic Design</h6>
-                                            <p>2018 - 2011</p>
-                                        </div>
-                                        <p>
-                                            Integer ultricies a turpis ac mattis. Integer auctor eleifend diam vitae sodales. Nullam mollis semper rutrum. Vestibulum hendrerit nulla vitae velit semper.
-                                        </p>
-                                    </div>
-                                </div>
+
+
                             </div>
                         </div>
                         <div class="col-lg-8 mt-4 mt-lg-0">
@@ -112,89 +91,60 @@
                                     <li class="nav-item" role="presentation">
                                         <button class="nav-link active" id="pills-courses-tab" data-bs-toggle="pill" data-bs-target="#pills-courses" type="button" role="tab" aria-selected="true">Courses</button>
                                     </li>
-                                    
+
                                 </ul>
                                 <div class="tab-content" id="pills-tabContent">
                                     <div class="tab-pane fade show active" id="pills-courses" role="tabpanel" aria-labelledby="pills-courses-tab">
                                         <div class="row">
-                                            <div class="col-md-6 mb-4">
-                                                <div class="contentCard contentCard--course">
-                                                    <div class="contentCard-top">
-                                                        <a href="course-details.html"><img src="../BeDev/view/dist/images/courses/demo-img-01.png" alt="images" class="img-fluid" /></a>
-                                                    </div>
-                                                    <div class="contentCard-bottom">
-                                                        <h5>
-                                                            <a href="course-details.html" class="font-title--card">Chicago International Conference on Education</a>
-                                                        </h5>
-                                                        <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                            <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
-                                                                <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
-                                                                <p class="font-para--md">Brandon Dias</p>
-                                                            </a>
-                                                            <div class="price">
-                                                                <span>$12</span>
-                                                                <del>$95</del>
-                                                            </div>
+                                        <c:forEach var="co" items="${listCourse}">
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="contentCard contentCard--course">
+                                                        <div class="contentCard-top">
+                                                            <a href="course-details.html"><img src="${co.getCourseImage()}" alt="images" class="img-fluid" /></a>
                                                         </div>
-                                                        <div class="contentCard-more">
-                                                            <div class="d-flex align-items-center">
-                                                                <div class="icon">
-                                                                    <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
+                                                        <div class="contentCard-bottom">
+                                                            <h5>
+                                                                <a href="course-details.html" class="font-title--card">${co.getCourseName()}</a>
+                                                            </h5>
+                                                            <div class="contentCard-info d-flex align-items-center justify-content-between">
+                                                                <a href="#" class="contentCard-user d-flex align-items-center">
+<!--                                                                    <img src="${ex.getImg()}" alt="client-image" class="rounded-circle" />
+                                                                    <p class="font-para--md">${co.getExpert().getExpertName()}</p>-->
+                                                                </a>
+                                                                <div class="price">
+                                                                    <span><fmt:formatNumber type = "number" value = "${co.getMoney()}"/> VND</span>
+                                                                    <del>$95</del>
                                                                 </div>
-                                                                <span>4.5</span>
                                                             </div>
-                                                            <div class="eye d-flex align-items-center">
-                                                                <div class="icon">
-                                                                    <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
+                                                            <div class="contentCard-more">
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="icon">
+                                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
+                                                                    </div>
+                                                                    <span>4.5</span>
                                                                 </div>
-                                                                <span>24,517</span>
-                                                            </div>
-                                                            <div class="book d-flex align-items-center">
-                                                                <div class="icon">
-                                                                    <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
+                                                                <div class="eye d-flex align-items-center">
+                                                                    <div class="icon">
+                                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
+                                                                    </div>
+                                                                    <span>${co.getNumberRegister()} Register</span>
                                                                 </div>
-                                                                <span>37 Lesson</span>
-                                                            </div>
-                                                            <div class="clock d-flex align-items-center">
-                                                                <div class="icon">
-                                                                    <img src="../BeDev/view/dist/images/icon/Clock.png" alt="clock" />
+                                                                <div class="book d-flex align-items-center">
+                                                                    <div class="icon">
+                                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
+                                                                    </div>
+                                                                    <span>${co.getNumberLesson()} Lesson</span>
                                                                 </div>
-                                                                <span>3 Hours</span>
+
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                           
+                                            </c:forEach>                                         
                                         </div>
-                                        <div class="row">
-                                            <div class="pagination-group justify-content-center mt-lg-5 mt-2">
-                                                <a href="#" class="p_prev">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="9.414" height="16.828" viewBox="0 0 9.414 16.828">
-                                                    <path
-                                                        data-name="Icon feather-chevron-left"
-                                                        d="M20.5,23l-7-7,7-7"
-                                                        transform="translate(-12.5 -7.586)"
-                                                        fill="none"
-                                                        stroke="#1a2224"
-                                                        stroke-linecap="round"
-                                                        stroke-linejoin="round"
-                                                        stroke-width="2"
-                                                        ></path>
-                                                    </svg>
-                                                </a>
-                                                <a href="#!1" class="cdp_i active">01</a>
-                                                <a href="#!2" class="cdp_i">02</a>
-                                                <a href="#!3" class="cdp_i">03</a>
-                                                <a href="#!+1" class="p_next">
-                                                    <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M1.5 1L8.5 8L1.5 15" stroke="#35343E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
