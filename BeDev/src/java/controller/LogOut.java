@@ -40,6 +40,8 @@ public class LogOut extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         session.removeAttribute("account");
+        session.removeAttribute("student");
+        session.removeAttribute("expert");
         response.sendRedirect("HomeControl");
         return;
     }

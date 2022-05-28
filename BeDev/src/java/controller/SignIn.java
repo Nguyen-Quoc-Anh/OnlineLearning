@@ -21,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
+import modal.Admin;
+import modal.Expert;
+import modal.Student;
 
 /**
  *
@@ -42,7 +45,7 @@ public class SignIn extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.getRequestDispatcher("//view//signin.jsp").forward(request, response);
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,7 +60,7 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         processRequest(request, response);
     }
 
@@ -85,8 +88,24 @@ public class SignIn extends HttpServlet {
             if (!account.isEmailVeriFy()) {
                 mess = " Please verify youre email.";
             } else {
+                if (account.getRole().getRoleID() == 3) {
+                    Student student = new Student();
+                    student = accountDAO.getStudentByAccountID(account.getAccountID());
+                    session.setAttribute("student", student);
+
+                } else {
+                    if (account.getRole().getRoleID()==2) {
+                        Expert expert = new Expert();
+                        expert = accountDAO.getExpertByAccountID(account.getAccountID());
+                        session.setAttribute("expert", expert);
+                    }else{
+                        Admin admin = new Admin();
+                        admin = accountDAO.getAdminByAccountID(account.getAccountID());
+                        session.setAttribute("admin", admin);
+                    }
+
+                }
                 session.setAttribute("account", account);
-                
                 response.sendRedirect("HomeControl");
                 return;
             }
