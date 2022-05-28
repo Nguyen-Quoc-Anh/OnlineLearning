@@ -5,24 +5,22 @@
  */
 package controller;
 
-import email.EmailSender;
-import dao.AccountDAO;
+import dao.QuestionDAO;
+import dao.QuizDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modal.Account;
-import modal.Role;
-import modal.Student;
+import modal.Quiz;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name = "SignUp", urlPatterns = {"/SignUp"})
-public class SignUp extends HttpServlet {
+@WebServlet(name = "Quiz", urlPatterns = {"/Quiz"})
+public class QuizController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +34,8 @@ public class SignUp extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view//signup.jsp").forward(request, response);
+        request.getRequestDispatcher("//view//quiz.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,6 +50,21 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        QuizDAO quizDAO = new QuizDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
+        try {
+            int quizID = Integer.parseInt(request.getParameter("qid"));
+            Quiz quiz = quizDAO.getQuizByID(quizID);
+            if (quiz == null) {
+                throw new Exception();
+            }
+            int numberOfQuestion = questionDAO.countQuestionInQuiz(quizID);
+            request.setAttribute("numberOfQuestion", numberOfQuestion);
+            request.setAttribute("quiz", quiz);
+        } catch (Exception e) {
+            response.sendRedirect("Error");
+            return;
+        }
         processRequest(request, response);
     }
 
@@ -65,29 +79,6 @@ public class SignUp extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        AccountDAO accountDAO = new AccountDAO();
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
-
-        if (accountDAO.validEmail(email)) {
-            int accountID = accountDAO.signup(new Student(new Account(0, email, password, false, new Role(3), true), name, 0, ""));
-            if (accountID != 0) {
-                String message = "Click this link to verify yor email " + request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 7)
-                        + "/AccountVerification?uid=" + accountID + "&email=" + email;
-                boolean sendEmailSuccess = EmailSender.sendMail(email, "Your email verification", message);
-                if (sendEmailSuccess) {
-                    request.setAttribute("success", "Sign up successfully. Check email now to verify your account.");
-                } else {
-                    request.setAttribute("failed", "Cannot sent email");
-                }
-            } else {
-                request.setAttribute("failed", "Cannot create account. Try again.");
-            }
-        } else {
-            request.setAttribute("failed", "Email is currently in use.");
-        }
         processRequest(request, response);
     }
 

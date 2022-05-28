@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Account;
 
 /**
@@ -74,27 +75,45 @@ public class ResetPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
+        HttpSession session = request.getSession();
         AccountDAO accountDAO = new AccountDAO();
-        boolean validEmail = !accountDAO.validEmail(email);
-        if (validEmail) {
-            String newPassword = generateRandomString(8);
-            boolean sendEmailSuccess = EmailSender.sendMail(email, "Your new password", "Your new password is: " + newPassword);
-            if (sendEmailSuccess) {
-                Account account = new Account();
-                account.setEmail(email);
-                account.setPassword(newPassword);
-                boolean resetSuccess = accountDAO.resetPassword(account);
-                if (resetSuccess) {
-                    request.setAttribute("mess", "Reset password successfully. Check your email to get your new password.");
+        if (session.getAttribute("step") == null || ((int) session.getAttribute("step") == 1)) {
+            String email = request.getParameter("email");
+            boolean validEmail = !accountDAO.validEmail(email);
+            if (validEmail) {
+                String verificationCode = generateRandomString(8);
+                boolean sendEmailSuccess = EmailSender.sendMail(email, "Your verification code", "Your verification code is: " + verificationCode);
+                if (sendEmailSuccess) {
+                    session.setAttribute("email", email);
+                    session.setAttribute("verifycode", verificationCode);
+                    session.setAttribute("step", 2);
+                    session.setMaxInactiveInterval(180);
+                    request.setAttribute("mess", "Send verification code successfully. Check your email to get your verification code.");
                 } else {
-                    request.setAttribute("mess", "Cannot reset new password. Your password is remain.");
+                    request.setAttribute("mess", "Cannot send verification code to your email.");
                 }
             } else {
-                request.setAttribute("mess", "Cannot send new password to your email.");
+                request.setAttribute("mess", "Email is not valid.");
             }
-        } else {
-            request.setAttribute("mess", "Email is not valid.");
+        } else if ((int) session.getAttribute("step") == 2) {
+            System.out.println("here");
+            String verificationCode = request.getParameter("verifycode");
+            if (session.getAttribute("verifycode") != null && session.getAttribute("verifycode").toString().equals(verificationCode)) {
+                System.out.println("here2");
+                session.setAttribute("step", 3);
+            }
+        } else if ((int) session.getAttribute("step") == 3) {
+            String password = request.getParameter("password");
+            Account account = new Account();
+            account.setEmail(session.getAttribute("email").toString());
+            account.setPassword(password);
+            boolean resetPasswordSuccess = accountDAO.resetPassword(account);
+            if (resetPasswordSuccess) {
+                request.setAttribute("mess", "Reset password successfully.");
+            } else {
+                request.setAttribute("mess", "Cannot reset password. Your old password is remain");
+            }
+            session.invalidate();
         }
         processRequest(request, response);
     }
