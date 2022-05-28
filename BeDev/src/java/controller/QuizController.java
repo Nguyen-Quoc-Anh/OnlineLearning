@@ -5,19 +5,22 @@
  */
 package controller;
 
+import dao.QuestionDAO;
+import dao.QuizDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modal.Quiz;
 
 /**
  *
  * @author ACER
  */
 @WebServlet(name = "Quiz", urlPatterns = {"/Quiz"})
-public class Quiz extends HttpServlet {
+public class QuizController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,6 +50,21 @@ public class Quiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        QuizDAO quizDAO = new QuizDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
+        try {
+            int quizID = Integer.parseInt(request.getParameter("qid"));
+            Quiz quiz = quizDAO.getQuizByID(quizID);
+            if (quiz == null) {
+                throw new Exception();
+            }
+            int numberOfQuestion = questionDAO.countQuestionInQuiz(quizID);
+            request.setAttribute("numberOfQuestion", numberOfQuestion);
+            request.setAttribute("quiz", quiz);
+        } catch (Exception e) {
+            response.sendRedirect("Error");
+            return;
+        }
         processRequest(request, response);
     }
 

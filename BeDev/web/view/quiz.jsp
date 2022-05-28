@@ -4,6 +4,8 @@
     Author     : Admin
 --%>
 
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -77,9 +79,9 @@
             <div class="row course-description">
                 <div class="col-lg-8">
                     <div class="container">
-                        <h2>Quiz: Quiz Name</h2>
+                        <h2>Quiz: ${quiz.getQuizName()}</h2>
                         <br>
-                        <p>#Numbers questions</p>
+                        <p>${numberOfQuestion} questions</p>
                         <br><br><br><br><br>
                         <hr>
                         <div class="row mb-5 mt-4">
@@ -87,7 +89,7 @@
                                 <br>
                                 <h5><strong>Receive grade</strong></h5>
                                 <br>
-                                <span style="padding-right: 15px;">To Pass: </span><span>#% or higher</span>
+                                <span style="padding-right: 15px;">To Pass: </span><span><fmt:formatNumber type = "number" value = "${quiz.getPassRate()}"/>% or higher</span>
                             </div>
                             <div class="col-md-6">
                                 <div style="padding-left: 60px;">
@@ -101,7 +103,7 @@
                         <hr>
                         <br>
                         <div class="text-center">
-                            <a class="btn btn-primary btn-lg text-white">Start quiz</a>
+                            <a class="btn btn-primary btn-lg text-white" href="QuizHandle?qid=${quiz.getQuizID()}">Start quiz</a>
                         </div>
                     </div>
                 </div>

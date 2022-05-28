@@ -5,6 +5,8 @@
  */
 package modal;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ACER
@@ -12,25 +14,33 @@ package modal;
 public class Quiz {
     private int quizID;
     private String quizName;
-    private int passRate;
+    private double passRate;
     private int position;
     private Chapter chapter;
     private boolean status;
-
+    private ArrayList<Question> questionList;
+    private double grade;
     public Quiz() {
     }
 
     public Quiz(int quizID) {
         this.quizID = quizID;
     }
-    
-    public Quiz(int quizID, String quizName, int passRate, int position, Chapter chapter, boolean status) {
+
+    public Quiz(int quizID, String quizName, double passRate, int position, Chapter chapter, boolean status, ArrayList<Question> questionList) {
         this.quizID = quizID;
         this.quizName = quizName;
         this.passRate = passRate;
         this.position = position;
         this.chapter = chapter;
         this.status = status;
+        this.questionList = questionList;
+    }
+
+    public Quiz(int quizID, String quizName, double passRate) {
+        this.quizID = quizID;
+        this.quizName = quizName;
+        this.passRate = passRate;
     }
 
     public int getQuizID() {
@@ -49,11 +59,11 @@ public class Quiz {
         this.quizName = quizName;
     }
 
-    public int getPassRate() {
+    public double getPassRate() {
         return passRate;
     }
 
-    public void setPassRate(int passRate) {
+    public void setPassRate(double passRate) {
         this.passRate = passRate;
     }
 
@@ -79,6 +89,22 @@ public class Quiz {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public ArrayList<Question> getQuestionList() {
+        return questionList;
+    }
+
+    public void setQuestionList(ArrayList<Question> questionList) {
+        this.questionList = questionList;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
     }
     
 }

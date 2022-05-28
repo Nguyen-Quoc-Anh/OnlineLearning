@@ -14,7 +14,8 @@ public class Answer {
     private Question question;
     private String content;
     private boolean isTrue;
-
+    private double point;
+    
     public Answer() {
     }
 
@@ -27,6 +28,11 @@ public class Answer {
         this.question = question;
         this.content = content;
         this.isTrue = isTrue;
+    }
+
+    public Answer(int answerID, double point) {
+        this.answerID = answerID;
+        this.point = point;
     }
 
     public int getAnswerID() {
@@ -60,5 +66,37 @@ public class Answer {
     public void setIsTrue(boolean isTrue) {
         this.isTrue = isTrue;
     }
-    
+
+    public double getPoint() {
+        return point;
+    }
+
+    public void setPoint(double point) {
+        this.point = point;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 67 * hash + this.answerID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Answer other = (Answer) obj;
+        if (this.answerID != other.answerID) {
+            return false;
+        }
+        return true;
+    }
 }
