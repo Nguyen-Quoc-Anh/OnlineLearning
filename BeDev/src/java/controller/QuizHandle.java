@@ -5,6 +5,8 @@
  */
 package controller;
 
+import dao.AnswerDAO;
+import dao.CourseDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import modal.Account;
 import modal.Answer;
 import modal.Question;
 import modal.Quiz;
@@ -83,11 +87,21 @@ public class QuizHandle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
+        HttpSession session = request.getSession();
         QuestionDAO questionDAO = new QuestionDAO();
+        AnswerDAO answerDAO = new AnswerDAO();
+        CourseDAO courseDAO = new CourseDAO();
+        Account account;
         try {
+            account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
             if (quiz == null) {
+                throw new Exception();
+            }
+
+            boolean enrolled = courseDAO.checkStudentEnrollByQuizID(quizID, account.getAccountID());
+            if (!enrolled) {
                 throw new Exception();
             }
             ArrayList<Question> questionsList = questionDAO.getQuestionByQuizID(quizID);
@@ -109,9 +123,8 @@ public class QuizHandle extends HttpServlet {
                 for (int j = 0; j < answers.length; j++) {
                     answersList.add(new Answer(Integer.parseInt(answers[j]), pointPerQuestion / numberOfTrueAnswer));
                 }
-
+                questionsList.get(i).setPointPerQuestion(pointPerQuestion);
                 Question question = new Question(questionsList.get(i).getQuestionID());
-                question.setPointPerQuestion(pointPerQuestion);
                 question.setAnswerList(answersList);
                 answeredRecord.add(question);
             }
@@ -121,7 +134,6 @@ public class QuizHandle extends HttpServlet {
                 if (answeredRecord.contains(question)) {
                     for (Answer answer : question.getAnswerList()) {
                         Question q = answeredRecord.get(answeredRecord.indexOf(question));
-                        q.setPointPerQuestion(0);
                         if (q.getAnswerList().contains(answer) && answer.isTrue()) {
                             double point = q.getAnswerList().get(q.getAnswerList().indexOf(answer)).getPoint();
                             totalPoint += point;
@@ -130,7 +142,16 @@ public class QuizHandle extends HttpServlet {
                     }
                 }
             }
-            System.out.println(totalPoint);
+            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalPoint, quiz.getQuizID());
+            System.out.println(quizRecordID);
+            if (quizRecordID == -1) {
+                request.setAttribute("mess", "Cannot insert quiz record.");
+            } else {
+                boolean success = answerDAO.insertAnswerRecord(answeredRecord, quizRecordID);
+                if (!success) {
+                    request.setAttribute("mess", "Cannot save your answer.");
+                }
+            }
             request.setAttribute("totalPoint", totalPoint);
             request.setAttribute("answeredList", answeredRecord);
             request.setAttribute("questionList", questionsList);

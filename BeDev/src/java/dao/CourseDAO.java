@@ -164,6 +164,23 @@ public class CourseDAO extends DBContext {
         }
         return 0;
     }
+    
+    public boolean checkStudentEnrollByQuizID (int quizID, int studentID) {
+        try {
+            String sql = "select e.* from Enroll e, Quiz q, Chapter c where q.chapterID = c.chapterID and c.courseID = e.courseID and "
+                    + "q.quizID = ? and e.studentID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            stm.setInt(2, studentID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();

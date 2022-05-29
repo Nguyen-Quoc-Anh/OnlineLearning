@@ -30,10 +30,10 @@
                                 <p>
                                     Our mision is to help people to find the best course online and learn with expert anytime, anywhere.
                                 </p>
-                                <form>
+                                <form action="CourseSearch">
                                     <div class="banner-input">
                                         <div class="main-input">
-                                            <input type="text" placeholder="what do you want to learn today..." />
+                                            <input name="search" type="text" placeholder="what do you want to learn today..." />
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
                                                 width="24"
@@ -115,7 +115,7 @@
                                     </div>
                                 </div>
                                 <div class="browse-categories-item-text">
-                                    <h6 class="font-title--card"><a href="#">${cat.getCategoryName()}</a></h6>
+                                    <h6 class="font-title--card"><a href="CourseSearch?categoryID=${cat.getCategoryID()}">${cat.getCategoryName()}</a></h6>
                                     <p>${cat.getNumberCourse()} Courses</p>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center">
-                        <a href="course-search.html" class="button button-lg button--primary">Browse all Courses</a>
+                        <a href="CourseSearch" class="button button-lg button--primary">Browse all Courses</a>
                     </div>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 text-center">
-                                    <a href="course-search.html" class="button button-lg button--primary">Browse all Courses</a>
+                                    <a href="CourseSearch" class="button button-lg button--primary">Browse all Courses</a>
                                 </div>
                             </div>
                         </div>
@@ -246,7 +246,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" class="button button-lg button--primary">Start Learning</a>
+                            <a href="CourseSearch" class="button button-lg button--primary">Start Learning</a>
                         </div>
                     </div>
                     <div class="col-lg-6 order-1 order-lg-0">

@@ -21,7 +21,7 @@ public class AnswerDAO extends DBContext {
     public ArrayList<Answer> getAnswersByQuestionID(int questionID) {
         ArrayList<Answer> answers = new ArrayList<>();
         try {
-            String sql = "select * from Answer where questionID = ?";
+            String sql = "select * from [Option] where questionID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, questionID);
             ResultSet rs = stm.executeQuery();
@@ -32,5 +32,26 @@ public class AnswerDAO extends DBContext {
             System.out.println(e);
         }
         return answers;
+    }
+
+    public boolean insertAnswerRecord(ArrayList<Question> answerList, int quizRecordID) {
+        String sql;
+        PreparedStatement stm;
+        for (Question question : answerList) {
+            for (Answer answer : question.getAnswerList()) {
+                try {
+                    sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
+                    stm = connection.prepareStatement(sql);
+                    stm.setInt(1, quizRecordID);
+                    stm.setInt(2, question.getQuestionID());
+                    stm.setInt(3, answer.getAnswerID());
+                    stm.executeUpdate();
+                } catch (Exception e) {
+                    System.out.println(e);
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

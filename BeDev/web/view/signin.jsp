@@ -27,24 +27,23 @@
                                 <h2 class="font-title--md mb-0">Sign in</h2>
                                 <p class="mt-2 mb-lg-4 mb-3">Don't have account? <a href="SignUp" class="text-black-50">Sign up</a></p>
                                 <form action="SignIn" method="post">
-                                    <div class="form-element success">
+                                    <div class="form-element"  id="emailInput">
                                         <div class="form-alert">
-                                            <label  for="name">Email</label>
+                                            <label for="email">Email</label>
+                                            <span id="emailAlert" class="d-none" >Please enter a valid email</span>
                                         </div>
                                         <div class="form-alert-input">
-                                            <input  onblur="checkEmail()" name="email" type="email" placeholder="Your email" id="name" />
-                                            
+                                            <input onblur="checkEmail()" type="email" placeholder="youremail@gmail.com" id="email" name="email" />
                                         </div>
                                     </div>
-                                    <div class="form-element active">
+                                    <div class="form-element" id="passInput">
                                         <div class="d-flex justify-content-between">
                                             <label for="confirm-password">Password</label>
                                             <a href="ResetPassword" class="text-primary fs-6">Forget Password</a>
                                         </div>
-
                                         <div class="form-alert-input">
-                                            <input required="" onblur="checkPassword()" name="password" type="password" placeholder="Type here..." id="confirm-password" />
-                                            <div class="form-alert-icon" onclick="showPassword('confirm-password', this);">
+                                            <input type="password" placeholder="Type here..." id="password" onblur="checkPassword()" name="password" />
+                                            <div class="form-alert-icon" onclick="showPassword('password', this)">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     width="24"
@@ -63,28 +62,27 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
                                     <div style="color: red">
-                                        ${mess}
-                                    </div>
-                                    <div class="form-element">
-                                        <button type="submit" class="button button-lg button--primary w-100">Sign in</button>
-                                    </div>
-                                    
-                                </form>
-                            </div>
+                                    ${mess}
+                                </div>
+                                <div class="form-element">
+                                    <button type="submit" class="button button-lg button--primary w-100">Sign in</button>
+                                </div>
+
+                            </form>
                         </div>
-                        <div class="col-xl-7 order-1 order-xl-0">
-                            <div class="signup-area-image">
-                                <img width="500" style="margin-left: 120px;" src="../BeDev/view/dist/images/banner/banner-image-01.png" alt="Illustration Image" class="img-fluid" />
-                            </div>
+                    </div>
+                    <div class="col-xl-7 order-1 order-xl-0">
+                        <div class="signup-area-image">
+                            <img width="500" style="margin-left: 120px;" src="../BeDev/view/dist/images/banner/banner-image-01.png" alt="Illustration Image" class="img-fluid" />
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
+        </section>
         <jsp:include page="footer.jsp"></jsp:include>
         <script>
-            
+
 
             const validateEmail = (email) => {
                 return email.match(
@@ -110,7 +108,7 @@
                 }
             }
 
-            
+
 
             function warning(type) {
                 var alert = document.getElementById(type + "Input");

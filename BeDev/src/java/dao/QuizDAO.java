@@ -8,6 +8,7 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import modal.Quiz;
 
 /**
@@ -29,5 +30,23 @@ public class QuizDAO extends DBContext {
             System.out.println(e);
         }
         return null;
+    }
+    
+    public int insertQuizRecord (int studentID, double grade, int quizID) {
+        try {
+            String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, ?, ?)";
+            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            stm.setInt(1, studentID);
+            stm.setDouble(2, grade);
+            stm.setInt(3, quizID);
+            stm.executeUpdate();
+            ResultSet rs = stm.getGeneratedKeys();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
     }
 }

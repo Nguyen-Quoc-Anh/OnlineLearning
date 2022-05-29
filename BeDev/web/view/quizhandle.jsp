@@ -250,6 +250,9 @@
                             </ul>
                         </div>
                     </c:forEach>
+                    <div class="text-danger text-center">
+                        ${mess}
+                    </div>
                 </c:if>
             </div>
         </div>

@@ -25,7 +25,7 @@
                         <div class="col-lg-5 order-2 order-lg-0">
                             <div class="signup-area-textwrapper">
                                 <h2 class="font-title--md mb-0">Sign Up</h2>
-                                <p class="mt-2 mb-lg-4 mb-3">Already have account? <a href="signin" class="text-black-50">Sign In</a></p>
+                                <p class="mt-2 mb-lg-4 mb-3">Already have account? <a href="SignIn" class="text-black-50">Sign In</a></p>
                                 <form action="SignUp" method="POST" id="signup-form">
                                     <div class="form-element" id="nameInput">
                                         <div class="form-alert">
