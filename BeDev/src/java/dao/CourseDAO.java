@@ -35,7 +35,7 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Course> listCourseByCategoryID(String categoryID) {
         List<Course> list = new ArrayList<>();
         try {
@@ -53,7 +53,7 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Course> listCourseBySearch(String search) {
         List<Course> list = new ArrayList<>();
         try {
@@ -108,21 +108,21 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     public List<Course> listFeatureCourse() {
         List<Course> list = new ArrayList<>();
         try {
             LessonDAO le = new LessonDAO();
             EnrollDAO en = new EnrollDAO();
-            String sql = "	select co.*, e.name from Course co, Expert e\n"
-                    + "	where co.courseID in (select a.courseID from  (select top(6) e.courseID, count(*) as Number_Registed from Enroll e, Course c\n"
-                    + "	where e.courseID = c.courseID\n"
-                    + "	group by e.courseID\n"
-                    + "	order by Number_Registed desc ) as a) and co.expertID = e.expertID";
+            String sql = "select co.*, e.name, e.imageURL from Course co, Expert e\n"
+                    + "where co.courseID in (select a.courseID from  (select top(6) e.courseID, count(*) as Number_Registed from Enroll e, Course c\n"
+                    + "where e.courseID = c.courseID\n"
+                    + "group by e.courseID\n"
+                    + "order by Number_Registed desc ) as a) and co.expertID = e.expertID";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), "", "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), rs.getString(10), "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));
             }
         } catch (Exception e) {
             System.out.println(e);
