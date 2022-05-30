@@ -27,7 +27,7 @@
                     <div class="students-info-intro">
                         <!-- profile Details   -->
                         <div class="students-info-intro__profile">
-                        <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                        <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                             <div class="students-info-intro-start">
                                 <div class="image">
                                     <img src="${student.getImageURL()}" alt="Student" />
@@ -40,7 +40,7 @@
                             </div>  
                         </c:if>
                             
-                        <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
+                        <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
                             <div class="students-info-intro-start">
                                 <div class="image">
                                     <img src="${expert.getImg()}" alt="Student" />
@@ -53,7 +53,7 @@
                             </div> 
                         </c:if>
                             
-                        <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                        <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                             <div>
                                 <div class="students-info-intro-end">
                                     <div class="enrolled-courses">
@@ -111,7 +111,7 @@
                     <nav class="students-info-intro__nav">
                         <div class="nav" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="true">My Profile</button>
-                            <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                            <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                                 <button class="nav-link" id="nav-coursesall-tab" data-bs-toggle="tab" data-bs-target="#nav-coursesall" type="button" role="tab" aria-controls="nav-coursesall" aria-selected="false">All Courses</button>
                                 <button class="nav-link" id="nav-activecourses-tab" data-bs-toggle="tab" data-bs-target="#nav-activecourses" type="button" role="tab" aria-controls="nav-activecourses" aria-selected="false">
                                     Active Courses
@@ -134,14 +134,14 @@
                                 <img src="../BeDev/view/dist/images/user/user-img-01.jpg" alt="Student" />
                             </div>
 
-                            <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                            <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                                 <div class="text">
                                     <h5>${student.getName()} Information</h5>
                                     <p>Student</p>
                                 </div>
                             </c:if>
 
-                            <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
+                            <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
                                 <div class="text">
                                     <h5>${expert.getExpertName()} Information</h5>
                                     <p>Instructor</p>
@@ -224,7 +224,7 @@
                 <div class="students-info-main">
                     <div class="tab-content" id="nav-tabContent">
                         <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                            <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                            <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                                 <div class="tab-content__profile">
                                     <div class="tab-content__profile-content">
                                         <div class="info-student">
@@ -258,7 +258,7 @@
                                     </div>
                                 </div>
                             </c:if>
-                            <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
+                            <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
                                 <div class="tab-content__profile">
                                     <div class="tab-content__profile-content">
                                         <div class="info-student">
@@ -1323,11 +1323,11 @@
                                         <div class="students-info-form">
                                             <h6 class="font-title--card">Your Information</h6>
                                             <form method="post">
-                                                <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
+                                                <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <label for="fname">Your Name</label>
-                                                            <input type="text" class="form-control" name="name" placeholder="${student.getName()}" id="fname" />
+                                                            <input type="text" class="form-control" name="name" value="${student.getName()}" id="fname" />
                                                         </div>
                                                     </div>
                                                     <div class="row g-3">
@@ -1337,11 +1337,11 @@
                                                         </div>
                                                     </div>
                                                 </c:if>
-                                                <c:if test="${sessionScope.account.getRole().getRoleID()==3}">
+                                                <c:if test="${sessionScope.account.getRole().getRoleID()==2}">
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <label for="fname">Your Name</label>
-                                                            <input type="text" class="form-control" name="name" placeholder="${expert.getExpertName()}" id="fname" />
+                                                            <input type="text" class="form-control" name="name" value="${expert.getExpertName()}" id="fname" />
                                                         </div>
                                                     </div>
                                                     <div class="row g-3">
@@ -1353,7 +1353,7 @@
                                                     <div class="row g-3">
                                                         <div class="col-12">
                                                             <label for="fname">Your Phone</label>
-                                                            <input type="text" class="form-control" name="phone" placeholder="${expert.getPhone()}" id="phone" />
+                                                            <input type="text" class="form-control" name="phone" value="${expert.getPhone()}" id="phone" />
                                                         </div>
                                                     </div>
                                                     <div class="row g-3">

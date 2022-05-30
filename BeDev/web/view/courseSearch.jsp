@@ -228,8 +228,8 @@
                                                 <a href="#" class="font-title--card">${course.courseName}</a>
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                <a href="#" class="contentCard-user d-flex align-items-center">
-                                                    <img src="../BeDev/view/dist/images/courses/7.png" alt="client-image" class="rounded-circle" />
+                                                <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
+                                                    <img src="${course.getExpert().getImg()}" style="height: 30px" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">${course.getExpert().getExpertName()}</p>
                                                 </a>
                                                 <div class="price">

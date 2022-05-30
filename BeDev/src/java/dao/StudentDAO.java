@@ -49,4 +49,10 @@ public class StudentDAO extends DBContext {
             System.out.println(e);
         }
     }
+    
+    public static void main(String[] args) {
+        StudentDAO dao = new StudentDAO();
+        Student s = dao.profile(10);
+        System.out.println(s);
+    }
 }

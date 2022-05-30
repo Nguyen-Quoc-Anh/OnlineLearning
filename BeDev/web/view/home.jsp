@@ -163,7 +163,7 @@
                                                 </h5>
                                                 <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                     <a href="ExpertProfile?id=${co.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
-                                                        <img src="${co.getExpert().getImg()}" alt="loading" class="rounded-circle" />
+                                                        <img src="${co.getExpert().getImg()}" height="20px" width="20px" alt="loading" class="rounded-circle" />
                                                         <p class="font-para--md">${co.getExpert().getExpertName()}</p>
 
                                                     </a>

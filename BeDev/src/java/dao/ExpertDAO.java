@@ -55,7 +55,7 @@ public class ExpertDAO extends DBContext {
     public void editProfileExpert(int id, String name, String phone, String description) {
         try {
             String sql = "update Expert\n"
-                    + "	set name = ? and phone = ? and description = ?\n"
+                    + "	set name = ? , phone = ? , description = ?\n"
                     + "	where expertID = ? ";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setNString(1, name);
