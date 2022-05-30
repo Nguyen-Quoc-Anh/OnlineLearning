@@ -42,6 +42,7 @@ public class LogOut extends HttpServlet {
         session.removeAttribute("account");
         session.removeAttribute("student");
         session.removeAttribute("expert");
+        session.removeAttribute("admin");
         response.sendRedirect("HomeControl");
         return;
     }
