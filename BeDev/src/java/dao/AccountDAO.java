@@ -131,7 +131,7 @@ public class AccountDAO extends DBContext {
             stm.setString(2, email);
             stm.executeUpdate();
             return true;
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return false;
