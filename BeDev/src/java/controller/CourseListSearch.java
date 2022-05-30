@@ -77,7 +77,7 @@ public class CourseListSearch extends HttpServlet {
         }
         request.setAttribute("pageMax", pageMax);
         request.setAttribute("listCourse", listCourseBySearch);
-        request.setAttribute("url", "CourseListSearch?");
+        request.setAttribute("url", "CourseListSearch?search=" + search);
 
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }

@@ -77,7 +77,7 @@ public class CourseListPrice extends HttpServlet {
         }
         request.setAttribute("pageMax", pageMax);
         request.setAttribute("listCourse", listCourseByPrice);
-        request.setAttribute("url", "CourseListPrice?");
+        request.setAttribute("url", "CourseListPrice?lowPrice=" + lowPrice + "&highPrice=" + highPrice);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
 

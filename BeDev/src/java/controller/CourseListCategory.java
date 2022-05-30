@@ -79,7 +79,7 @@ public class CourseListCategory extends HttpServlet {
         }
         request.setAttribute("pageMax", pageMax);
         request.setAttribute("listCourse", listCourseByCategory);
-        request.setAttribute("url", "CourseListCategory?");
+        request.setAttribute("url", "CourseListCategory?categoryID=" + categoryID);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
 

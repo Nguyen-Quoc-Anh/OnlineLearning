@@ -77,7 +77,7 @@ public class CourseListStar extends HttpServlet {
         }
         request.setAttribute("pageMax", pageMax);
         request.setAttribute("listCourse", listCourseByStar);
-        request.setAttribute("url", "CourseListStar?");
+        request.setAttribute("url", "CourseListStar?star=" + star);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
 
