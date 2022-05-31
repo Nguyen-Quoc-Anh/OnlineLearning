@@ -37,7 +37,7 @@ public class AccountDAO extends DBContext {
         return true;
     }
 
-    public int signup(Student student) {
+    public boolean signup(Student student) {
         try {
             String sql = "insert into Account(email, password, role) values (?, ?, ?); ";
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -55,10 +55,10 @@ public class AccountDAO extends DBContext {
             stm.setNString(2, student.getName());
             stm.setNString(3, "../BeDev/view/dist/images/avatar/user_avatar.png");
             stm.executeUpdate();
-            return student.getAccount().getAccountID();
+            return true;
         } catch (Exception e) {
             System.out.println(e);
-            return 0;
+            return false;
         }
     }
 
@@ -187,6 +187,20 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
+    public int getNewAccountID () {
+        try {
+            String sql = "select top(1) a.accountID from Account a order by a.accountID desc";
+            PreparedStatement stm  = connection.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1) + 1;
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+    
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
         Expert a = accountDAO.getExpertByAccountID(2);

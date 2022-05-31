@@ -72,19 +72,22 @@ public class SignUp extends HttpServlet {
         String password = request.getParameter("password");
 
         if (accountDAO.validEmail(email)) {
-            int accountID = accountDAO.signup(new Student(new Account(0, email, password, false, new Role(3), true), name, 0, ""));
-            if (accountID != 0) {
-                String message = "Click this link to verify yor email " + request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 7)
-                        + "/AccountVerification?uid=" + accountID + "&email=" + email;
-                boolean sendEmailSuccess = EmailSender.sendMail(email, "Your email verification", message);
-                if (sendEmailSuccess) {
+
+            int accountID = accountDAO.getNewAccountID();
+            String message = "Click this link to verify yor email " + request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 7)
+                    + "/AccountVerification?uid=" + accountID + "&email=" + email;
+            boolean sendEmailSuccess = EmailSender.sendMail(email, "Your email verification", message);
+            if (sendEmailSuccess) {
+                boolean signInSuccess = accountDAO.signup(new Student(new Account(0, email, password, false, new Role(3), true), name, 0, ""));
+                if (signInSuccess) {
                     request.setAttribute("success", "Sign up successfully. Check email now to verify your account.");
                 } else {
-                    request.setAttribute("failed", "Cannot sent email");
+                    request.setAttribute("failed", "Cannot create account. Try again.");
                 }
             } else {
-                request.setAttribute("failed", "Cannot create account. Try again.");
+                request.setAttribute("failed", "Cannot sent email. Create account failed.");
             }
+
         } else {
             request.setAttribute("failed", "Email is currently in use.");
         }

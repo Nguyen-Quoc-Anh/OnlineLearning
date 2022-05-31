@@ -20,8 +20,8 @@ import javax.mail.internet.MimeMessage;
  * @author ACER
  */
 public class EmailSender {
-    private static final String SENDEREMAIL = "huytqhe151216@fpt.edu.vn";        // Your email here
-    private static final String EMAILPASSWORD = "091827346555";      // Your password here
+    private static final String SENDEREMAIL = "anhnqhe151349@fpt.edu.vn";        // Your email here
+    private static final String EMAILPASSWORD = "bbb123456";      // Your password here
     public static boolean sendMail(String to, String subject, String body) {
         try { 
             Properties pros = new Properties();
