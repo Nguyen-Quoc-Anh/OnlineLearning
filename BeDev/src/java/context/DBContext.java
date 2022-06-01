@@ -21,7 +21,8 @@ public class DBContext {
     public DBContext() {
         try {
             String user = "sa";
-            String pass = "12345";
+//            String pass = "12345";//tien
+            String pass = "123456";
 //            String pass = "12345678"; // Quang pass
 //            String pass = "123456789";// Huy pass
 //            String url = "jdbc:sqlserver://LAPTOP-TNC3HU99\\QUOCANH:1433;databaseName=OnlineLearn";//Quoc Anh
