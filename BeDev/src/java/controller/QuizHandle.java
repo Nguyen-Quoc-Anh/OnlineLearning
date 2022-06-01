@@ -59,10 +59,17 @@ public class QuizHandle extends HttpServlet {
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
         QuestionDAO questionDAO = new QuestionDAO();
+        CourseDAO courseDAO = new CourseDAO();
+        HttpSession session = request.getSession();
         try {
             int quizID = Integer.parseInt(request.getParameter("qid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
             if (quiz == null) {
+                throw new Exception();
+            }
+            Account account = (Account) session.getAttribute("account");
+            boolean enrolled = courseDAO.checkStudentEnrollByQuizID(quizID, account.getAccountID());
+            if (!enrolled) {
                 throw new Exception();
             }
             request.setAttribute("questionList", questionDAO.getQuestionByQuizID(quizID));
