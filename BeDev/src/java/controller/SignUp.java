@@ -71,14 +71,16 @@ public class SignUp extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
 
-        if (accountDAO.validEmail(email)) {
+        if (!accountDAO.isEmailExist(email)) {
 
             int accountID = accountDAO.getNewAccountID();
-            String message = "Click this link to verify yor email " + request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 7)
-                    + "/AccountVerification?uid=" + accountID + "&email=" + email;
+
+//            String message = "Click this link to verify yor email " + request.getRequestURL().toString().substring(0, request.getRequestURL().toString().length() - 7)
+//                    + "/AccountVerification?uid=" + accountID + "&email=" + email;
+            String message = "Click this link to verify yor email http://localhost:8080/BeDev/AccountVerification?uid=" + accountID + "&email=" + email;
             boolean sendEmailSuccess = EmailSender.sendMail(email, "Your email verification", message);
             if (sendEmailSuccess) {
-                boolean signInSuccess = accountDAO.signup(new Student(new Account(0, email, password, false, new Role(3), true), name, 0, ""));
+                boolean signInSuccess = accountDAO.signup(new Student(new Account(accountID, email, password, false, new Role(3), true), name, 0, ""));
                 if (signInSuccess) {
                     request.setAttribute("success", "Sign up successfully. Check email now to verify your account.");
                 } else {

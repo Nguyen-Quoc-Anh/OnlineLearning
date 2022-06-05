@@ -5,8 +5,7 @@
  */
 package controller;
 
-import dao.AnswerDAO;
-import dao.CourseDAO;
+import dao.OptionDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
-import modal.Answer;
+import modal.Option;
 import modal.Question;
 import modal.Quiz;
 
@@ -59,19 +58,9 @@ public class QuizHandle extends HttpServlet {
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
         QuestionDAO questionDAO = new QuestionDAO();
-        CourseDAO courseDAO = new CourseDAO();
-        HttpSession session = request.getSession();
         try {
             int quizID = Integer.parseInt(request.getParameter("qid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
-            if (quiz == null) {
-                throw new Exception();
-            }
-            Account account = (Account) session.getAttribute("account");
-            boolean enrolled = courseDAO.checkStudentEnrollByQuizID(quizID, account.getAccountID());
-            if (!enrolled) {
-                throw new Exception();
-            }
             request.setAttribute("questionList", questionDAO.getQuestionByQuizID(quizID));
             request.setAttribute("quiz", quiz);
         } catch (Exception e) {
@@ -96,79 +85,42 @@ public class QuizHandle extends HttpServlet {
         QuizDAO quizDAO = new QuizDAO();
         HttpSession session = request.getSession();
         QuestionDAO questionDAO = new QuestionDAO();
-        AnswerDAO answerDAO = new AnswerDAO();
-        CourseDAO courseDAO = new CourseDAO();
-        Account account;
+        OptionDAO answerDAO = new OptionDAO();
+        double totalPoint = 0;
         try {
-            account = (Account) session.getAttribute("account");
+            Account account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
-            Quiz quiz = quizDAO.getQuizByID(quizID);
-            if (quiz == null) {
-                throw new Exception();
-            }
-
-            boolean enrolled = courseDAO.checkStudentEnrollByQuizID(quizID, account.getAccountID());
-            if (!enrolled) {
-                throw new Exception();
-            }
-            ArrayList<Question> questionsList = questionDAO.getQuestionByQuizID(quizID);
-            ArrayList<Question> answeredRecord = new ArrayList<>();
-            double pointPerQuestion = 10 / questionsList.size();
-            for (int i = 0; i < questionsList.size(); i++) {
-                int numberOfTrueAnswer = 0;
-                for (Answer a : questionsList.get(i).getAnswerList()) {
-                    if (a.isTrue()) {
-                        numberOfTrueAnswer++;
-                    }
-                }
-
-                String[] answers = request.getParameterValues(Integer.toString(questionsList.get(i).getQuestionID()));
-                if (answers == null) {
+            ArrayList<Question> questionsList = questionDAO.getQuestionsAndTrueOption(quizID);
+            ArrayList<Question> optionRecord = new ArrayList<>();
+            for (Question question : questionsList) {
+                // get checked option
+                String[] studentOptions = request.getParameterValues(Integer.toString(question.getQuestionID()));
+                if (studentOptions == null) {   // student not answer this question
                     continue;
                 }
-                ArrayList<Answer> answersList = new ArrayList<>();
-                for (int j = 0; j < answers.length; j++) {
-                    answersList.add(new Answer(Integer.parseInt(answers[j]), pointPerQuestion / numberOfTrueAnswer));
-                }
-                questionsList.get(i).setPointPerQuestion(pointPerQuestion);
-                Question question = new Question(questionsList.get(i).getQuestionID());
-                question.setAnswerList(answersList);
-                answeredRecord.add(question);
-            }
-            double totalPoint = 0;
-
-            for (Question question : questionsList) {
-                if (answeredRecord.contains(question)) {
-                    for (Answer answer : question.getAnswerList()) {
-                        Question q = answeredRecord.get(answeredRecord.indexOf(question));
-                        if (q.getAnswerList().contains(answer) && answer.isTrue()) {
-                            double point = q.getAnswerList().get(q.getAnswerList().indexOf(answer)).getPoint();
-                            totalPoint += point;
-                            q.setPointPerQuestion(q.getPointPerQuestion() + point);
-                        }
+                ArrayList<Option> options = new ArrayList<>();
+                for (int j = 0; j < studentOptions.length; j++) {
+                    Option option = new Option(Integer.parseInt(studentOptions[j]));
+                    int index = question.getOptionList().indexOf(option);
+                    if (index != -1) {  // option student checked is true
+                        totalPoint += question.getOptionList().get(index).getPoint();   // add point
                     }
+                    options.add(option);
                 }
+                optionRecord.add(new Question(quizID, options));    // add into a record
             }
-            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalPoint, quiz.getQuizID());
-            System.out.println(quizRecordID);
-            if (quizRecordID == -1) {
+            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalPoint, quizID);
+            if (quizRecordID == -1) {   // can't insert into database
                 request.setAttribute("mess", "Cannot insert quiz record.");
+                processRequest(request, response);
             } else {
-                boolean success = answerDAO.insertAnswerRecord(answeredRecord, quizRecordID);
-                if (!success) {
-                    request.setAttribute("mess", "Cannot save your answer.");
-                }
+                answerDAO.insertOptionRecord(optionRecord, quizRecordID);
+                response.sendRedirect("QuizReview?qid=" + quizRecordID);    // redirect to view result
             }
-            request.setAttribute("totalPoint", totalPoint);
-            request.setAttribute("answeredList", answeredRecord);
-            request.setAttribute("questionList", questionsList);
-            request.setAttribute("quiz", quiz);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
             response.sendRedirect("Error");
-            return;
         }
-        processRequest(request, response);
     }
 
     /**

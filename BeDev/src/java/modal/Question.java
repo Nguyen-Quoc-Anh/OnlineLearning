@@ -17,8 +17,9 @@ public class Question {
     private String explanation;
     private Quiz quiz;
     private boolean status;
-    private ArrayList<Answer> answerList;
+    private ArrayList<Option> optionList;
     private double pointPerQuestion;
+    private boolean multipleChoice;
     
     public Question() {
     }
@@ -27,13 +28,13 @@ public class Question {
         this.questionID = questionID;
     }
 
-    public Question(int questionID, String content, String explaination, Quiz quiz, boolean status, ArrayList<Answer> answerList) {
+    public Question(int questionID, String content, String explaination, Quiz quiz, boolean status, ArrayList<Option> answerList) {
         this.questionID = questionID;
         this.content = content;
         this.explanation = explaination;
         this.quiz = quiz;
         this.status = status;
-        this.answerList = answerList;
+        this.optionList = answerList;
     }
 
     public Question(int questionID, String content, String explaination, Quiz quiz, boolean status) {
@@ -42,6 +43,16 @@ public class Question {
         this.explanation = explaination;
         this.quiz = quiz;
         this.status = status;
+    }
+
+    public Question(int questionID, double pointPerQuestion) {
+        this.questionID = questionID;
+        this.pointPerQuestion = pointPerQuestion;
+    }
+
+    public Question(int questionID, ArrayList<Option> optionList) {
+        this.questionID = questionID;
+        this.optionList = optionList;
     }
     
     public int getQuestionID() {
@@ -84,12 +95,12 @@ public class Question {
         this.status = status;
     }
 
-    public ArrayList<Answer> getAnswerList() {
-        return answerList;
+    public ArrayList<Option> getOptionList() {
+        return optionList;
     }
 
-    public void setAnswerList(ArrayList<Answer> answerList) {
-        this.answerList = answerList;
+    public void setOptionList(ArrayList<Option> optionList) {
+        this.optionList = optionList;
     }
 
     public double getPointPerQuestion() {
@@ -98,6 +109,14 @@ public class Question {
 
     public void setPointPerQuestion(double pointPerQuestion) {
         this.pointPerQuestion = pointPerQuestion;
+    }
+
+    public boolean isMultipleChoice() {
+        return multipleChoice;
+    }
+
+    public void setMultipleChoice(boolean multipleChoice) {
+        this.multipleChoice = multipleChoice;
     }
 
     @Override
