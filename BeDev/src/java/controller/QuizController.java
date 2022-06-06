@@ -70,7 +70,7 @@ public class QuizController extends HttpServlet {
             if (!enrolled) {
                 throw new Exception();
             }
-            int numberOfQuestion = questionDAO.countQuestionInQuiz(quizID);
+            int numberOfQuestion = questionDAO.countQuestionsInQuiz(quizID);
             request.setAttribute("numberOfQuestion", numberOfQuestion);
             request.setAttribute("quiz", quiz);
         } catch (Exception e) {

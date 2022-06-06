@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Filter;
+package filter;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -25,7 +25,7 @@ import modal.Account;
  *
  * @author MrLink
  */
-@WebFilter(filterName = "Accountfilter", urlPatterns = {"/ChangePassword/", "/ResetPassword/", "/StudentProfile/", "/Quiz", "/QuizHandle"})
+@WebFilter(filterName = "Accountfilter", urlPatterns = {"/SignIn", "/SignUp"})
 public class Accountfilter implements Filter {
 
     private static final boolean debug = true;
@@ -107,10 +107,10 @@ public class Accountfilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
         Account account = (Account) session.getAttribute("account");
-        if (account != null) {
+        if (account == null) {
             chain.doFilter(request, response);
         } else {
-            res.sendRedirect("SignIn");
+            res.sendRedirect("Error");
         }
     }
 

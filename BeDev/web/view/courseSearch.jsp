@@ -25,10 +25,10 @@
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb align-items-center bg-transparent p-0 mb-0">
                             <li class="breadcrumb-item">
-                                <a href="index.html" class="fs-6 text-secondary">Home</a>
+                                <a href="HomeControl" class="fs-6 text-secondary">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="" class="fs-6 text-secondary">course</a>
+                                <a href="#" class="fs-6 text-secondary">Courses list</a>
                             </li>
                         </ol>
                     </nav>
@@ -42,7 +42,7 @@
                     <div class="row">
                         <div class="col-lg-9 mx-auto">
                             <div class="event-search-bar">
-                                <form action="">
+                                <form action="CourseListSearch">
                                     <div class="form-input-group">
                                         <input type="text" class="form-control" placeholder="Search Course..." name="search" required=""/>
                                         <button class="button button-lg button--primary" type="submit" id="button-addon2">
@@ -83,7 +83,7 @@
                                         <c:forEach items="${listCategory}" var="category">
                                             <div class="accordion-body__item">
                                                 <div class="check-box">
-                                                    <a href="CourseSearch?categoryID=${category.categoryID}"> ${category.categoryName} </a>
+                                                    <a href="CourseListCategory?categoryID=${category.categoryID}"> ${category.categoryName} </a>
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -102,7 +102,7 @@
                                         <div class="price-range">
                                             <div>
                                                 <div class="price-range-block">
-                                                    <form class="d-flex price-range-block__inputWrapper" action="#">
+                                                    <form class="d-flex price-range-block__inputWrapper" action="CourseListPrice">
                                                         <input
                                                             name="lowPrice"
                                                             <c:if test="${lowPrice == null}">
@@ -173,22 +173,22 @@
                                     <div class="accordion-body">
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="CourseSearch?star=1"> 1 Star and higher </a>
+                                                <a href="CourseListStar?star=1"> 1 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="CourseSearch?star=2"> 2 Star and higher </a>
+                                                <a href="CourseListStar?star=2"> 2 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="CourseSearch?star=3"> 3 Star and higher </a>
+                                                <a href="CourseListStar?star=3"> 3 Star and higher </a>
                                             </div>
                                         </div>
                                         <div class="accordion-body__item">
                                             <div class="check-box">
-                                                <a href="CourseSearch?star=4"> 4 Star and higher </a>
+                                                <a href="CourseListStar?star=4"> 4 Star and higher </a>
                                             </div>
                                         </div>
                                     </div>

@@ -54,6 +54,7 @@ public class CategoryDAO extends DBContext {
         return list;
     }
     
+    
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();
         for (Category category : dao.listCategory()) {

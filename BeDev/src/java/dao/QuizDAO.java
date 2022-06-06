@@ -17,14 +17,19 @@ import modal.Quiz;
  */
 public class QuizDAO extends DBContext {
 
+    /**
+     * This method get quiz by id.
+     * @param quizID id of quiz
+     * @return Quiz
+     */
     public Quiz getQuizByID(int quizID) {
         try {
-            String sql = "select * from Quiz where quizID = ?";
+            String sql = "select q.quizName, q.passRate from Quiz q where q.quizID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                return new Quiz(quizID, rs.getNString(3), rs.getDouble(4));
+                return new Quiz(quizID, rs.getNString(1), rs.getDouble(2));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -32,6 +37,13 @@ public class QuizDAO extends DBContext {
         return null;
     }
     
+    /**
+     * This method insert a quiz record into database.
+     * @param studentID id of student who take quiz
+     * @param grade grade of student
+     * @param quizID id of quiz
+     * @return a quiz record id.
+     */
     public int insertQuizRecord (int studentID, double grade, int quizID) {
         try {
             String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, ?, ?)";

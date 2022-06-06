@@ -40,7 +40,7 @@ public class AccountVerification extends HttpServlet {
             Account account = new Account();
             account.setAccountID(id);
             account.setEmail(email);
-            boolean valid = accountDAO.checkAccount(account);
+            boolean valid = accountDAO.checkAccountExistByEmailAndID(account);
             if (valid) {
                 boolean success = accountDAO.accountVerification(id);
                 if (success) {
