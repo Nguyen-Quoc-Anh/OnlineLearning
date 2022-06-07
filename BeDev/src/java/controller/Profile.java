@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
-import modal.Enroll;
 import modal.Expert;
 import modal.Student;
 
@@ -62,19 +61,17 @@ public class Profile extends HttpServlet {
             if (session != null && session.getAttribute("account") != null) {
                 Account account = (Account) session.getAttribute("account");
                 
-                if (account.getRole().getRoleID() == 3) {
-                    System.out.println(account.getRole().getRoleID());
-                    Student student = studentDao.profile(account.getAccountID());
-                    System.out.println(student.getImageURL());
-                    int countEnroll = enrollDAO.countEnrollOfStudent(account.getAccountID());
+                
+                if (account.getRole().getRoleID() == 3) { //check account is student
+                    Student student = studentDao.profile(account.getAccountID()); // get profile of student         
+                    int countEnroll = enrollDAO.countEnrollOfStudent(account.getAccountID()); // count enroll of student
                     request.setAttribute("student", student);
                     request.setAttribute("countEnroll", countEnroll);
                     processRequest(request, response);
                     session.setAttribute("student", student);                  
                 }
-                if (account.getRole().getRoleID()==2) {
-                    Expert expert = expertDao.profile(account.getAccountID());
-                    System.out.println(expert.getImg());
+                if (account.getRole().getRoleID()==2) { //check account is expert
+                    Expert expert = expertDao.profile(account.getAccountID()); // get profile of expert
                     request.setAttribute("expert", expert);
                     session.setAttribute("expert", expert);
                     processRequest(request, response);
@@ -110,24 +107,21 @@ public class Profile extends HttpServlet {
                 Account account = (Account) session.getAttribute("account");
                 
                 
-                if (account.getRole().getRoleID() == 3) {
+                if (account.getRole().getRoleID() == 3) { //check account is student
                     String name = request.getParameter("name");
-                    studentDao.editProfile(account.getAccountID(), name);
+                    studentDao.editProfile(account.getAccountID(), name); // update profile of student
                     
-                    Student student = studentDao.profile(account.getAccountID());
-                    int countEnroll = enrollDAO.countEnrollOfStudent(account.getAccountID());
+                    Student student = studentDao.profile(account.getAccountID()); // get profile of student
+                    int countEnroll = enrollDAO.countEnrollOfStudent(account.getAccountID()); // count enroll of student
                     session.setAttribute("student", student);
                     request.setAttribute("countEnroll", countEnroll);
                 }
-                if(account.getRole().getRoleID() == 2){
+                if(account.getRole().getRoleID() == 2){ //check account is expert
                     String name = request.getParameter("name");
                     String phone = request.getParameter("phone");
                     String des = request.getParameter("des");
-                    System.out.println(name);
-                    System.out.println(phone);
-                    System.out.println(des);
-                    expertDao.editProfileExpert(account.getAccountID(), name, phone, des);
-                    Expert expert = expertDao.profile(account.getAccountID());
+                    expertDao.editProfileExpert(account.getAccountID(), name, phone, des); // update profile of expert
+                    Expert expert = expertDao.profile(account.getAccountID()); // get profile of expert
                     session.setAttribute("expert", expert);
                     request.setAttribute("expert", expert);
                 }
@@ -136,7 +130,7 @@ public class Profile extends HttpServlet {
                 response.sendRedirect("SignIn");
                 return;
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println(e);
         }
         processRequest(request, response);

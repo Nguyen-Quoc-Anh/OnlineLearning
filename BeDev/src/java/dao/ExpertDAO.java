@@ -21,14 +21,18 @@ import modal.Expert;
  */
 public class ExpertDAO extends DBContext {
 
-    public List<Expert> listExpert() {
+    /**
+     * This method get list all expert from database
+     * @return a list of exert
+     */
+    public List<Expert> listExpert(){
         List<Expert> list = new ArrayList<>();
         try {
             String sql = "select * from Expert";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                list.add(new Expert(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)));
+            while (rs.next()) {                
+                list.add(new Expert(rs.getInt("expertID"), rs.getString("name"), rs.getString("imageURL"), rs.getString("phone"), rs.getString("description")));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -36,6 +40,11 @@ public class ExpertDAO extends DBContext {
         return list;
     }
 
+    /**
+     * This method get information of expert from database
+     * @param id is id of expert
+     * @return a expert
+     */
     public Expert profile(int id) {
         try {
             String sql = "select e.expertID, e.name, e.phone, e.imageURL, a.email, e.description from Expert e, Account a\n"
@@ -46,12 +55,19 @@ public class ExpertDAO extends DBContext {
             while (rs.next()) {
                 return new Expert(rs.getString(2), rs.getString(4), rs.getString(3), rs.getString(6), new Account(rs.getInt(1), rs.getString(5), "", true, null, true));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return null;
     }
 
+    /**
+     * This method allows expert update information and insert it to database
+     * @param id is id of expert
+     * @param name is updated name
+     * @param phone is updated phone
+     * @param description is updated description
+     */
     public void editProfileExpert(int id, String name, String phone, String description) {
         try {
             String sql = "update Expert\n"

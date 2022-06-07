@@ -52,20 +52,13 @@ public class HomeControl extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-        Student s = (Student) session.getAttribute("student");
-        System.out.println(s.getName());
-        } catch (Exception e) {
-            System.out.println("chua co student");
-        }
+            throws ServletException, IOException {     
         CategoryDAO dao = new CategoryDAO();
         CourseDAO courseDao =  new CourseDAO();
-        ExpertDAO expertDao = new ExpertDAO();
-        List<Expert> expertList = expertDao.listExpert();
-        List<Category> c = dao.listCategoryAndNumberCourse();
-        List<Course> courseList = courseDao.listFeatureCourse();    
+        ExpertDAO expertDao = new ExpertDAO(); 
+        List<Expert> expertList = expertDao.listExpert();  //get list of expert
+        List<Category> c = dao.listCategoryAndNumberCourse(); //get list of category
+        List<Course> courseList = courseDao.listFeatureCourse(); //get list of courses 
         request.setAttribute("c", c);
         request.setAttribute("courseList", courseList);
         request.setAttribute("expertList", expertList);
