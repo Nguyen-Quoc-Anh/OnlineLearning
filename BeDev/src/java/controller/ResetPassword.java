@@ -96,11 +96,10 @@ public class ResetPassword extends HttpServlet {
                 request.setAttribute("mess", "Email is not valid.");
             }
         } else if ((int) session.getAttribute("step") == 2) {
-            System.out.println("here");
             String verificationCode = request.getParameter("verifycode");
             if (session.getAttribute("verifycode") != null && session.getAttribute("verifycode").toString().equals(verificationCode)) {
-                System.out.println("here2");
                 session.setAttribute("step", 3);
+                session.setMaxInactiveInterval(180);
             }
         } else if ((int) session.getAttribute("step") == 3) {
             String password = request.getParameter("password");
