@@ -33,7 +33,7 @@
                                             <span id="emailAlert" class="d-none" >Please enter a valid email</span>
                                         </div>
                                         <div class="form-alert-input">
-                                            <input onblur="checkEmail()" type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                                            <input onblur="checkEmail()" type="email" placeholder="Youremail@gmail.com" id="email" name="email" />
                                         </div>
                                     </div>
                                     <div class="form-element" id="passInput">
