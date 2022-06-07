@@ -5,6 +5,8 @@
  */
 package modal;
 
+import java.util.List;
+
 /**
  *
  * @author ACER
@@ -15,6 +17,7 @@ public class Chapter {
     private Course course;
     private int position;
     private boolean status;
+    private List<Lesson> lessons;
 
     public Chapter() {
     }
@@ -25,6 +28,21 @@ public class Chapter {
         this.course = course;
         this.position = position;
         this.status = status;
+    }
+
+    public Chapter(int chapterID, String chapterName, int position, List<Lesson> lessons) {
+        this.chapterID = chapterID;
+        this.chapterName = chapterName;
+        this.position = position;
+        this.lessons = lessons;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     public int getChapterID() {

@@ -30,5 +30,4 @@ public class LessonDAO extends DBContext {
         }
         return 0;
     }
-    
 }

@@ -7,9 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.RateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
-import modal.Rate;
 
 /**
  *
@@ -43,11 +40,6 @@ public class CourseListStar extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.starCourse();
-        request.setAttribute("listRate", listRate);
-
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
@@ -63,14 +55,10 @@ public class CourseListStar extends HttpServlet {
         List<Course> listCourse = courseDAO.listCourse();
         List<Course> listCourseByStar = new ArrayList<>();
         for (Course course : listCourse) {
-            for (Integer courseID : courseDAO.getCourseIDByStar(star)) {
-                if (courseID == course.getCourseID()) {
-                    listCourseByStar.add(course);
-                }
+            if (course.getAverageStar() >= Integer.parseInt(star)) {
+                listCourseByStar.add(course);
             }
-
         }
-
         int pageMax = listCourseByStar.size() / Integer.parseInt(numberProduct);
         if (listCourseByStar.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;

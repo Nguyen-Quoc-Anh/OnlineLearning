@@ -7,9 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.RateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
-import modal.Rate;
 
 /**
  *
@@ -43,11 +40,6 @@ public class CourseListPrice extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-        
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.starCourse();
-        request.setAttribute("listRate", listRate);
-        
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
@@ -58,7 +50,6 @@ public class CourseListPrice extends HttpServlet {
             numberProduct = "4";
         }
         request.setAttribute("numberProduct", numberProduct);
-        
         String lowPrice = request.getParameter("lowPrice");
         String highPrice = request.getParameter("highPrice");
         CourseDAO courseDAO = new CourseDAO();
@@ -69,8 +60,6 @@ public class CourseListPrice extends HttpServlet {
                 listCourseByPrice.add(course);
             }
         }
-        
-        
         int pageMax = listCourseByPrice.size() / Integer.parseInt(numberProduct);
         if (listCourseByPrice.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;
@@ -80,7 +69,6 @@ public class CourseListPrice extends HttpServlet {
         request.setAttribute("url", "CourseListPrice?lowPrice=" + lowPrice + "&highPrice=" + highPrice);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

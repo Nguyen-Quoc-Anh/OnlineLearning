@@ -7,9 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.RateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
-import modal.Rate;
 
 /**
  *
@@ -44,11 +41,6 @@ public class CourseListSearch extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.starCourse();
-        request.setAttribute("listRate", listRate);
-
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
@@ -70,7 +62,6 @@ public class CourseListSearch extends HttpServlet {
                 listCourseBySearch.add(course);
             }
         }
-
         int pageMax = listCourseBySearch.size() / Integer.parseInt(numberProduct);
         if (listCourseBySearch.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;
@@ -78,7 +69,6 @@ public class CourseListSearch extends HttpServlet {
         request.setAttribute("pageMax", pageMax);
         request.setAttribute("listCourse", listCourseBySearch);
         request.setAttribute("url", "CourseListSearch?search=" + search);
-
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
 

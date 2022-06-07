@@ -7,10 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.RateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
-import modal.Rate;
 
 /**
  *
@@ -43,11 +39,6 @@ public class CourseListCategory extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.starCourse();
-        request.setAttribute("listRate", listRate);
-
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
@@ -58,27 +49,15 @@ public class CourseListCategory extends HttpServlet {
             numberProduct = "4";
         }
         request.setAttribute("numberProduct", numberProduct);
-
         CourseDAO courseDAO = new CourseDAO();
-
         String categoryID = request.getParameter("categoryID");
-        List<Course> listCourse = courseDAO.listCourse();
-        List<Course> listCourseByCategory = new ArrayList<>();
-        for (Course course : listCourse) {
-            for (Integer courseID : courseDAO.getCourseIDByCategoryID(categoryID)) {
-                if (courseID == course.getCourseID()) {
-                    listCourseByCategory.add(course);
-                }
-            }
-        }
-        
-        
-        int pageMax = listCourseByCategory.size() / Integer.parseInt(numberProduct);
-        if (listCourseByCategory.size() % Integer.parseInt(numberProduct) != 0) {
+        List<Course> listCourse = courseDAO.listCourseCategory(categoryID);
+        int pageMax = listCourse.size() / Integer.parseInt(numberProduct);
+        if (listCourse.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;
         }
         request.setAttribute("pageMax", pageMax);
-        request.setAttribute("listCourse", listCourseByCategory);
+        request.setAttribute("listCourse", listCourse);
         request.setAttribute("url", "CourseListCategory?categoryID=" + categoryID);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }

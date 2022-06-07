@@ -5,13 +5,19 @@
  */
 package controller;
 
+import dao.CategoryDAO;
+import dao.ChapterDAO;
+import dao.CourseDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modal.Category;
+import modal.Chapter;
+import modal.Course;
 
 /**
  *
@@ -32,6 +38,21 @@ public class CourseDetails extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        CourseDAO courseDAO = new CourseDAO();
+        String courseID = request.getParameter("courseID");
+        Course course = courseDAO.getCourseById(courseID);
+        request.setAttribute("course", course);
+        
+        CategoryDAO categoryDAO = new CategoryDAO();
+        List<Category> listCategory = categoryDAO.listCategoryByCourse(courseID);
+        request.setAttribute("categoryOfCourse", listCategory);
+        
+        ChapterDAO chapterDAO = new ChapterDAO();
+        List<Chapter> listChapter = chapterDAO.listChapter(courseID);
+        request.setAttribute("listChapter", listChapter);
+        
+        List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
+        request.setAttribute("relatedCourse", relatedCourse);
         request.getRequestDispatcher("//view//courseDetails.jsp").forward(request, response);
     }
 
