@@ -74,12 +74,11 @@ public class Profile extends HttpServlet {
                 }
                 if (account.getRole().getRoleID()==2) {
                     Expert expert = expertDao.profile(account.getAccountID());
-                    System.out.println(expert.getImg());
                     request.setAttribute("expert", expert);
                     session.setAttribute("expert", expert);
                     processRequest(request, response);
                 }
-
+                
             } else {
                 response.sendRedirect("SignIn");
                 return;
