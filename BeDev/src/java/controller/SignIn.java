@@ -85,20 +85,20 @@ public class SignIn extends HttpServlet {
         if (account == null) {
             mess = "Invalid email or password. Please enter again.";
         } else {
-            if (!account.isEmailVeriFy()) {
+            if (!account.isEmailVeriFy()) {// email have not verified.
                 mess = " Please verify youre email.";
             } else {
-                if (account.getRole().getRoleID() == 3) {
+                if (account.getRole().getRoleID() == 3) {// account is student
                     Student student = new Student();
                     student = accountDAO.getStudentByAccountID(account.getAccountID());
                     session.setAttribute("student", student);
 
                 } else {
-                    if (account.getRole().getRoleID()==2) {
+                    if (account.getRole().getRoleID()==2) {// account is expert
                         Expert expert = new Expert();
                         expert = accountDAO.getExpertByAccountID(account.getAccountID());
                         session.setAttribute("expert", expert);
-                    }else{
+                    }else{// account is admin
                         Admin admin = new Admin();
                         admin = accountDAO.getAdminByAccountID(account.getAccountID());
                         session.setAttribute("admin", admin);
