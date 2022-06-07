@@ -51,7 +51,7 @@
                 <br><br>
                 <h2>Quiz: ${quiz.getQuizName()}</h2>
                 <br>
-                <span style="padding-right: 5px;"><strong>Total points </strong></span><span>10</span>
+                <span style="padding-right: 5px;"><strong>Total grade </strong></span><span>10</span>
                 <br><br><br><br>
                 <%int questionOrder = 1;%>
                 <form action="QuizHandle?qid=${quiz.getQuizID()}" method="POST">

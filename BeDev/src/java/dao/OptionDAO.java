@@ -69,25 +69,22 @@ public class OptionDAO extends DBContext {
     /**
      * This method insert student answers into database.
      *
-     * @param answerList list contain student answer
+     * @param questionID id of question
+     * @param optionID id of option
      * @param quizRecordID id of record
      */
-    public void insertOptionRecord(ArrayList<Question> answerList, int quizRecordID) {
+    public void insertOptionRecord(int questionID, int optionID, int quizRecordID) {
         String sql;
         PreparedStatement stm;
-        for (Question question : answerList) {
-            for (Option answer : question.getOptionList()) {
-                try {
-                    sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
-                    stm = connection.prepareStatement(sql);
-                    stm.setInt(1, quizRecordID);
-                    stm.setInt(2, question.getQuestionID());
-                    stm.setInt(3, answer.getOptionID());
-                    stm.executeUpdate();
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+        try {
+            sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
+            stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizRecordID);
+            stm.setInt(2, questionID);
+            stm.setInt(3, optionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 }

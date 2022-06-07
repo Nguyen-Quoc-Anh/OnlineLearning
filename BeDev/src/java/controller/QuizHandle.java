@@ -86,37 +86,33 @@ public class QuizHandle extends HttpServlet {
         HttpSession session = request.getSession();
         QuestionDAO questionDAO = new QuestionDAO();
         OptionDAO answerDAO = new OptionDAO();
-        double totalPoint = 0;
+        double totalGrade = 0;
         try {
             Account account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
             ArrayList<Question> questionsList = questionDAO.getQuestionsAndTrueOption(quizID);
-            ArrayList<Question> optionRecord = new ArrayList<>();
+            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalGrade, quizID);
+            if (quizRecordID == -1) {   // can't insert into database
+                request.setAttribute("mess", "Cannot insert quiz record.");
+                processRequest(request, response);
+                return;
+            }
             for (Question question : questionsList) {
                 // get checked option
                 String[] studentOptions = request.getParameterValues(Integer.toString(question.getQuestionID()));
                 if (studentOptions == null) {   // student not answer this question
                     continue;
                 }
-                ArrayList<Option> options = new ArrayList<>();
                 for (int j = 0; j < studentOptions.length; j++) {
-                    Option option = new Option(Integer.parseInt(studentOptions[j]));
-                    int index = question.getOptionList().indexOf(option);
+                    int index = question.getOptionList().indexOf(new Option(Integer.parseInt(studentOptions[j])));
                     if (index != -1) {  // option student checked is true
-                        totalPoint += question.getOptionList().get(index).getPoint();   // add point
+                        totalGrade += question.getOptionList().get(index).getPoint();   // add point
                     }
-                    options.add(option);
+                    answerDAO.insertOptionRecord(question.getQuestionID(), Integer.parseInt(studentOptions[j]), quizRecordID);
                 }
-                optionRecord.add(new Question(quizID, options));    // add into a record
             }
-            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalPoint, quizID);
-            if (quizRecordID == -1) {   // can't insert into database
-                request.setAttribute("mess", "Cannot insert quiz record.");
-                processRequest(request, response);
-            } else {
-                answerDAO.insertOptionRecord(optionRecord, quizRecordID);
-                response.sendRedirect("QuizReview?qid=" + quizRecordID);    // redirect to view result
-            }
+            quizDAO.updateQuizRecordGrade(totalGrade, quizRecordID);
+            response.sendRedirect("QuizReview?qid=" + quizRecordID);    // redirect to view result
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendRedirect("Error");
