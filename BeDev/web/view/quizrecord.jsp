@@ -10,56 +10,61 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Quiz Record</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <style>
-            .bd-example {
-                padding: 1.5rem;
-                margin-right: 0;
-                margin-left: 0;
-                border-width: 0.2rem;
-            }
-            h1
-            {
-                font-size: 32px;
-                text-shadow: -1px -1px #0c0, 1px 1px #060, -3px 0 4px #000;
-                font-family:Arial, Helvetica, sans-serif;
-                color: #0dcaf0;
-                padding:16px;
-                font-weight:lighter;
-                -moz-box-shadow: 2px 2px 6px #888;  
-                -webkit-box-shadow: 2px 2px 6px #888;  
-                box-shadow:2px 2px 6px #888;  
-                text-align:center;
-                display:block;
-                margin:16px;
-                background-image:url(images/background-h1-wood.jpg);  
-            }
-        </style>
+        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
-    <body>
-        <h1>Quiz History for #</h1>
-        <div class="bd-example">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Grade</th>
-                        <th scope="col">Time Attended</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="re" items="${listRecord}">
-                        <tr>
-                            <th scope="row">${re.getGrade()}</th>
-                            <td>${re.getTimeAttended()}</td>
-                            <td><a href="QuizReview?record=${re.getRecordID()}&qid=${re.getQuizID()}">View Detail</a></td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-
-
+    <body onload="loader()">
+         <div class="loader">
+            <span class="loader-spinner">Loading...</span>
         </div>
+        <header class="bg-transparent">
+            <div class="container-fluid">
+                <div class="coursedescription-header">
+                    <div class="coursedescription-header-start">
+                        <a class="logo-image" href="index.html">
+                            <img src="../BeDev/view/dist/images/logo/logo.png" alt="Logo" />
+                        </a>
+                        <div class="topic-info">
+                            <div class="topic-info-arrow">
+                                <a href="Quiz?qid=${qid}">
+                                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.5 19.5L8.5 12.5L15.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </a>
+                            </div>
+                            <div class="topic-info-text">
+                                <h6 class="font-title--xs"><a href="Quiz?qid=${qid}">${quizRecord.getQuizName()}</a></h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="d-flex justify-content-center" style="margin-bottom: 300px">
+            <div class="col-10">
+                <table class="table">
+                    <thead class="bg-primary text-white">
+                        <tr class="text-center">
+                            <th scope="col">Grade</th>
+                            <th scope="col">Time Attended</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="re" items="${listRecord}">
+                            <tr class="text-center">
+                                <th scope="row">${re.getGrade()}</th>
+                                <td>${re.getTimeAttended().toString().substring(0, 10)} &emsp; ${re.getTimeAttended().toString().substring(11,19)}</td>
+                                <td><a href="QuizReview?rid=${re.getRecordID()}&qid=${re.getQuizID()}">View Detail</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

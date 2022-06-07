@@ -7,7 +7,6 @@ package controller;
 
 import dao.QuizRecordDAO;
 import java.io.IOException;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +20,8 @@ import modal.Student;
  *
  * @author admin
  */
-@WebServlet(name = "RecordController", urlPatterns = {"/RecordController"})
-public class RecordController extends HttpServlet {
+@WebServlet(name = "QuizReview", urlPatterns = {"/QuizReview"})
+public class QuizReview extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +35,7 @@ public class RecordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/quizrecord.jsp").forward(request, response);
+        request.getRequestDispatcher("//view/quizreview.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,15 +51,14 @@ public class RecordController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        QuizRecordDAO recordDAO = new QuizRecordDAO();
+        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
         try {
+            int rid = Integer.parseInt(request.getParameter("rid"));
             int qid = Integer.parseInt(request.getParameter("qid"));
             if (session.getAttribute("account") !=null ) {
                 if (session.getAttribute("student") != null) {
                     Student student = (Student) session.getAttribute("student");
-                    ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid);
-                    QuizRecord quizRecord = recordDAO.nameOfQuiz(qid);
-                    request.setAttribute("listRecord", listRecord);
+                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
                     request.setAttribute("quizRecord", quizRecord);
                 } else {
                     response.sendRedirect("Error");
@@ -70,9 +68,10 @@ public class RecordController extends HttpServlet {
                 response.sendRedirect("SignIn");
                 return;
             }
-            request.setAttribute("qid", qid);
+            request.setAttribute("rid", rid);
+            request.setAttribute("qid", qid);          
         } catch (IOException e) {
-            System.out.println(e + "Failed at RecordController");
+            System.out.println(e + "Failed at QuizReview");
             response.sendRedirect("Error");
         }
         processRequest(request, response);
