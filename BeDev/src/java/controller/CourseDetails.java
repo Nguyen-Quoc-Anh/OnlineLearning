@@ -8,6 +8,7 @@ package controller;
 import dao.CategoryDAO;
 import dao.ChapterDAO;
 import dao.CourseDAO;
+import dao.RateDAO;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Chapter;
 import modal.Course;
+import modal.Rate;
 
 /**
  *
@@ -50,6 +52,11 @@ public class CourseDetails extends HttpServlet {
         ChapterDAO chapterDAO = new ChapterDAO();
         List<Chapter> listChapter = chapterDAO.listChapter(courseID);
         request.setAttribute("listChapter", listChapter);
+        
+        RateDAO rateDAO = new RateDAO();
+        List<Rate> listRate = rateDAO.listRateByCourse(courseID);
+        request.setAttribute("listRate", listRate);
+        
         
         List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
         request.setAttribute("relatedCourse", relatedCourse);

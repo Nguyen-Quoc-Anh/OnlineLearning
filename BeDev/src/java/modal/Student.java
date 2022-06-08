@@ -25,6 +25,12 @@ public class Student {
         this.imageURL = imageURL;
     }
 
+    public Student(Account account, String name, String imageURL) {
+        this.account = account;
+        this.name = name;
+        this.imageURL = imageURL;
+    }
+
     public Account getAccount() {
         return account;
     }
