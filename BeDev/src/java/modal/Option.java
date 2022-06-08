@@ -9,38 +9,49 @@ package modal;
  *
  * @author ACER
  */
-public class Answer {
-    private int answerID;
+public class Option {
+    private int optionID;
     private Question question;
     private String content;
     private boolean isTrue;
     private double point;
     
-    public Answer() {
+    public Option() {
     }
 
-    public Answer(int answerID) {
-        this.answerID = answerID;
+    public Option(int optionID) {
+        this.optionID = optionID;
     }
     
-    public Answer(int answerID, Question question, String content, boolean isTrue) {
-        this.answerID = answerID;
+    public Option(int optionID, Question question, String content, boolean isTrue) {
+        this.optionID = optionID;
         this.question = question;
         this.content = content;
         this.isTrue = isTrue;
     }
 
-    public Answer(int answerID, double point) {
-        this.answerID = answerID;
+    public Option(int optionID, Question question, String content) {
+        this.optionID = optionID;
+        this.question = question;
+        this.content = content;
+    }
+
+    public Option(int optionID, boolean isTrue) {
+        this.optionID = optionID;
+        this.isTrue = isTrue;
+    }
+    
+    public Option(int optionID, double point) {
+        this.optionID = optionID;
         this.point = point;
     }
 
-    public int getAnswerID() {
-        return answerID;
+    public int getOptionID() {
+        return optionID;
     }
 
-    public void setAnswerID(int answerID) {
-        this.answerID = answerID;
+    public void setOptionID(int optionID) {
+        this.optionID = optionID;
     }
 
     public Question getQuestion() {
@@ -78,7 +89,7 @@ public class Answer {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 67 * hash + this.answerID;
+        hash = 67 * hash + this.optionID;
         return hash;
     }
 
@@ -93,8 +104,8 @@ public class Answer {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Answer other = (Answer) obj;
-        if (this.answerID != other.answerID) {
+        final Option other = (Option) obj;
+        if (this.optionID != other.optionID) {
             return false;
         }
         return true;

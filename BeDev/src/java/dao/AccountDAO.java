@@ -9,7 +9,6 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import modal.Account;
 import modal.Admin;
 import modal.Expert;
@@ -22,33 +21,40 @@ import modal.Student;
  */
 public class AccountDAO extends DBContext {
 
-    public boolean validEmail(String email) {
+    /**
+     * This method check email is exist or not.
+     * @param email email need to check
+     * @return true if email exist. Otherwise return false
+     */
+    public boolean isEmailExist(String email) {
         try {
             String sql = "select * from Account where email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, email);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                return false;
+                return true;
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return true;
+        return false;
     }
 
+    /**
+     * This method insert a new Account as a student into database base on register information
+     * @param student contain user information
+     * @return true if insert success. Otherwise return false.
+     */
     public boolean signup(Student student) {
         try {
-            String sql = "insert into Account(email, password, role) values (?, ?, ?); ";
-            PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            String sql = "insert into Account(email, password, role, accountID) values (?, ?, ?, ?); ";
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, student.getAccount().getEmail());
             stm.setString(2, student.getAccount().getPassword());
             stm.setInt(3, student.getAccount().getRole().getRoleID());
+            stm.setInt(4, student.getAccount().getAccountID());
             stm.executeUpdate();
-            ResultSet rs = stm.getGeneratedKeys();
-            while (rs.next()) {
-                student.getAccount().setAccountID(rs.getInt(1));
-            }
             sql = "insert into Student(studentID, name, imageURL) values (?, ?, ?)";
             stm = connection.prepareStatement(sql);
             stm.setInt(1, student.getAccount().getAccountID());
@@ -62,7 +68,12 @@ public class AccountDAO extends DBContext {
         }
     }
 
-    public boolean checkAccount(Account account) {
+    /**
+     * This method check account is exist or not.
+     * @param account
+     * @return true if account exist. Otherwise return false.
+     */
+    public boolean checkAccountExistByEmailAndID(Account account) {
         try {
             String sql = "select * from Account where email = ? and accountID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -78,6 +89,12 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
+    /**
+     * This method set verify attribute of account to true.
+     *
+     * @param id account id need to verify.
+     * @return true if verify success. Otherwise return false.
+     */
     public boolean accountVerification(int id) {
         try {
             String sql = "update Account set emailVerify = 1 where accountID = ?";
@@ -91,6 +108,12 @@ public class AccountDAO extends DBContext {
         return false;
     }
 
+    /**
+     * This method reset user password.
+     *
+     * @param account account user change password.
+     * @return true if change password success. Otherwise return false.
+     */
     public boolean resetPassword(Account account) {
         try {
             String sql = "update Account set password = ? where email = ?";
@@ -126,15 +149,17 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     /**
-     * This method is used to change password.
-     * @param email
-     * @param newPass
-     * @return true if change successfully , false if changes fail.
+     * This method change account password if email is same as param email
+     *
+     * @param email user email
+     * @param newPass re password user want to set
+     * @return true if change password success. Otherwise return false.
      */
     public boolean changePassword(String email, String newPass) {
         try {
-            String sql = "update  Account  \n"
+            String sql = "update Account  \n"
                     + "set password = ? where  email = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, newPass);
@@ -197,7 +222,7 @@ public class AccountDAO extends DBContext {
         try {
             String sql = "select * from Admin a , Account acc\n"
                     + "where a.adminID = acc.accountID and a.adminID= ?";
-            PreparedStatement stm  = connection.prepareCall(sql);
+            PreparedStatement stm = connection.prepareCall(sql);
             stm.setInt(1, id);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -209,10 +234,15 @@ public class AccountDAO extends DBContext {
         return null;
     }
 
-    public int getNewAccountID () {
+    /**
+     * This method get new account ID will be generate.
+     *
+     * @return an integer represent for account ID.
+     */
+    public int getNewAccountID() {
         try {
             String sql = "select top(1) a.accountID from Account a order by a.accountID desc";
-            PreparedStatement stm  = connection.prepareCall(sql);
+            PreparedStatement stm = connection.prepareCall(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1) + 1;
@@ -222,7 +252,7 @@ public class AccountDAO extends DBContext {
         }
         return -1;
     }
-    
+
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
         Expert a = accountDAO.getExpertByAccountID(2);
