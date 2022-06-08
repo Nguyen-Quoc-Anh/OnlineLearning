@@ -44,20 +44,62 @@ public class CourseDetails extends HttpServlet {
         String courseID = request.getParameter("courseID");
         Course course = courseDAO.getCourseById(courseID);
         request.setAttribute("course", course);
-        
+
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategoryByCourse(courseID);
         request.setAttribute("categoryOfCourse", listCategory);
-        
+
         ChapterDAO chapterDAO = new ChapterDAO();
         List<Chapter> listChapter = chapterDAO.listChapter(courseID);
         request.setAttribute("listChapter", listChapter);
-        
+
         RateDAO rateDAO = new RateDAO();
         List<Rate> listRate = rateDAO.listRateByCourse(courseID);
         request.setAttribute("listRate", listRate);
-        
-        
+        if (listRate.size() != 0) {
+            int sumStar = 0;
+            int starOne = 0;
+            int starTwo = 0;
+            int starThree = 0;
+            int starFour = 0;
+            for (Rate rate : listRate) {
+                sumStar += rate.getStar();
+                switch (rate.getStar()) {
+                    case 1:
+                        starOne += 1;
+                        break;
+                    case 2:
+                        starTwo += 1;
+                        break;
+                    case 3:
+                        starThree += 1;
+                        break;
+                    case 4:
+                        starFour += 1;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            double percentStarOne = ((double) starOne / listRate.size()) * 100;
+            double percentStarTwo = ((double) starTwo / listRate.size()) * 100;
+            double percentStarThree = ((double) starThree / listRate.size()) * 100;
+            double percentStarFour = ((double) starFour / listRate.size()) * 100;
+            double percentStarFive = 100 - percentStarOne - percentStarTwo - percentStarThree - percentStarFour;
+            request.setAttribute("avgStar", sumStar / listRate.size());
+            request.setAttribute("percentStarOne", String.format("%.2f", percentStarOne));
+            request.setAttribute("percentStarTwo", String.format("%.2f", percentStarTwo));
+            request.setAttribute("percentStarThree", String.format("%.2f", percentStarThree));
+            request.setAttribute("percentStarFour", String.format("%.2f", percentStarFour));
+            request.setAttribute("percentStarFive", String.format("%.2f", percentStarFive));
+        } else {
+            request.setAttribute("avgStar", 0);
+            request.setAttribute("percentStarOne", 0);
+            request.setAttribute("percentStarTwo", 0);
+            request.setAttribute("percentStarThree", 0);
+            request.setAttribute("percentStarFour", 0);
+            request.setAttribute("percentStarFive", 0);
+        }
         List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
         request.setAttribute("relatedCourse", relatedCourse);
         request.getRequestDispatcher("//view//courseDetails.jsp").forward(request, response);
