@@ -57,14 +57,13 @@ public class ExpertProfile extends HttpServlet {
         try {
             int id = Integer.parseInt(request.getParameter("id"));
             Expert expert = expertDAO.profile(id);
-            List<Course> listCourse = courseDAO.listCourseByExpert(id);
-            int count = courseDAO.countCourseOfExpert(id);
-            System.out.println(expert.getDescription());
+            List<Course> listCourse = courseDAO.listCourseByExpert(id); // get list courses create by expert
+            int count = courseDAO.countCourseOfExpert(id); // count number course of expert
             request.setAttribute("expert", expert);
             request.setAttribute("count", count);
             request.setAttribute("listCourse", listCourse);
 
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             response.sendRedirect("Error");
             return;
         }

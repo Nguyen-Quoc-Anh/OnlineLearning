@@ -5,26 +5,23 @@
  */
 package controller;
 
-import dao.CategoryDAO;
-import dao.CourseDAO;
-import dao.ExpertDAO;
+import dao.QuizRecordDAO;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Category;
-import modal.Course;
-import modal.Expert;
+import modal.QuizRecord;
 import modal.Student;
 
 /**
  *
- * @author Admin
+ * @author admin
  */
-public class HomeControl extends HttpServlet {
+@WebServlet(name = "QuizReview", urlPatterns = {"/QuizReview"})
+public class QuizReview extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +35,7 @@ public class HomeControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view//home.jsp").forward(request, response);
+        request.getRequestDispatcher("//view/quizreview.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,16 +49,31 @@ public class HomeControl extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {     
-        CategoryDAO dao = new CategoryDAO();
-        CourseDAO courseDao =  new CourseDAO();
-        ExpertDAO expertDao = new ExpertDAO(); 
-        List<Expert> expertList = expertDao.listExpert();  //get list of expert
-        List<Category> c = dao.listCategoryAndNumberCourse(); //get list of category
-        List<Course> courseList = courseDao.listFeatureCourse(); //get list of courses 
-        request.setAttribute("c", c);
-        request.setAttribute("courseList", courseList);
-        request.setAttribute("expertList", expertList);
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
+        try {
+            int rid = Integer.parseInt(request.getParameter("rid"));
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            if (session.getAttribute("account") !=null ) {
+                if (session.getAttribute("student") != null) {
+                    Student student = (Student) session.getAttribute("student");
+                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
+                    request.setAttribute("quizRecord", quizRecord);
+                } else {
+                    response.sendRedirect("Error");
+                    return;
+                }
+            }else{
+                response.sendRedirect("SignIn");
+                return;
+            }
+            request.setAttribute("rid", rid);
+            request.setAttribute("qid", qid);          
+        } catch (IOException e) {
+            System.out.println(e + "Failed at QuizReview");
+            response.sendRedirect("Error");
+        }
         processRequest(request, response);
     }
 

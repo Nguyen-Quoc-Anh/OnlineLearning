@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import modal.Account;
-import modal.Enroll;
-import modal.Role;
 import modal.Student;
 
 /**
@@ -19,7 +17,12 @@ import modal.Student;
  * @author ACER
  */
 public class StudentDAO extends DBContext {
-
+    
+    /**
+     * This method get information of a student from database
+     * @param id is id of student
+     * @return a student
+     */
     public Student profile(int id) {
         try {
             String sql = "select s.studentID, s.name, s.cashInWallet, s.imageURL, a.email from Student s, Account a\n"
@@ -30,12 +33,17 @@ public class StudentDAO extends DBContext {
             while (rs.next()) {
                 return new Student(new Account(rs.getInt(1), rs.getString(5), "", true, null, true), rs.getString(2), rs.getDouble(3), rs.getString(4));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return null;
     }
 
+    /**
+     * This method allows student update information and insert it to database
+     * @param id is id of student
+     * @param name is name updated
+     */
     public void editProfile(int id, String name) {
         try {
             String sql = "update Student\n"

@@ -35,6 +35,10 @@ public class CategoryDAO extends DBContext {
         return list;
     }
     
+    /**
+     * This method get list category from database and number course of each category
+     * @return a list category
+     */
     public List<Category> listCategoryAndNumberCourse() {
         List<Category> list = new ArrayList<>();
         String sql = "select c.categoryID, c.categoryName, count(cc.courseID) as Number_Course from Category c\n"

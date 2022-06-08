@@ -21,6 +21,7 @@ public class DBContext {
     public DBContext() {
         try {
             String user = "sa";
+            //String pass = "12345";
 //            String pass = "12345";//tien
             String pass = "12345";
 //            String pass = "12345678"; // Quang pass

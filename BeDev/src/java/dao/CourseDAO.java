@@ -8,6 +8,7 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modal.Course;
@@ -74,7 +75,11 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-
+    
+    /**
+     * This method get list top 6 courses have highest register
+     * @return a list of course
+     */
     public List<Course> listFeatureCourse() {
         List<Course> list = new ArrayList<>();
         try {
@@ -88,14 +93,19 @@ public class CourseDAO extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), rs.getString(10), "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), rs.getString(10), "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));              
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
-    
+
+    /**
+     * This method get list courses of expert
+     * @param id is id of expert
+     * @return a list of courses
+     */
     public List<Course> listCourseByExpert(int id) {
         List<Course> list = new ArrayList<>();
         try {
@@ -114,7 +124,12 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-
+    
+    /**
+     * This method count number course create by expert
+     * @param id is id of expert
+     * @return number of course
+     */
     public int countCourseOfExpert(int id) {
         try {
             String sql = "select count(*) from Course\n"
