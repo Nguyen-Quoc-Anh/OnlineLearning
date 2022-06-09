@@ -8,6 +8,7 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import modal.Answer;
 import modal.Question;
@@ -54,4 +55,5 @@ public class AnswerDAO extends DBContext {
         }
         return true;
     }
+    
 }
