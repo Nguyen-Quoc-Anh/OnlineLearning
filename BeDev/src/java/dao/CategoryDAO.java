@@ -58,6 +58,10 @@ public class CategoryDAO extends DBContext {
         return list;
     }
     
+    /**
+     * This method get list category by course ID from database
+     * @return a list category
+     */
     public List<Category> listCategoryByCourse(String courseID) {
         List<Category> list = new ArrayList<>();
         String sql = "select cc.categoryID, c.categoryName from Course_Category cc "

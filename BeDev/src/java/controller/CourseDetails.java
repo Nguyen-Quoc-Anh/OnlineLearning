@@ -42,21 +42,23 @@ public class CourseDetails extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         CourseDAO courseDAO = new CourseDAO();
         String courseID = request.getParameter("courseID");
+        //Get a course by course ID from courseDAO
         Course course = courseDAO.getCourseById(courseID);
         request.setAttribute("course", course);
-
+        //Get list category by course ID from categoryDAO
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategoryByCourse(courseID);
         request.setAttribute("categoryOfCourse", listCategory);
-
+        //Get list chapter of course by course ID from chapterDAO
         ChapterDAO chapterDAO = new ChapterDAO();
         List<Chapter> listChapter = chapterDAO.listChapter(courseID);
         request.setAttribute("listChapter", listChapter);
-
+        //Get list rate of course by course ID from rateDAO
         RateDAO rateDAO = new RateDAO();
         List<Rate> listRate = rateDAO.listRateByCourse(courseID);
         request.setAttribute("listRate", listRate);
-        if (listRate.size() != 0) {
+        //Get percent of star one, two, three, four, five and average star 
+        if (!listRate.isEmpty()) {
             int sumStar = 0;
             int starOne = 0;
             int starTwo = 0;

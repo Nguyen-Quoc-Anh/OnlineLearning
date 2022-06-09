@@ -19,6 +19,10 @@ import modal.Student;
  * @author Admin
  */
 public class RateDAO extends DBContext {
+    /**
+     * This method get a list rate by course ID from database
+     * @return a list rate
+     */
     public List<Rate> listRateByCourse(String courseID) {
         List<Rate> list = new ArrayList<>();
         try {

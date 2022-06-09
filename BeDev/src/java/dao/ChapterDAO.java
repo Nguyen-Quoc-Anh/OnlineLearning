@@ -18,7 +18,10 @@ import modal.Lesson;
  * @author admin
  */
 public class ChapterDAO extends DBContext {
-
+    /**
+     * This method get a list chapter by course ID from database
+     * @return a list chapter
+     */
     public List<Chapter> listChapter(String courseID) {
         List<Chapter> listChapter = new ArrayList<>();
         try {

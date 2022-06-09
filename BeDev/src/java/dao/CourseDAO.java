@@ -19,7 +19,10 @@ import modal.Expert;
  * @author Admin
  */
 public class CourseDAO extends DBContext {
-    
+    /**
+     * This method get list course from database
+     * @return a list of course
+     */
     public List<Course> listCourse() {
         List<Course> list = new ArrayList<>();
         try {
@@ -46,7 +49,11 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-
+    
+    /**
+     * This method get list course by category ID from database
+     * @return a list of course
+     */
     public List<Course> listCourseCategory(String categoryID) {
         List<Course> list = new ArrayList<>();
         try {
@@ -163,6 +170,10 @@ public class CourseDAO extends DBContext {
         return false;
     }
 
+    /**
+     * This method get course by course ID
+     * @return a course
+     */
     public Course getCourseById(String courseID) {
         try {
             String sql = "select c.courseID, c.courseName, c.description, c.courseImage, "
@@ -191,6 +202,10 @@ public class CourseDAO extends DBContext {
         return null;
     }
 
+    /**
+     * This method get 4 course by category ID and don't get a course have below course ID
+     * @return a list of course
+     */
     public List<Course> relatedCourse(String courseID, int categoryID) {
         List<Course> list = new ArrayList<>();
         try {

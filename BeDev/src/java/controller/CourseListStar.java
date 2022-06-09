@@ -37,19 +37,23 @@ public class CourseListStar extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        //Get list category from categoryDAO
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
+        //Get current number page
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
         }
         request.setAttribute("pagePosition", pagePosition);
+        //Number product to display in tha page
         String numberProduct = request.getParameter("numberProduct");
         if (numberProduct == null) {
             numberProduct = "4";
         }
         request.setAttribute("numberProduct", numberProduct);
+        //Get list course from courseDAO and get the course which course star more than star paramenter  
         String star = request.getParameter("star");
         CourseDAO courseDAO = new CourseDAO();
         List<Course> listCourse = courseDAO.listCourse();
@@ -59,12 +63,13 @@ public class CourseListStar extends HttpServlet {
                 listCourseByStar.add(course);
             }
         }
+        request.setAttribute("listCourse", listCourseByStar);
+        //Get maxinum page can display
         int pageMax = listCourseByStar.size() / Integer.parseInt(numberProduct);
         if (listCourseByStar.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;
         }
         request.setAttribute("pageMax", pageMax);
-        request.setAttribute("listCourse", listCourseByStar);
         request.setAttribute("url", "CourseListStar?star=" + star);
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
