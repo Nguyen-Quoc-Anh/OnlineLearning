@@ -20,6 +20,9 @@ public class Question {
     private ArrayList<Option> optionList;
     private double pointPerQuestion;
     private boolean multipleChoice;
+    private int numberTrueOption;
+    private ArrayList<Answer> answerList;
+    private ArrayList<Answer> compareList;
     
     public Question() {
     }
@@ -28,6 +31,15 @@ public class Question {
         this.questionID = questionID;
     }
 
+    public Question(int questionID, String content, String explanation, int numberTrueOption) {
+        this.questionID = questionID;
+        this.content = content;
+        this.explanation = explanation;
+        this.numberTrueOption = numberTrueOption;
+    }
+    
+    
+    
     public Question(int questionID, String content, String explaination, Quiz quiz, boolean status, ArrayList<Option> answerList) {
         this.questionID = questionID;
         this.content = content;
@@ -119,6 +131,33 @@ public class Question {
         this.multipleChoice = multipleChoice;
     }
 
+    public int getNumberTrueOption() {
+        return numberTrueOption;
+    }
+
+    public void setNumberTrueOption(int numberTrueOption) {
+        this.numberTrueOption = numberTrueOption;
+    }
+
+    public ArrayList<Answer> getAnswerList() {
+        return answerList;
+    }
+
+    public void setAnswerList(ArrayList<Answer> answerList) {
+        this.answerList = answerList;
+    }
+
+    public ArrayList<Answer> getCompareList() {
+        return compareList;
+    }
+
+    public void setCompareList(ArrayList<Answer> compareList) {
+        this.compareList = compareList;
+    }
+    
+    
+    
+    
     @Override
     public int hashCode() {
         int hash = 7;

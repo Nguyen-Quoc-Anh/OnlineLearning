@@ -133,7 +133,7 @@
                 <br>
                 <span style="padding-right: 5px;"><strong>Total grade </strong></span><span>10</span>
               <br><br><br><br>
-                <!--  
+                  
                 <%int questionOrder = 1;%>
                 <% int numberTrueAnswer = 0;%>
                 <c:if test="${answeredList == null}">
@@ -169,11 +169,6 @@
                 <c:if test="${answeredList != null}">
                     <c:forEach items="${questionList}" var="question">
                         <%numberTrueAnswer = 0;%>
-                        <c:forEach items="${question.getAnswerList()}" var="answer">
-                            <c:if test="${answer.isTrue()}">
-                                <%numberTrueAnswer++;%>
-                            </c:if>
-                        </c:forEach>
                         <div style="padding-bottom: 45px;">
                             <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
                             <%questionOrder++;%>
@@ -235,7 +230,7 @@
                         ${mess}
                     </div>
                 </c:if>
-                -->
+                
             </div>
         </div>
         <!-- Course Description Ends Here -->
