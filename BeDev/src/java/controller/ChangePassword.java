@@ -84,13 +84,13 @@ public class ChangePassword extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         Account account = (Account) session.getAttribute("account");
         String mess = null;
-        if (!account.getPassword().equals(curPass)) {
+        if (!account.getPassword().equals(curPass)) {// check if curPass matches the password in session. 
             mess = "Current password is incorrect.";
         } else {
-            if (!newPass.equals(confirmNewPass)) {
+            if (!newPass.equals(confirmNewPass)) {// check newPass matches confirmPass.
                 mess = "Confirm new passsword is incorrect";
             } else {
-                if (accountDAO.changePassword(account.getEmail(), newPass)) {
+                if (accountDAO.changePassword(account.getEmail(), newPass)) {// changePassword
                     mess = "Change password successfully.";
                     account.setPassword(newPass);
                     session.setAttribute("account", account);
@@ -100,7 +100,6 @@ public class ChangePassword extends HttpServlet {
             }
         }
         request.setAttribute("mess", mess);
-
         processRequest(request, response);
     }
 

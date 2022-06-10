@@ -22,6 +22,8 @@ public class Course {
     private boolean status;
     private int numberRegister;
     private int numberLesson;
+    private int averageStar;
+    
     public Course() {
     }
 
@@ -66,6 +68,42 @@ public class Course {
         this.numberRegister = numberRegister;
         this.numberLesson = numberLesson;
     }
+
+    public Course(int courseID, String courseName, String courseImage, Expert expert, double money, int numberRegister, int numberLesson, int averageStar) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.courseImage = courseImage;
+        this.expert = expert;
+        this.money = money;
+        this.numberRegister = numberRegister;
+        this.numberLesson = numberLesson;
+        this.averageStar = averageStar;
+    }
+
+    public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, int numberRegister, int numberLesson, int averageStar) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.expert = expert;
+        this.money = money;
+        this.releasedDate = releasedDate;
+        this.numberRegister = numberRegister;
+        this.numberLesson = numberLesson;
+        this.averageStar = averageStar;
+    }
+    
+    
+
+    public int getAverageStar() {
+        return averageStar;
+    }
+
+    public void setAverageStar(int averageStar) {
+        this.averageStar = averageStar;
+    }
+    
+    
 
     public int getNumberLesson() {
         return numberLesson;

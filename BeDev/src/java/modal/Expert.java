@@ -20,6 +20,12 @@ public class Expert {
     public Expert() {
     }
 
+    public Expert(int expertID, String expertName, String img) {
+        this.expertID = expertID;
+        this.expertName = expertName;
+        this.img = img;
+    }
+    
     public Expert(String expertName, String img, String phone, String description, Account account) {
         this.expertName = expertName;
         this.img = img;
@@ -28,8 +34,20 @@ public class Expert {
         this.account = account;
     }
 
+    public Expert(String expertName, String img, String phone, String description) {
+        this.expertName = expertName;
+        this.img = img;
+        this.phone = phone;
+        this.description = description;
+    }
     
-    
+    public Expert(int expertID, String expertName, String img, String description) {
+        this.expertID = expertID;
+        this.expertName = expertName;
+        this.img = img;
+        this.phone = phone;
+        this.description = description;
+    }
     
     public Expert(int expertID, String expertName, String img, String phone, String description) {
         this.expertID = expertID;
