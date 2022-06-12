@@ -132,81 +132,68 @@
                 <h2>Quiz: ${quizRecord.getQuizName()}</h2>
                 <br>
                 <span style="padding-right: 5px;"><strong>Total grade </strong></span><span>10</span>
-              <br><br><br><br>
-                  
-              
-              
-              
-                 
+                <br><br><br><br>
+
                 <%int questionOrder = 1;%>
-                <c:if test="${answeredList != null}">
-                    <!-- vong for cho question -->
-                    <c:forEach items="${questionList}" var="question">
-                        <%numberTrueAnswer = 0;%>
-                        <div style="padding-bottom: 45px;">
-                            <!-- hien thi question-->
-                            <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
-                            <!-- bien dem cau hoi-->
-                            <%questionOrder++;%>
-                            <ul class="p-1">
-                                <c:forEach items="${question.getAnswerList()}" var="answer">
-                                    <li class="list-group-item border-0">
-                                        <div class="form-check">
-                                            <c:set var="option" value="${(answeredList.contains(question)) ? answeredList.get(answeredList.indexOf(question)).getAnswerList().contains(answer) : null}"/>
-                                            <c:choose>
-                                                <c:when test="${option}">
-                                                    <input class="form-check-input" value="${answer.getAnswerID()}" name="${question.getQuestionID()}" type="<%=(numberTrueAnswer == 1) ? "radio" : "checkbox"%>" style="margin-right: 10px" checked> 
-                                                    ${answer.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <input class="form-check-input" value="${answer.getAnswerID()}" name="${question.getQuestionID()}" type="<%=(numberTrueAnswer == 1) ? "radio" : "checkbox"%>" style="margin-right: 10px" disabled> 
-                                                    ${answer.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                                <c:set var="ques" value="${(answeredList.contains(question)) ? answeredList.get(answeredList.indexOf(question)) : null}"/>
-                                <c:choose>
-                                    <c:when test="${ques.getPointPerQuestion() != question.getPointPerQuestion()}">
-                                        <div style="background-color: rgb(253, 245, 245); padding: 10px; margin-left: -30px; margin-top: 10px;">
-                                            <div class="row" style="color: rgb(211, 0, 1); font-weight: 600;">
-                                                <div class="col-md-1">
-                                                    <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-181" class="css-1hltn8p"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.646 14.354l-8-8 .708-.708 8 8-.708.708z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.354 6.354l-8 8-.708-.708 8-8 .708.708z" fill="currentColor"></path></svg>
-                                                </div>
-                                                <div class="col-md-10 d-flex">
-                                                    <p class="justify-content-center align-self-center">Incorrect</p>
-                                                </div>
+                <!-- vong for cho question -->
+                <c:forEach items="${questionList}" var="question">
+                    <div style="padding-bottom: 45px;">
+                        <!-- hien thi question-->
+                        <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
+                        <!-- bien dem cau hoi-->
+                        <%questionOrder++;%>
+                        <ul class="p-1">
+                            <!-- hiển thị option và checked câu trả lời của student-->
+                            <c:forEach items="${question.getOptionList()}" var="option">
+                                <li class="list-group-item border-0">
+                                    <div class="form-check">                    
+                                        <input class="form-check-input" name="${question.getQuestionID()}" type="${(question.getNumberTrueOption() == 1) ? "radio" : "checkbox"}" style="margin-right: 10px" ${question.getAnswerList().contains(option) ? "checked" : "disabled"}> 
+                                        ${option.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}                                   
+                                    </div>
+                                </li>
+                            </c:forEach>
+                        </ul>  
+                        <!-- Kiểm tra đúng sai câu trả lời của student-->
+                        <c:forEach var="com" items="${question.getCompareList()}">
+                            <c:if test="${com.getAnswerOption()!=0}">
+                                <c:if test="${!com.isTrue()}">
+                                    <div style="background-color: rgb(253, 245, 245); padding: 10px; margin-left: -30px; margin-top: 10px;">
+                                        <div class="row" style="color: rgb(211, 0, 1); font-weight: 600;">
+                                            <div class="col-md-1">
+                                                <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-181" class="css-1hltn8p"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.646 14.354l-8-8 .708-.708 8 8-.708.708z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.354 6.354l-8 8-.708-.708 8-8 .708.708z" fill="currentColor"></path></svg>
+                                            </div>
+                                            <div class="col-md-10 d-flex">
+                                                <p class="justify-content-center align-self-center" style="margin-right: 10px">Incorrect</p>                                               
+                                                <p>( Your option :  ${com.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} )</p>
                                             </div>
                                         </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div style="background-color: rgb(247, 251, 249); padding: 10px; margin-left: -30px; margin-top: 10px;">
-                                            <div class="row" style="color: rgb(29, 124, 80); font-weight: 600;" >
-                                                <div class="col-md-1">
-                                                    <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-39" class="css-md7hvk"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.384 7.32l-5.35 6.42-3.388-3.386.708-.708 2.612 2.613 4.65-5.58.768.641z" fill="currentColor"></path></svg>    
-                                                </div>
-                                                <div class="col-md-10 d-flex">
-                                                    <p class="justify-content-center align-self-center">Correct</p>
-                                                </div>
+                                    </div>
+                                </c:if>
+                                <c:if test="${com.isTrue()}">
+                                    <div style="background-color: rgb(247, 251, 249); padding: 10px; margin-left: -30px; margin-top: 10px;">
+                                        <div class="row" style="color: rgb(29, 124, 80); font-weight: 600;" >
+                                            <div class="col-md-1">
+                                                <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-39" class="css-md7hvk"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.384 7.32l-5.35 6.42-3.388-3.386.708-.708 2.612 2.613 4.65-5.58.768.641z" fill="currentColor"></path></svg>    
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-1"></div>
-                                                <div class="col-md-10 mt-2">
-                                                    <p>Explanation: ${question.getExplanation().equals("") ? "None" : question.getExplanation()}</p>
-                                                </div>
+                                            <div class="col-md-10 d-flex">
+                                                <p class="justify-content-center align-self-center" style="margin-right: 10px">Correct</p>
+                                                <p>( Your option :  ${com.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} )</p>
                                             </div>
                                         </div>
-                                    </c:otherwise>
-                                </c:choose>
-                            </ul>
-                        </div>
-                    </c:forEach>
-                    <div class="text-danger text-center">
-                        ${mess}
+                                        <div class="row">
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-10 mt-2">
+                                                
+                                                <p>Explanation: ${question.getExplanation().equals("") ? "None" : question.getExplanation()}</p>                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+                            </c:if>
+                        </c:forEach>
+
                     </div>
-                </c:if>
-                
+                </c:forEach>
             </div>
         </div>
         <!-- Course Description Ends Here -->

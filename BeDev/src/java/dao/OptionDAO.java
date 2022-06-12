@@ -9,7 +9,6 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import modal.Answer;
 import modal.Option;
 import modal.Question;
 
@@ -105,8 +104,14 @@ public class OptionDAO extends DBContext {
         return 0;
     }
 
-    public ArrayList<Answer> getAnswerByRecordIdAndQuestionId(int rid, int questionId) {
-        ArrayList<Answer> answers = new ArrayList<>();
+    /**
+     * This method get list answer of question in a record
+     * @param rid is record id
+     * @param questionId is question id
+     * @return 
+     */
+    public ArrayList<Option> getAnswerByRecordIdAndQuestionId(int rid, int questionId) {
+        ArrayList<Option> opList = new ArrayList<>();
         try {
             String sql = "select ar.answerID from Answer_Record ar\n"
                     + "where ar.quizRecordID = ? and ar.questionID = ?";
@@ -115,29 +120,33 @@ public class OptionDAO extends DBContext {
             stm.setInt(2, questionId);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                answers.add(new Answer(new Option(rs.getInt(1))));
+                opList.add(new Option(rs.getInt(1)));
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return answers;
+        return opList;
     }
-
-    public ArrayList<Answer> listCompareResult(int rid) {
-        ArrayList<Answer> answers = new ArrayList<>();
+    
+    /**
+     * This method get list option compare between option of question and answer of student
+     * @param rid is record id
+     * @param questionID is question id
+     * @return 
+     */
+    public ArrayList<Option> listCompareResult(int rid, int questionID) {
+        ArrayList<Option> answers = new ArrayList<>();
         try {
-            String sql = "SELECT O.optionID AS TRUE_OPTION, AR.answerID AS ANSWER_OPTION, O1.content AS STUDENT_ANSWER FROM Question Q\n"
-                    + "LEFT JOIN Answer_Record AR\n"
-                    + "ON AR.questionID = Q.questionID AND AR.quizRecordID = ?\n"
-                    + "right join [OPTION] O\n"
-                    + "ON O.questionID = Q.questionID AND O.isTrue = 1 AND Q.status = 1\n"
-                    + "JOIN [Option] O1\n"
-                    + "ON O1.optionID = AR.answerID";
+            String sql = "select o.optionID, o.content, o.isTrue, ar.answerID from [Option] o\n"
+                    + "left join Answer_Record ar\n"
+                    + "on o.questionID = ar.questionID and o.optionID = ar.answerID and ar.quizRecordID = ?\n"
+                    + "where o.questionID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, rid);
+            stm.setInt(2, questionID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                answers.add(new Answer(rs.getInt(1), rs.getInt(2), rs.getString(3)));
+                answers.add(new Option(rs.getInt(1), rs.getString(2), rs.getBoolean(3), rs.getInt(4)));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -147,9 +156,10 @@ public class OptionDAO extends DBContext {
 
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
-        int k = dao.numberTrueOption(11);
-        ArrayList<Answer> answers = dao.getAnswerByRecordIdAndQuestionId(1, 11);
-        System.out.println(answers.size());
-        System.out.println(k);
+        ArrayList<Option> blabla = dao.listCompareResult(1,11);
+        for (Option option : blabla) {
+            System.out.println(option.getAnswerOption());
+        }
     }
+
 }

@@ -21,8 +21,8 @@ public class Question {
     private double pointPerQuestion;
     private boolean multipleChoice;
     private int numberTrueOption;
-    private ArrayList<Answer> answerList;
-    private ArrayList<Answer> compareList;
+    private ArrayList<Option> answerList;
+    private ArrayList<Option> compareList;
     
     public Question() {
     }
@@ -139,21 +139,23 @@ public class Question {
         this.numberTrueOption = numberTrueOption;
     }
 
-    public ArrayList<Answer> getAnswerList() {
+    public ArrayList<Option> getAnswerList() {
         return answerList;
     }
 
-    public void setAnswerList(ArrayList<Answer> answerList) {
+    public void setAnswerList(ArrayList<Option> answerList) {
         this.answerList = answerList;
     }
 
-    public ArrayList<Answer> getCompareList() {
+    public ArrayList<Option> getCompareList() {
         return compareList;
     }
 
-    public void setCompareList(ArrayList<Answer> compareList) {
+    public void setCompareList(ArrayList<Option> compareList) {
         this.compareList = compareList;
     }
+
+
     
     
     

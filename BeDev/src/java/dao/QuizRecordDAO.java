@@ -18,6 +18,12 @@ import modal.QuizRecord;
  */
 public class QuizRecordDAO extends DBContext {
 
+    /**
+     * This method get list of quiz record done by student 
+     * @param sid is student id
+     * @param qid is quiz id
+     * @return a quiz record
+     */
     public ArrayList<QuizRecord> listRecord(int sid, int qid) {
         ArrayList<QuizRecord> list = new ArrayList<>();
         try {
@@ -35,7 +41,14 @@ public class QuizRecordDAO extends DBContext {
         }
         return list;
     }
-
+    
+    /**
+     * This method is a record of grade and passrate of quiz in a quiz record completed by student
+     * @param rid is recordID
+     * @param qid is quiz id
+     * @param sid is student id
+     * @return a quiz record
+     */
     public QuizRecord compareGrade(int rid, int qid, int sid) {
         try {
             String sql = "select qr.grade, q.passRate, q.quizName from Quiz_Record qr, Quiz q\n"
@@ -54,6 +67,11 @@ public class QuizRecordDAO extends DBContext {
         return null;
     }
 
+    /**
+     * This method get name of a quiz
+     * @param qid is a quiz id
+     * @return a name of quiz
+     */
     public QuizRecord nameOfQuiz(int qid) {
         try {
             String sql = "select quizName from Quiz\n"
