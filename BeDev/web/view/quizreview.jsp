@@ -133,49 +133,20 @@
                 <br>
                 <span style="padding-right: 5px;"><strong>Total grade </strong></span><span>10</span>
               <br><br><br><br>
-                <!--  
+                  
+              
+              
+              
+                 
                 <%int questionOrder = 1;%>
-                <% int numberTrueAnswer = 0;%>
-                <c:if test="${answeredList == null}">
-                    <form action="QuizHandle?qid=${quiz.getQuizID()}" method="POST">
-                        <%questionOrder = 1;%>
-                        <c:forEach items="${questionList}" var="question">
-                            <%numberTrueAnswer = 0;%>
-                            <c:forEach items="${question.getAnswerList()}" var="answer">
-                                <c:if test="${answer.isTrue()}">
-                                    <%numberTrueAnswer++;%>
-                                </c:if>
-                            </c:forEach>
-                            <div style="padding-bottom: 45px;">
-                                <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
-                                <%questionOrder++;%>
-                                <ul class="p-1">
-                                    <c:forEach items="${question.getAnswerList()}" var="answer">
-                                        <li class="list-group-item border-0">
-                                            <div class="form-check">
-                                                <input class="form-check-input" value="${answer.getAnswerID()}" name="${question.getQuestionID()}" type="<%=(numberTrueAnswer == 1) ? "radio" : "checkbox"%>" style="margin-right: 10px"> 
-                                                ${answer.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}
-                                            </div>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                            </div>
-                        </c:forEach>
-                        <div class="text-center">
-                            <button class="btn btn-primary btn-lg text-white">Submit quiz</button>
-                        </div>
-                    </form>
-                </c:if>
                 <c:if test="${answeredList != null}">
+                    <!-- vong for cho question -->
                     <c:forEach items="${questionList}" var="question">
                         <%numberTrueAnswer = 0;%>
-                        <c:forEach items="${question.getAnswerList()}" var="answer">
-                            <c:if test="${answer.isTrue()}">
-                                <%numberTrueAnswer++;%>
-                            </c:if>
-                        </c:forEach>
                         <div style="padding-bottom: 45px;">
+                            <!-- hien thi question-->
                             <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
+                            <!-- bien dem cau hoi-->
                             <%questionOrder++;%>
                             <ul class="p-1">
                                 <c:forEach items="${question.getAnswerList()}" var="answer">
@@ -235,7 +206,7 @@
                         ${mess}
                     </div>
                 </c:if>
-                -->
+                
             </div>
         </div>
         <!-- Course Description Ends Here -->

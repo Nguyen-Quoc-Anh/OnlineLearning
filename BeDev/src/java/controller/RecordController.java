@@ -71,9 +71,10 @@ public class RecordController extends HttpServlet {
                 return;
             }
             request.setAttribute("qid", qid);
-        } catch (IOException e) {
-            System.out.println(e + "Failed at RecordController");
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "Failed at RecordController");
             response.sendRedirect("Error");
+            return; 
         }
         processRequest(request, response);
     }
