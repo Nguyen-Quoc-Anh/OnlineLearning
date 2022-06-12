@@ -22,7 +22,7 @@ public class ChapterDAO extends DBContext {
      * This method get a list chapter by course ID from database
      * @return a list chapter
      */
-    public List<Chapter> listChapter(String courseID) {
+    public List<Chapter> listChapterByCourse(String courseID) {
         List<Chapter> listChapter = new ArrayList<>();
         try {
             String sql = "select c.chapterID, c.chapterName, c.position, l.lessonID, l.lessonName, "
@@ -57,7 +57,7 @@ public class ChapterDAO extends DBContext {
 
     public static void main(String[] args) {
         ChapterDAO c = new ChapterDAO();
-        System.out.println(c.listChapter("1").get(2).getLessons().size());
+        System.out.println(c.listChapterByCourse("1").get(2).getLessons().size());
     }
 
 }

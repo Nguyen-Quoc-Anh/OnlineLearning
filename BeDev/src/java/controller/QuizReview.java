@@ -35,6 +35,29 @@ public class QuizReview extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        HttpSession session = request.getSession();
+        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
+        try {
+            int rid = Integer.parseInt(request.getParameter("rid"));
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            if (session.getAttribute("account") != null ) {
+                if (session.getAttribute("student") != null) {
+                    Student student = (Student) session.getAttribute("student");
+                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
+                    request.setAttribute("quizRecord", quizRecord);
+                } else {
+                    response.sendRedirect("Error");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
+            }
+            request.setAttribute("rid", rid);
+            request.setAttribute("qid", qid);          
+        } catch (IOException e) {
+            response.sendRedirect("Error");
+        }
         request.getRequestDispatcher("//view/quizreview.jsp").forward(request, response);
     }
 
@@ -50,30 +73,6 @@ public class QuizReview extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
-        try {
-            int rid = Integer.parseInt(request.getParameter("rid"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") !=null ) {
-                if (session.getAttribute("student") != null) {
-                    Student student = (Student) session.getAttribute("student");
-                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
-                    request.setAttribute("quizRecord", quizRecord);
-                } else {
-                    response.sendRedirect("Error");
-                    return;
-                }
-            }else{
-                response.sendRedirect("SignIn");
-                return;
-            }
-            request.setAttribute("rid", rid);
-            request.setAttribute("qid", qid);          
-        } catch (IOException e) {
-            System.out.println(e + "Failed at QuizReview");
-            response.sendRedirect("Error");
-        }
         processRequest(request, response);
     }
 

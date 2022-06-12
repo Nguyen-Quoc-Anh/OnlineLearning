@@ -51,7 +51,7 @@ public class CourseDetails extends HttpServlet {
         request.setAttribute("categoryOfCourse", listCategory);
         //Get list chapter of course by course ID from chapterDAO
         ChapterDAO chapterDAO = new ChapterDAO();
-        List<Chapter> listChapter = chapterDAO.listChapter(courseID);
+        List<Chapter> listChapter = chapterDAO.listChapterByCourse(courseID);
         request.setAttribute("listChapter", listChapter);
         //Get list rate of course by course ID from rateDAO
         RateDAO rateDAO = new RateDAO();
