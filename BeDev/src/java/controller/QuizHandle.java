@@ -112,7 +112,7 @@ public class QuizHandle extends HttpServlet {
                 }
             }
             quizDAO.updateQuizRecordGrade(totalGrade, quizRecordID);
-            response.sendRedirect("QuizReview?qid=" + quizRecordID);    // redirect to view result
+            response.sendRedirect("QuizReview?rid=" + quizRecordID + "&qid=" + quizID);    // redirect to view result
         } catch (Exception e) {
             System.out.println(e.getMessage());
             response.sendRedirect("Error");

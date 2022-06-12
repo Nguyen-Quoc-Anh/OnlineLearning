@@ -133,6 +133,7 @@
                 <br>
                 <span style="padding-right: 5px;"><strong>Total grade </strong></span><span>10</span>
               <br><br><br><br>
+                  
               
               
               
@@ -141,7 +142,7 @@
                 <c:if test="${answeredList != null}">
                     <!-- vong for cho question -->
                     <c:forEach items="${questionList}" var="question">
-                        <!-- check number true answer -->
+                        <%numberTrueAnswer = 0;%>
                         <div style="padding-bottom: 45px;">
                             <!-- hien thi question-->
                             <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>

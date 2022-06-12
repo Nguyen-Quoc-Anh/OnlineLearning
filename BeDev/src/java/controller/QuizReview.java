@@ -70,9 +70,10 @@ public class QuizReview extends HttpServlet {
             }
             request.setAttribute("rid", rid);
             request.setAttribute("qid", qid);          
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println(e + "Failed at QuizReview");
             response.sendRedirect("Error");
+            return;
         }
         processRequest(request, response);
     }

@@ -9,6 +9,7 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import modal.Answer;
 import modal.Option;
 import modal.Question;
 import modal.Quiz;
@@ -99,5 +100,29 @@ public class QuestionDAO extends DBContext {
         }
         return -1;
     }
-    
+
+    public ArrayList<Question> listQuestionByQuizID(int quizID, int rid) {
+        ArrayList<Question> questions = new ArrayList<>();
+        OptionDAO optionDAO = new OptionDAO();
+        try {
+            String sql = "select q.questionID, q.content, q.explaination from Question q\n"
+                    + "where q.quizID = ? and q.status = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), optionDAO.numberTrueOption(rs.getInt(1)));
+                ArrayList<Option> listOption = optionDAO.getOptionsByQuestionID(quizID);
+                ArrayList<Answer> listAnswer = optionDAO.getAnswerByRecordIdAndQuestionId(rid, rs.getInt(1));
+                ArrayList<Answer> listCompare = optionDAO.listCompareResult(rid);
+                question.setOptionList(listOption);
+                question.setAnswerList(listAnswer);
+                question.setCompareList(listCompare);
+                questions.add(question);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return questions;
+    }
 }
