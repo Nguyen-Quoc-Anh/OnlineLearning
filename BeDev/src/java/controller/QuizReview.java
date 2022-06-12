@@ -5,14 +5,19 @@
  */
 package controller;
 
+import dao.QuestionDAO;
 import dao.QuizRecordDAO;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Option;
+import modal.Question;
 import modal.QuizRecord;
 import modal.Student;
 
@@ -52,14 +57,17 @@ public class QuizReview extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
         try {
             int rid = Integer.parseInt(request.getParameter("rid"));
             int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") !=null ) {
-                if (session.getAttribute("student") != null) {
+            if (session.getAttribute("account") !=null ) {  //check login with account session
+                if (session.getAttribute("student") != null) { //check student login
                     Student student = (Student) session.getAttribute("student");
-                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
+                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());  // a record contain grade and passrate of quiz in a quizrecord
+                    ArrayList<Question> questionList = questionDAO.listQuestionByQuizIdAndRecordId(qid, rid); // list question of quiz (contain option of question and answer of student)
                     request.setAttribute("quizRecord", quizRecord);
+                    request.setAttribute("questionList", questionList);
                 } else {
                     response.sendRedirect("Error");
                     return;

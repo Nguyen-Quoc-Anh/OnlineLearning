@@ -9,7 +9,6 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import modal.Answer;
 import modal.Option;
 import modal.Question;
 import modal.Quiz;
@@ -100,8 +99,14 @@ public class QuestionDAO extends DBContext {
         }
         return -1;
     }
-
-    public ArrayList<Question> listQuestionByQuizID(int quizID, int rid) {
+    
+    /**
+     * This method get list question (contain option of question and answer of student) in a quiz
+     * @param quizID
+     * @param rid
+     * @return 
+     */
+    public ArrayList<Question> listQuestionByQuizIdAndRecordId(int quizID, int rid) {
         ArrayList<Question> questions = new ArrayList<>();
         OptionDAO optionDAO = new OptionDAO();
         try {
@@ -112,9 +117,9 @@ public class QuestionDAO extends DBContext {
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), optionDAO.numberTrueOption(rs.getInt(1)));
-                ArrayList<Option> listOption = optionDAO.getOptionsByQuestionID(quizID);
-                ArrayList<Answer> listAnswer = optionDAO.getAnswerByRecordIdAndQuestionId(rid, rs.getInt(1));
-                ArrayList<Answer> listCompare = optionDAO.listCompareResult(rid);
+                ArrayList<Option> listOption = optionDAO.getOptionsByQuestionID(rs.getInt(1)); // list option of a question
+                ArrayList<Option> listAnswer = optionDAO.getAnswerByRecordIdAndQuestionId(rid, rs.getInt(1)); // list answer of question in a record
+                ArrayList<Option> listCompare = optionDAO.listCompareResult(rid,rs.getInt(1)); //list option compare between option of question and answer of student
                 question.setOptionList(listOption);
                 question.setAnswerList(listAnswer);
                 question.setCompareList(listCompare);
