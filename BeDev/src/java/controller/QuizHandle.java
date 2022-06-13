@@ -91,7 +91,7 @@ public class QuizHandle extends HttpServlet {
             Account account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
             ArrayList<Question> questionsList = questionDAO.getQuestionsAndTrueOption(quizID);
-            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), totalGrade, quizID);
+            int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), quizID);
             if (quizRecordID == -1) {   // can't insert into database
                 request.setAttribute("mess", "Cannot insert quiz record.");
                 processRequest(request, response);
@@ -101,6 +101,7 @@ public class QuizHandle extends HttpServlet {
                 // get checked option
                 String[] studentOptions = request.getParameterValues(Integer.toString(question.getQuestionID()));
                 if (studentOptions == null) {   // student not answer this question
+                    answerDAO.insertOptionRecord(question.getQuestionID(), -1, quizRecordID);
                     continue;
                 }
                 for (int j = 0; j < studentOptions.length; j++) {
@@ -114,7 +115,7 @@ public class QuizHandle extends HttpServlet {
             quizDAO.updateQuizRecordGrade(totalGrade, quizRecordID);
             response.sendRedirect("QuizReview?qid=" + quizRecordID);    // redirect to view result
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e);
             response.sendRedirect("Error");
         }
     }

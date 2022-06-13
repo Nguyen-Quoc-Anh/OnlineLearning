@@ -42,17 +42,15 @@ public class QuizDAO extends DBContext {
      * This method insert a quiz record into database.
      *
      * @param studentID id of student who take quiz
-     * @param grade grade of student
      * @param quizID id of quiz
      * @return a quiz record id.
      */
-    public int insertQuizRecord(int studentID, double grade, int quizID) {
+    public int insertQuizRecord(int studentID, int quizID) {
         try {
-            String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, ?, ?)";
+            String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, 0, ?)";
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, studentID);
-            stm.setDouble(2, grade);
-            stm.setInt(3, quizID);
+            stm.setInt(2, quizID);
             stm.executeUpdate();
             ResultSet rs = stm.getGeneratedKeys();
             while (rs.next()) {
