@@ -22,7 +22,7 @@ public class CategoryDAO extends DBContext {
     
     public List<Category> listCategory() {
         List<Category> list = new ArrayList<>();
-        String sql = "select * from Category";
+        String sql = "select categoryID, categoryName from Category";
         try {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
@@ -35,6 +35,10 @@ public class CategoryDAO extends DBContext {
         return list;
     }
     
+    /**
+     * This method get list category from database and number course of each category
+     * @return a list category
+     */
     public List<Category> listCategoryAndNumberCourse() {
         List<Category> list = new ArrayList<>();
         String sql = "select c.categoryID, c.categoryName, count(cc.courseID) as Number_Course from Category c\n"
@@ -54,11 +58,33 @@ public class CategoryDAO extends DBContext {
         return list;
     }
     
+    /**
+     * This method get list category by course ID from database
+     * @return a list category
+     */
+    public List<Category> listCategoryByCourse(String courseID) {
+        List<Category> list = new ArrayList<>();
+        String sql = "select cc.categoryID, c.categoryName from Course_Category cc "
+                + "inner join Category c on cc.categoryID = c.categoryID where cc.courseID = ?";
+        try {
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new Category(rs.getInt(1), rs.getString(2)));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    
     
     public static void main(String[] args) {
         CategoryDAO dao = new CategoryDAO();
-        for (Category category : dao.listCategory()) {
-            System.out.println(category.toString());
-        }
+//        for (Category category : dao.listCategory()) {
+//            System.out.println(category.toString());
+//        }
+        System.out.println(dao.listCategoryByCourse("1"));
     }
 }

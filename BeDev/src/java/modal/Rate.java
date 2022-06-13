@@ -12,25 +12,42 @@ package modal;
 public class Rate {
     private int rateID;
     private int star;
-    private Account account;
+    private Student student;
     private String content;
     private Course course;
 
     public Rate() {
     }
 
-    public Rate(int rateID, int star, Account account, String content, Course course) {
-        this.rateID = rateID;
-        this.star = star;
-        this.account = account;
-        this.content = content;
-        this.course = course;
-    }
-
     public Rate(int star, Course course) {
         this.star = star;
         this.course = course;
     }
+
+    public Rate(int rateID, int star, Student student, String content, Course course) {
+        this.rateID = rateID;
+        this.star = star;
+        this.student = student;
+        this.content = content;
+        this.course = course;
+    }
+
+    public Rate(int rateID, int star, Student student, String content) {
+        this.rateID = rateID;
+        this.star = star;
+        this.student = student;
+        this.content = content;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+    
+    
 
     public int getRateID() {
         return rateID;
@@ -46,14 +63,6 @@ public class Rate {
 
     public void setStar(int star) {
         this.star = star;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public String getContent() {

@@ -1,32 +1,28 @@
-
 /*
- * Copyright(C) 2005, FPT university
- * ...
- * ...
- *
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2018-09-10      1.0                 HuyTQ           First Implement
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
-import dao.AccountDAO;
+import dao.QuizRecordDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Account;
+import modal.QuizRecord;
+import modal.Student;
 
 /**
  *
- * @author ADMIN
+ * @author admin
  */
-@WebServlet(name = "ChangePassword", urlPatterns = {"/ChangePassword"})
-public class ChangePassword extends HttpServlet {
+@WebServlet(name = "RecordController", urlPatterns = {"/RecordController"})
+public class RecordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,7 +36,7 @@ public class ChangePassword extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view//changepassword.jsp").forward(request, response);
+        request.getRequestDispatcher("//view/quizrecord.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,11 +52,29 @@ public class ChangePassword extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("account") != null) {
-
-        } else {
-            response.sendRedirect("HomeControl");
-            return;
+        QuizRecordDAO recordDAO = new QuizRecordDAO();
+        try {
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            if (session.getAttribute("account") !=null ) { //check login with account session
+                if (session.getAttribute("student") != null) { //check student login
+                    Student student = (Student) session.getAttribute("student");
+                    ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid); // list quiz record of student in a quiz
+                    QuizRecord quizRecord = recordDAO.nameOfQuiz(qid); // name of quiz
+                    request.setAttribute("listRecord", listRecord);
+                    request.setAttribute("quizRecord", quizRecord);
+                } else {
+                    response.sendRedirect("Error");
+                    return;
+                }
+            }else{
+                response.sendRedirect("SignIn");
+                return;
+            }
+            request.setAttribute("qid", qid);
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + "Failed at RecordController");
+            response.sendRedirect("Error");
+            return; 
         }
         processRequest(request, response);
     }
@@ -76,30 +90,6 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String curPass = request.getParameter("curPass");
-        String newPass = request.getParameter("newPass");
-        String confirmNewPass = request.getParameter("confirmNewPass");
-
-        AccountDAO accountDAO = new AccountDAO();
-        Account account = (Account) session.getAttribute("account");
-        String mess = null;
-        if (!account.getPassword().equals(curPass)) {// check if curPass matches the password in session. 
-            mess = "Current password is incorrect.";
-        } else {
-            if (!newPass.equals(confirmNewPass)) {// check newPass matches confirmPass.
-                mess = "Confirm new passsword is incorrect";
-            } else {
-                if (accountDAO.changePassword(account.getEmail(), newPass)) {// changePassword
-                    mess = "Change password successfully.";
-                    account.setPassword(newPass);
-                    session.setAttribute("account", account);
-                } else {
-                    mess = "Something went wrong.";
-                }
-            }
-        }
-        request.setAttribute("mess", mess);
         processRequest(request, response);
     }
 

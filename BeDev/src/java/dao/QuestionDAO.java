@@ -98,4 +98,35 @@ public class QuestionDAO extends DBContext {
         }
         return -1;
     }
+    
+    /**
+     * This method get list question (contain option of question and answer of student) in a quiz
+     * @param quizID
+     * @param rid
+     * @return 
+     */
+    public ArrayList<Question> listQuestionByQuizIdAndRecordId(int quizID, int rid) {
+        ArrayList<Question> questions = new ArrayList<>();
+        OptionDAO optionDAO = new OptionDAO();
+        try {
+            String sql = "select q.questionID, q.content, q.explaination from Question q\n"
+                    + "where q.quizID = ? and q.status = 1";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), optionDAO.numberTrueOption(rs.getInt(1)));
+                ArrayList<Option> listOption = optionDAO.getOptionsByQuestionID(rs.getInt(1)); // list option of a question
+                ArrayList<Option> listAnswer = optionDAO.getAnswerByRecordIdAndQuestionId(rid, rs.getInt(1)); // list answer of question in a record
+                ArrayList<Option> listCompare = optionDAO.listCompareResult(rid,rs.getInt(1)); //list option compare between option of question and answer of student
+                question.setOptionList(listOption);
+                question.setAnswerList(listAnswer);
+                question.setCompareList(listCompare);
+                questions.add(question);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return questions;
+    }
 }

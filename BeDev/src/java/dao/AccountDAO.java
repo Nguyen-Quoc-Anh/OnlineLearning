@@ -127,7 +127,12 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
-
+    /**
+     * this method is used to check email and password when login..
+     * @param email
+     * @param password
+     * @return a account if input is valid opposite return null.
+     */
     public Account signIn(String email, String password) {
         try {
             String sql = "select * from Account a\n"
@@ -166,7 +171,11 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
-
+    /**
+     * This method is used to get student by account ID
+     * @param id
+     * @return a student have this id.
+     */
     public Student getStudentByAccountID(int id) {
         try {
             String sql = "select * from Account a , Student s\n"
@@ -183,7 +192,11 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-
+    /**
+     * This method is used to get expert by account id.
+     * @param id of account
+     * @return a expert have this id
+     */
     public Expert getExpertByAccountID(int id) {
         try {
             String sql = "select * from Account a , Expert e\n"
@@ -200,7 +213,11 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
-
+    /**
+     * This method is used to get a admin by account id.
+     * @param id of account.
+     * @return a admin have this id
+     */
     public Admin getAdminByAccountID(int id) {
         try {
             String sql = "select * from Admin a , Account acc\n"

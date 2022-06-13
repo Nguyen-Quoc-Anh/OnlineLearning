@@ -8,6 +8,7 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import modal.Course;
@@ -53,7 +54,11 @@ public class EnrollDAO extends DBContext {
         }
         return 0;
     }
-
+    /**
+     * This method is number course enrolled by student from database 
+     * @param id is id of student
+     * @return number course enrolled by student
+     */
     public int countEnrollOfStudent(int id) {
         try {
             String sql = "select count(*) from Enroll e\n"
@@ -64,7 +69,7 @@ public class EnrollDAO extends DBContext {
             while (rs.next()) {
                 return rs.getInt(1);
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return 0;

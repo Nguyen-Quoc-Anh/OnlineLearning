@@ -221,11 +221,11 @@
                                 <div class="col-md-6 mb-4">
                                     <div class="contentCard contentCard--course">
                                         <div class="contentCard-top">
-                                            <a href="#"><img src="${course.courseImage}" alt="images" class="img-fluid" /></a>
+                                            <a href="CourseDetails?courseID=${course.courseID}"><img src="${course.courseImage}" alt="images" class="img-fluid" /></a>
                                         </div>
                                         <div class="contentCard-bottom">
                                             <h5>
-                                                <a href="#" class="font-title--card">${course.courseName}</a>
+                                                <a href="CourseDetails?courseID=${course.courseID}" class="font-title--card">${course.courseName}</a>
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                 <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
@@ -238,17 +238,12 @@
                                             </div>
                                             <div class="contentCard-more">
                                                 <div class="d-flex align-items-center">
-
-                                                    <c:forEach items="${listRate}" var="rate">
-                                                        <c:if test="${rate.getCourse().courseID == course.courseID}">
-                                                            <div class="icon">
-                                                                <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
-                                                            </div>
-                                                            <span>
-                                                                ${rate.star}
-                                                            </span>
-                                                        </c:if>
-                                                    </c:forEach>
+                                                    <div class="icon">
+                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
+                                                    </div>
+                                                    <span>
+                                                        ${course.averageStar}
+                                                    </span>
                                                 </div>
                                                 <div class="eye d-flex align-items-center">
                                                     <div class="icon">

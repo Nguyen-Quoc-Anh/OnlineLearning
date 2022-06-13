@@ -10,19 +10,32 @@ package modal;
  * @author ACER
  */
 public class Option {
+
     private int optionID;
     private Question question;
     private String content;
     private boolean isTrue;
     private double point;
     
+    private int trueOption;
+    private int answerOption;
+
     public Option() {
     }
 
+
+    public Option(int optionID, String content, boolean isTrue, int answerOption) {
+        this.optionID = optionID;
+        this.content = content;
+        this.isTrue = isTrue;
+        this.answerOption = answerOption;
+    }
+    
+    
     public Option(int optionID) {
         this.optionID = optionID;
     }
-    
+
     public Option(int optionID, Question question, String content, boolean isTrue) {
         this.optionID = optionID;
         this.question = question;
@@ -40,7 +53,7 @@ public class Option {
         this.optionID = optionID;
         this.isTrue = isTrue;
     }
-    
+
     public Option(int optionID, double point) {
         this.optionID = optionID;
         this.point = point;
@@ -86,6 +99,23 @@ public class Option {
         this.point = point;
     }
 
+    public int getTrueOption() {
+        return trueOption;
+    }
+
+    public void setTrueOption(int trueOption) {
+        this.trueOption = trueOption;
+    }
+
+    public int getAnswerOption() {
+        return answerOption;
+    }
+
+    public void setAnswerOption(int answerOption) {
+        this.answerOption = answerOption;
+    }
+
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -110,4 +140,10 @@ public class Option {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return optionID + "";
+    }
+    
 }

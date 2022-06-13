@@ -7,9 +7,7 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.CourseDAO;
-import dao.RateDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -19,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import modal.Category;
 import modal.Course;
-import modal.Rate;
 
 /**
  *
@@ -41,26 +38,24 @@ public class CourseListSearch extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+        //Get list category from categoryDAO
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> listCategory = categoryDAO.listCategory();
         request.setAttribute("listCategory", listCategory);
-
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.starCourse();
-        request.setAttribute("listRate", listRate);
-
+        //Get current number page
         String pagePosition = request.getParameter("pagePosition");
         if (pagePosition == null) {
             pagePosition = "1";
         }
         request.setAttribute("pagePosition", pagePosition);
+        //Number product to display in tha page
         String numberProduct = request.getParameter("numberProduct");
         if (numberProduct == null) {
             numberProduct = "4";
         }
         request.setAttribute("numberProduct", numberProduct);
+        //Get list course from courseDAO and get the course which course name contains a information  
         String search = request.getParameter("search");
-
         CourseDAO courseDAO = new CourseDAO();
         List<Course> listCourse = courseDAO.listCourse();
         request.setAttribute("search", search);
@@ -70,15 +65,14 @@ public class CourseListSearch extends HttpServlet {
                 listCourseBySearch.add(course);
             }
         }
-
+        request.setAttribute("listCourse", listCourseBySearch);
+        //Get maxinum page can display
         int pageMax = listCourseBySearch.size() / Integer.parseInt(numberProduct);
         if (listCourseBySearch.size() % Integer.parseInt(numberProduct) != 0) {
             pageMax += 1;
         }
         request.setAttribute("pageMax", pageMax);
-        request.setAttribute("listCourse", listCourseBySearch);
         request.setAttribute("url", "CourseListSearch?search=" + search);
-
         request.getRequestDispatcher("//view//courseSearch.jsp").forward(request, response);
     }
 
