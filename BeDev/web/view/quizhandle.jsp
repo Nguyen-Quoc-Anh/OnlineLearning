@@ -64,9 +64,9 @@
                                 <c:forEach items="${question.getOptionList()}" var="option">
                                     <li class="list-group-item border-0">
                                         <div class="form-check">
-                                            <input class="form-check-input" value="${option.getOptionID()}" name="${question.getQuestionID()}" 
+                                            <input class="form-check-input" value="${option.getOptionID()}" id="${option.getOptionID()}" name="${question.getQuestionID()}" 
                                                    type="${question.isMultipleChoice() ? "checkbox" : "radio"}" style="margin-right: 10px"> 
-                                            ${option.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}
+                                            <label for="${option.getOptionID()}">${option.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")}</label>
                                         </div>
                                     </li>
                                 </c:forEach>

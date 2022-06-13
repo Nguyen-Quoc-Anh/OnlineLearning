@@ -86,7 +86,7 @@ public class QuestionDAO extends DBContext {
      */
     public int countQuestionsInQuiz(int quizID) {
         try {
-            String sql = "select count(*) from Question where quizID = ?";
+            String sql = "select count(*) from Question where quizID = ? and status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
             ResultSet rs = stm.executeQuery();
