@@ -235,6 +235,21 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
+    
+    /**
+     * This method enroll a course by course ID
+     */
+    public void enrollCourse(String courseID, int accountID) {
+        try {
+            String sql = "insert into Enroll values (?, ?, GETDATE())";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, courseID);
+            stm.setInt(2, accountID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public static void main(String[] args) {
         CourseDAO dao = new CourseDAO();
