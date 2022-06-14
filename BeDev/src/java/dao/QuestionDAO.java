@@ -29,15 +29,16 @@ public class QuestionDAO extends DBContext {
         ArrayList<Question> questions = new ArrayList<>();
         OptionDAO answerDAO = new OptionDAO();
         try {
-            String sql = "select ques.questionID, ques.content, ques.explaination, ques.status, \n"
-                    + "(select count(o.optionID) from [Option] o where o.isTrue = 1 and o.questionID = ques.questionID) as NumberOfTrueOption\n"
-                    + "from Question ques where ques.quizID = ? and ques.status = 1";
+            String sql = "select ques.questionID, ques.content, ques.explaination, count(o.optionID)\n"
+                    + "from Question ques, [Option] o \n"
+                    + "where ques.quizID = ? and ques.status = 1 and o.questionID = ques.questionID and o.isTrue = 1\n"
+                    + "group by ques.questionID, ques.content, ques.explaination";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(quizID), rs.getBoolean(4));
-                question.setMultipleChoice(rs.getInt(5) > 1);
+                Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(quizID), true);
+                question.setMultipleChoice(rs.getInt(4) > 1);
                 ArrayList<Option> option = answerDAO.getOptionsByQuestionID(question.getQuestionID());
                 question.setOptionList(option);
                 questions.add(question);
@@ -59,13 +60,11 @@ public class QuestionDAO extends DBContext {
         ArrayList<Question> questions = new ArrayList<>();
         OptionDAO answerDAO = new OptionDAO();
         try {
-            String sql = "select ques.questionID, \n"
-                    + "(10.0/(select count(*) from Question q where q.quizID = ? and q.status = 1)) as PointPerQuestion \n"
-                    + "from Question ques where ques.quizID = ? and ques.status = 1\n"
-                    + "group by ques.quizID, ques.questionID";
+            String sql = "select ques.questionID, 10.0/count(ques.questionID)\n"
+                    + "from Question ques join Question ques1 on ques.quizID = ? and ques.status = 1 and ques1.status =1\n"
+                    + "group by ques.questionID";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
-            stm.setInt(2, quizID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Question question = new Question(rs.getInt(1), rs.getDouble(2));
@@ -87,7 +86,7 @@ public class QuestionDAO extends DBContext {
      */
     public int countQuestionsInQuiz(int quizID) {
         try {
-            String sql = "select count(*) from Question where quizID = ?";
+            String sql = "select count(*) from Question where quizID = ? and status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
             ResultSet rs = stm.executeQuery();

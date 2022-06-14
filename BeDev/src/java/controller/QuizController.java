@@ -55,21 +55,10 @@ public class QuizController extends HttpServlet {
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
         QuestionDAO questionDAO = new QuestionDAO();
-        CourseDAO courseDAO = new CourseDAO();
-        HttpSession session = request.getSession();
-        Account account;
 
         try {
-            account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
-            if (quiz == null) {
-                throw new Exception();
-            }
-            boolean enrolled = courseDAO.checkStudentEnrollByQuizID(quizID, account.getAccountID());
-            if (!enrolled) {
-                throw new Exception();
-            }
             int numberOfQuestion = questionDAO.countQuestionsInQuiz(quizID);
             request.setAttribute("numberOfQuestion", numberOfQuestion);
             request.setAttribute("quiz", quiz);

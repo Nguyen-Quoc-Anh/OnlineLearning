@@ -8,6 +8,7 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.util.ArrayList;
 import modal.Option;
 import modal.Question;
@@ -49,13 +50,13 @@ public class OptionDAO extends DBContext {
     public ArrayList<Option> getTrueOptionsByQuestionID(Question question) {
         ArrayList<Option> options = new ArrayList<>();
         try {
-            String sql = "select o.optionID, \n"
-                    + "(?/(select count(o.optionID) from [Option] o where o.questionID = ? and o.isTrue = 1 group by o.questionID)) as PointPerTrueOption \n"
-                    + "from [Option] o where o.questionID = ? and o.isTrue = 1";
+            String sql = "select o.optionID, ?/count(o1.optionID)\n"
+                    + "from [Option] o join [Option] o1 on o.questionID = ? and o.isTrue = 1 \n"
+                    + "and o1.isTrue = 1 and o1.questionID = o.questionID\n"
+                    + "group by o.optionID";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setDouble(1, question.getPointPerQuestion());
             stm.setInt(2, question.getQuestionID());
-            stm.setInt(3, question.getQuestionID());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 options.add(new Option(rs.getInt(1), rs.getDouble(2)));
@@ -74,14 +75,16 @@ public class OptionDAO extends DBContext {
      * @param quizRecordID id of record
      */
     public void insertOptionRecord(int questionID, int optionID, int quizRecordID) {
-        String sql;
-        PreparedStatement stm;
         try {
-            sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
-            stm = connection.prepareStatement(sql);
+            String sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizRecordID);
             stm.setInt(2, questionID);
-            stm.setInt(3, optionID);
+            if (optionID != -1) {
+                stm.setInt(3, optionID);
+            } else {
+                stm.setNull(3, Types.INTEGER);
+            }
             stm.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
