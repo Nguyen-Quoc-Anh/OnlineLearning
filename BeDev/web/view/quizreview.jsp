@@ -139,7 +139,14 @@
                 <c:forEach items="${questionList}" var="question">
                     <div style="padding-bottom: 45px;">
                         <!-- hien thi question-->
-                        <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
+                        <c:if test="${question.getNumberTrueOption() == 1}">
+                            <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} </p>
+                        </c:if>
+                            
+                        <c:if test="${question.getNumberTrueOption() != 1}">
+                            <p style="font-size: 18px;"><strong><%=questionOrder%>.</strong> ${question.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;")} ( Select ${question.getNumberTrueOption()} answer) </p>
+                        </c:if>
+
                         <!-- bien dem cau hoi-->
                         <%questionOrder++;%>
                         <ul class="p-1">
@@ -183,7 +190,7 @@
                                         <div class="row">
                                             <div class="col-md-1"></div>
                                             <div class="col-md-10 mt-2">
-                                                
+
                                                 <p>Explanation: ${question.getExplanation().equals("") ? "None" : question.getExplanation()}</p>                                               
                                             </div>
                                         </div>
@@ -191,7 +198,32 @@
                                 </c:if>
                             </c:if>
                         </c:forEach>
-
+                        <c:if test="${question.getNumberAnswer()==0}">
+                            <div style="background-color: rgb(253, 245, 245); padding: 10px; margin-left: -30px; margin-top: 10px;">
+                                <div class="row" style="color: rgb(211, 0, 1); font-weight: 600;">
+                                    <div class="col-md-1">
+                                        <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-181" class="css-1hltn8p"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.646 14.354l-8-8 .708-.708 8 8-.708.708z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.354 6.354l-8 8-.708-.708 8-8 .708.708z" fill="currentColor"></path></svg>
+                                    </div>
+                                    <div class="col-md-10 d-flex">
+                                        <p class="justify-content-center align-self-center" style="margin-right: 10px">Incorrect</p>                                               
+                                        <p> ( You don't have answer ) </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="${question.getNumberAnswer()<question.getNumberTrueOption() && question.getNumberAnswer()!=0}">
+                            <div style="background-color: rgb(253, 245, 245); padding: 10px; margin-left: -30px; margin-top: 10px;">
+                                <div class="row" style="color: rgb(211, 0, 1); font-weight: 600;">
+                                    <div class="col-md-1">
+                                        <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-181" class="css-1hltn8p"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.646 14.354l-8-8 .708-.708 8 8-.708.708z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.354 6.354l-8 8-.708-.708 8-8 .708.708z" fill="currentColor"></path></svg>
+                                    </div>
+                                    <div class="col-md-10 d-flex">
+                                        <p class="justify-content-center align-self-center" style="margin-right: 10px">Incorrect</p>                                               
+                                        <p> ( Not enough answer ) </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:if>
                     </div>
                 </c:forEach>
             </div>

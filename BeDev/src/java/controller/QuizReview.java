@@ -6,17 +6,16 @@
 package controller;
 
 import dao.QuestionDAO;
+import dao.QuizDAO;
 import dao.QuizRecordDAO;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Option;
 import modal.Question;
 import modal.QuizRecord;
 import modal.Student;
@@ -40,29 +39,6 @@ public class QuizReview extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
-        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
-        try {
-            int rid = Integer.parseInt(request.getParameter("rid"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") != null ) {
-                if (session.getAttribute("student") != null) {
-                    Student student = (Student) session.getAttribute("student");
-                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());
-                    request.setAttribute("quizRecord", quizRecord);
-                } else {
-                    response.sendRedirect("Error");
-                    return;
-                }
-            } else {
-                response.sendRedirect("SignIn");
-                return;
-            }
-            request.setAttribute("rid", rid);
-            request.setAttribute("qid", qid);          
-        } catch (IOException e) {
-            response.sendRedirect("Error");
-        }
         request.getRequestDispatcher("//view/quizreview.jsp").forward(request, response);
     }
 
@@ -81,12 +57,15 @@ public class QuizReview extends HttpServlet {
         HttpSession session = request.getSession();
         QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
         QuestionDAO questionDAO = new QuestionDAO();
+        QuizDAO quizDAO = new QuizDAO();
         try {
             int rid = Integer.parseInt(request.getParameter("rid"));
             int qid = Integer.parseInt(request.getParameter("qid"));
+            Student student = (Student) session.getAttribute("student");
             if (session.getAttribute("account") !=null ) {  //check login with account session
-                if (session.getAttribute("student") != null) { //check student login
-                    Student student = (Student) session.getAttribute("student");
+                if (session.getAttribute("student") != null 
+                        && quizRecordDAO.checkExistQuizRecord(student.getAccount().getAccountID(), rid) != 0
+                        && quizDAO.checkQuizExist(qid) != 0) { //check student login and have quiz record and quiz
                     QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());  // a record contain grade and passrate of quiz in a quizrecord
                     ArrayList<Question> questionList = questionDAO.listQuestionByQuizIdAndRecordId(qid, rid); // list question of quiz (contain option of question and answer of student)
                     request.setAttribute("quizRecord", quizRecord);

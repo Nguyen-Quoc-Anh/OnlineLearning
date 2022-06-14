@@ -23,6 +23,7 @@ public class Question {
     private int numberTrueOption;
     private ArrayList<Option> answerList;
     private ArrayList<Option> compareList;
+    private int numberAnswer;
     
     public Question() {
     }
@@ -155,7 +156,15 @@ public class Question {
         this.compareList = compareList;
     }
 
+    public int getNumberAnswer() {
+        return numberAnswer;
+    }
 
+    public void setNumberAnswer(int numberAnswer) {
+        this.numberAnswer = numberAnswer;
+    }
+
+    
     
     
     
