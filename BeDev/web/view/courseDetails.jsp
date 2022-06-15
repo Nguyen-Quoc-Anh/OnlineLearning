@@ -242,7 +242,7 @@
                                                                             <polygon points="10 8 16 12 10 16 10 8"></polygon>
                                                                             </svg>
                                                                         </a>
-                                                                        <a href="#">${lesson.position}. ${lesson.lessonName}</a>
+                                                                        <a href="LessonView?courseID=${course.courseID}&lessonID=${lesson.lessonID}">${lesson.position}. ${lesson.lessonName}</a>
                                                                     </p>
                                                                 </div>
                                                                 <div class="curriculum-description-end">
@@ -900,12 +900,23 @@
                                     </div>
                                 </div>
                                 <div class="cart__checkout-process">
-                                    <form action="EnrollCourse">
-                                        <input name="courseID" value="${course.courseID}" hidden="">
-                                        <button type="submit" class="button button-lg button--primary w-100">
-                                            Enroll
-                                        </button>
-                                    </form>
+                                    <c:if test="${isEnroll == false || student == null}">
+                                        <form action="EnrollCourse">
+                                            <input name="courseID" value="${course.courseID}" hidden="">
+                                            <button type="submit" class="button button-lg button--primary w-100">
+                                                Enroll
+                                            </button>
+                                        </form>
+                                    </c:if>
+                                    <c:if test="${isEnroll == true}">
+                                        <form action="LessonView">
+                                            <input name="courseID" value="${course.courseID}" hidden="">
+                                            <input name="lessonID" value="${listChapter.get(0).lessons.get(0).lessonID}" hidden="">
+                                            <button type="submit" class="button button-lg button--primary w-100">
+                                                Watch
+                                            </button>
+                                        </form>
+                                    </c:if>
                                 </div>
                                 <div class="cart__share-content">
                                     <h6 class="font-title--card">Share This Course</h6>

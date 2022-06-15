@@ -16,10 +16,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Category;
 import modal.Chapter;
 import modal.Course;
 import modal.Rate;
+import modal.Student;
 
 /**
  *
@@ -42,6 +44,13 @@ public class CourseDetails extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         CourseDAO courseDAO = new CourseDAO();
         String courseID = request.getParameter("courseID");
+        HttpSession session = request.getSession();
+        Student student = (Student) session.getAttribute("student");
+        //Check student enroll a course
+        if (student != null) {
+            boolean isEnroll = courseDAO.isEnroll(courseID, student.getAccount().getAccountID());
+            request.setAttribute("isEnroll", isEnroll);
+        }
         //Get a course by course ID from courseDAO
         Course course = courseDAO.getCourseById(courseID);
         request.setAttribute("course", course);
