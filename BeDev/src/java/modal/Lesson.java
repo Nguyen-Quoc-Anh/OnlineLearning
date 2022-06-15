@@ -16,6 +16,7 @@ public class Lesson {
     private String content;
     private boolean status;
     private int position;
+    private int watched;
 
     public Lesson() {
     }
@@ -28,6 +29,13 @@ public class Lesson {
         this.status = status;
         this.position = position;
     }
+    
+    public Lesson(int lessonID, String lessonName, String video, String content) {
+        this.lessonID = lessonID;
+        this.lessonName = lessonName;
+        this.video = video;
+        this.content = content;
+    }
 
     public Lesson(int lessonID, String lessonName, int position) {
         this.lessonID = lessonID;
@@ -35,8 +43,21 @@ public class Lesson {
         this.position = position;
     }
     
+    public Lesson(int lessonID, String lessonName, int position, int watched) {
+        this.lessonID = lessonID;
+        this.lessonName = lessonName;
+        this.position = position;
+        this.watched = watched;
+    }
     
+    public int getWatched() {
+        return watched;
+    }
 
+    public void setWatched(int watched) {
+        this.watched = watched;
+    }
+    
     public int getLessonID() {
         return lessonID;
     }
