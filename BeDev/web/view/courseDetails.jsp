@@ -264,6 +264,47 @@
                                                                 </div>
                                                             </div>
                                                         </c:forEach>
+                                                        <c:if test="${chapter.quiz.quizID != 0}">
+                                                            <div class="curriculum-description">
+                                                                <div class="curriculum-description-start">
+                                                                    <p>
+                                                                        <a href="#">
+                                                                            <svg 
+                                                                                xmlns="http://www.w3.org/2000/svg" 
+                                                                                width="24" 
+                                                                                height="24" 
+                                                                                viewBox="0 0 24 24" 
+                                                                                fill="none" 
+                                                                                stroke="currentColor" 
+                                                                                stroke-width="2" 
+                                                                                stroke-linecap="round" 
+                                                                                stroke-linejoin="round" 
+                                                                                class="feather feather-activity">
+                                                                            <polyline points="20 6 9 17 4 12"></polyline>
+                                                                            </svg>
+                                                                        </a>
+                                                                        <a href="#">${chapter.quiz.position}. ${chapter.quiz.quizName}</a>
+                                                                    </p>
+                                                                </div>
+                                                                <div class="curriculum-description-end">
+                                                                    <svg
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        width="24"
+                                                                        height="24"
+                                                                        viewBox="0 0 24 24"
+                                                                        fill="none"
+                                                                        stroke="currentColor"
+                                                                        stroke-width="2"
+                                                                        stroke-linecap="round"
+                                                                        stroke-linejoin="round"
+                                                                        class="feather feather-lock"
+                                                                        >
+                                                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </c:if>
                                                     </div>
                                                 </div>
                                             </c:forEach>
@@ -859,9 +900,10 @@
                                     </div>
                                 </div>
                                 <div class="cart__checkout-process">
-                                    <form action="#">
+                                    <form action="EnrollCourse">
+                                        <input name="courseID" value="${course.courseID}" hidden="">
                                         <button type="submit" class="button button-lg button--primary w-100">
-                                            Enroll  
+                                            Enroll
                                         </button>
                                     </form>
                                 </div>

@@ -27,6 +27,12 @@ public class Quiz {
         this.quizID = quizID;
     }
 
+    public Quiz(int quizID, String quizName, int position) {
+        this.quizID = quizID;
+        this.quizName = quizName;
+        this.position = position;
+    }
+
     public Quiz(int quizID, String quizName, double passRate, int position, Chapter chapter, boolean status, ArrayList<Question> questionList) {
         this.quizID = quizID;
         this.quizName = quizName;

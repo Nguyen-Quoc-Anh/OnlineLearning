@@ -38,10 +38,14 @@ public class EnrollCourse extends HttpServlet {
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
-        CourseDAO courseDAO = new CourseDAO();
-        courseDAO.enrollCourse(courseID, student.getAccount().getAccountID());
-        
-        request.getRequestDispatcher("//view//courseDetails.jsp").forward(request, response);
+        if (courseID != null && student != null) {
+            CourseDAO courseDAO = new CourseDAO();
+            //Student enroll a course
+            courseDAO.enrollCourse(courseID, student.getAccount().getAccountID());
+            response.sendRedirect("LessonView");
+        } else {
+            response.sendRedirect("SignIn");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

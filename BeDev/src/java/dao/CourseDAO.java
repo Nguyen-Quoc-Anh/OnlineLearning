@@ -36,7 +36,7 @@ public class CourseDAO extends DBContext {
                     + "(select e.courseID, COUNT(e.courseID) as enrolCourse  from Enroll e "
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
-                    + "r.courseID) aoc on c.courseID = aoc.courseID";
+                    + "r.courseID) aoc on c.courseID = aoc.courseID where c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
@@ -68,7 +68,7 @@ public class CourseDAO extends DBContext {
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
                     + "r.courseID) aoc on c.courseID = aoc.courseID left join "
-                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ?";
+                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, categoryID);
             ResultSet rs = stm.executeQuery();
@@ -187,7 +187,7 @@ public class CourseDAO extends DBContext {
                     + "COUNT(e.courseID) as enrolCourse  from Enroll e group by e.courseID) "
                     + "eoc on c.courseID = eoc.courseID left join (select r.courseID, "
                     + "AVG(star) as averageStar from Rate r group by r.courseID) "
-                    + "aoc on c.courseID = aoc.courseID where c.courseID = ?";
+                    + "aoc on c.courseID = aoc.courseID where c.courseID = ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseID);
             ResultSet rs = stm.executeQuery();
@@ -220,7 +220,7 @@ public class CourseDAO extends DBContext {
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
                     + "r.courseID) aoc on c.courseID = aoc.courseID left join "
-                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.courseID != ?";
+                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.courseID != ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, categoryID);
             stm.setString(2, courseID);
