@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.CourseDAO;
 import dao.OptionDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
+import modal.Course;
 import modal.Option;
 import modal.Question;
 import modal.Quiz;
@@ -60,8 +62,15 @@ public class QuizHandle extends HttpServlet {
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             int quizID = Integer.parseInt(request.getParameter("qid"));
+            String courseID = request.getParameter("cid");
+            if (courseID == null) {
+                throw new Exception();
+            }
+            CourseDAO courseDAO = new CourseDAO();
+            Course course = courseDAO.getCourseById(request.getParameter("cid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
             request.setAttribute("questionList", questionDAO.getQuestionByQuizID(quizID));
+            request.setAttribute("course", course);
             request.setAttribute("quiz", quiz);
         } catch (Exception e) {
             response.sendRedirect("Error");
@@ -112,7 +121,7 @@ public class QuizHandle extends HttpServlet {
                     answerDAO.insertOptionRecord(question.getQuestionID(), Integer.parseInt(studentOptions[j]), quizRecordID);
                 }
             }
-            quizDAO.updateQuizRecordGrade(totalGrade, quizRecordID);
+            quizDAO.updateQuizRecordGrade((double) Math.round(totalGrade * 100) / 100, quizRecordID);
             response.sendRedirect("QuizReview?rid=" + quizRecordID + "&qid=" + quizID);    // redirect to view result
         } catch (Exception e) {
             System.out.println(e);
