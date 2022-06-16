@@ -260,22 +260,6 @@ public class CourseDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
-    public boolean isEnroll(String courseID, int studentID) {
-        try {
-            String sql = "select * from Enroll where courseID = ? and studentID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setString(1, courseID);
-            stm.setInt(2, studentID);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                return true;
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return false;
-    }
 
     public List<Course> getCourseByStudentId(int id) {
         try {

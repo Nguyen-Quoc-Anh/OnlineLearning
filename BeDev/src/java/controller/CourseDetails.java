@@ -48,9 +48,14 @@ public class CourseDetails extends HttpServlet {
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
         //Check student enroll a course
+        EnrollDAO enrollDAO = new EnrollDAO();
+        RateDAO rateDAO = new RateDAO();
         if (student != null) {
-            boolean isEnroll = courseDAO.isEnroll(courseID, student.getAccount().getAccountID());
+            boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());
             request.setAttribute("isEnroll", isEnroll);
+            if (isEnroll) {
+                request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
+            }
         }
         //Get a course by course ID from courseDAO
         Course course = courseDAO.getCourseById(courseID);
@@ -64,19 +69,10 @@ public class CourseDetails extends HttpServlet {
         List<Chapter> listChapter = chapterDAO.listChapterByCourse(courseID);
         request.setAttribute("listChapter", listChapter);
         //Get list rate of course by course ID from rateDAO
-        RateDAO rateDAO = new RateDAO();
+        
         List<Rate> listRate = rateDAO.listRateByCourse(courseID);
         request.setAttribute("listRate", listRate);
-        
         session.setAttribute("courseID", courseID);
-        EnrollDAO enrollDAO = new EnrollDAO();
-        int studentId = student.getAccount().getAccountID();
-        
-        request.setAttribute("checkEnrolled", enrollDAO.checkEnrolled(studentId, Integer.parseInt(courseID)));
-        if (rateDAO.checkRated(studentId, Integer.parseInt(courseID))) {
-            request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(studentId, Integer.parseInt(courseID)));
-        }
-        
         //Get percent of star one, two, three, four, five and average star 
         if (!listRate.isEmpty()) {
             int sumStar = 0;

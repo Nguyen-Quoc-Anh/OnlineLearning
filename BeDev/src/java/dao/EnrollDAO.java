@@ -83,24 +83,24 @@ public class EnrollDAO extends DBContext {
      * @param courseID
      * @return true if registered , false if not.
      */
-    public boolean checkEnrolled(int studentID, int courseID){
+    public boolean isEnroll(String courseID, int studentID) {
         try {
-            String sql = "select  * from Enroll where studentID = ? and courseID =?";
+            String sql = "select * from Enroll where courseID = ? and studentID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, studentID);
-            stm.setInt(2, courseID);
+            stm.setString(1, courseID);
+            stm.setInt(2, studentID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return false;
     }
+    
     public static void main(String[] args) {
         EnrollDAO enrollDAO = new EnrollDAO();
-        System.out.println(enrollDAO.checkEnrolled(10, 1));
     }
     
 }
