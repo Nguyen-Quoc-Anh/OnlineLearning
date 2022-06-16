@@ -28,8 +28,8 @@
             <div class="container-fluid">
                 <div class="coursedescription-header">
                     <div class="coursedescription-header-start">
-                        <a class="logo-image" href="#">
-                            <img src="" alt="" />
+                        <a class="logo-image" href="HomeControl">
+                            <img src="../BeDev/view/dist/images/logo/logo.png" alt="Logo" />
                         </a>
                         <div class="topic-info">
                             <div class="topic-info-arrow">
@@ -128,11 +128,11 @@
                         </div>
                         <hr>
                         <div class="d-flex justify-content-end">
-                            <a href="RecordController?qid=${quiz.quizID}"><button type="button" class="btn btn-info">History grade</button></a>
+                            <a href="RecordController?qid=${quiz.quizID}&cid=${course.courseID}"><button type="button" class="btn btn-primary text-white">History grade</button></a>
                         </div>
                         <br>
                         <div class="text-center">
-                            <a class="btn btn-primary btn-lg text-white" href="QuizHandle?qid=quiz.getQuizID">
+                            <a class="btn btn-primary btn-lg text-white" href="QuizHandle?qid=${quiz.quizID}&cid=${course.courseID}">
                                 <c:if test="${quizRecord.recordID == 0}">
                                     Start quiz
                                 </c:if>
@@ -188,7 +188,7 @@
                                         </c:forEach>
                                         <c:if test="${chapter.quiz.position != 0}">
                                             <div class="main-wizard__wrapper">
-                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&quizID=${chapter.quiz.quizID}">
+                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&qid=${chapter.quiz.quizID}">
                                                     <div class="main-wizard-icon">
                                                         <svg 
                                                             xmlns="http://www.w3.org/2000/svg" 

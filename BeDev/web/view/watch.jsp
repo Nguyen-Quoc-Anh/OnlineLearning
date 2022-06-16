@@ -166,7 +166,7 @@
                                         </c:forEach>
                                         <c:if test="${chapter.quiz.position != 0}">
                                             <div class="main-wizard__wrapper">
-                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&quizID=${chapter.quiz.quizID}">
+                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&qid=${chapter.quiz.quizID}">
                                                     <div class="main-wizard-icon">
                                                         <svg 
                                                             xmlns="http://www.w3.org/2000/svg" 
