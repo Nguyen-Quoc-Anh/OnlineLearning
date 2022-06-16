@@ -13,9 +13,46 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Course details</title>
         <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
+    <style>
 
+        body .edit:hover{
+            text-decoration: underline;
+        }
+        body .star-widget input{
+            display: none;
+        }
+
+        .star-widget label{
+            font-size: 40px;
+            color: #444;
+            padding: 10px;
+            float: right;
+            transition: all 0.2s ease;
+        }
+        input:not(:checked) ~ label:hover,
+        input:not(:checked) ~ label:hover ~ label{
+            color: #fd4;
+        }
+        input:checked ~ label{
+            color: #fd4;
+        }
+        input#rate-5:checked ~ label{
+            color: #fe7;
+            text-shadow: 0 0 20px #952;
+        }
+
+        .modal-body{
+            display: flex;
+            justify-content: center;
+        }
+        .wrapper-ratestar{
+            display: inline-block;
+        }
+
+    </style>
     <body onload="loader()">
         <jsp:include page="header.jsp"></jsp:include>
             <!-- Breadcrumb Starts Here -->
@@ -116,6 +153,7 @@
                                 <img src="${course.courseImage}" alt="img" />
                             </div>
                             <ul class="nav course-overview-nav nav-pills mb-3" id="pills-tab" role="tablist">
+
                                 <li class="nav-item" role="presentation">
                                     <button
                                         class="nav-link active font-para--lg"
@@ -163,6 +201,7 @@
                                         Review
                                     </button>
                                 </li>
+
                             </ul>
                             <div class="tab-content course-overview-content" id="pills-tabContentTwo">
                                 <div class="tab-pane fade show active" id="pills-courseoverview" role="tabpanel" aria-labelledby="pills-courseoverview-tab">
