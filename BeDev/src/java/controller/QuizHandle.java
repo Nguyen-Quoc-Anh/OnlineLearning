@@ -11,6 +11,7 @@ import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,7 +30,7 @@ import modal.Quiz;
  */
 @WebServlet(name = "QuizHandle", urlPatterns = {"/QuizHandle"})
 public class QuizHandle extends HttpServlet {
-
+    ArrayList<Question> questionList;
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -69,7 +70,8 @@ public class QuizHandle extends HttpServlet {
             CourseDAO courseDAO = new CourseDAO();
             Course course = courseDAO.getCourseById(request.getParameter("cid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
-            request.setAttribute("questionList", questionDAO.getQuestionByQuizID(quizID));
+            questionList = questionDAO.getQuestionByQuizID(quizID);
+            request.setAttribute("questionList", questionList);
             request.setAttribute("course", course);
             request.setAttribute("quiz", quiz);
         } catch (Exception e) {
@@ -93,32 +95,32 @@ public class QuizHandle extends HttpServlet {
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
         HttpSession session = request.getSession();
-        QuestionDAO questionDAO = new QuestionDAO();
         OptionDAO answerDAO = new OptionDAO();
         double totalGrade = 0;
         try {
             Account account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
-            ArrayList<Question> questionsList = questionDAO.getQuestionsAndTrueOption(quizID);
+            
             int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), quizID);
             if (quizRecordID == -1) {   // can't insert into database
                 request.setAttribute("mess", "Cannot insert quiz record.");
                 processRequest(request, response);
                 return;
             }
-            for (Question question : questionsList) {
+            for (Question question : questionList) {
                 // get checked option
                 String[] studentOptions = request.getParameterValues(Integer.toString(question.getQuestionID()));
                 if (studentOptions == null) {   // student not answer this question
                     answerDAO.insertOptionRecord(question.getQuestionID(), -1, quizRecordID);
                     continue;
                 }
-                for (int j = 0; j < studentOptions.length; j++) {
-                    int index = question.getOptionList().indexOf(new Option(Integer.parseInt(studentOptions[j])));
-                    if (index != -1) {  // option student checked is true
-                        totalGrade += question.getOptionList().get(index).getPoint();   // add point
+                for (Option option : question.getOptionList()) {
+                    if (Arrays.asList(studentOptions).contains(Integer.toString(option.getOptionID()))) {  // student option
+                        if (option.isTrue()) {  // student option is true
+                            totalGrade += option.getPoint();
+                        }
+                        answerDAO.insertOptionRecord(question.getQuestionID(), option.getOptionID(), quizRecordID); 
                     }
-                    answerDAO.insertOptionRecord(question.getQuestionID(), Integer.parseInt(studentOptions[j]), quizRecordID);
                 }
             }
             quizDAO.updateQuizRecordGrade((double) Math.round(totalGrade * 100) / 100, quizRecordID);
