@@ -8,6 +8,7 @@ package controller;
 import dao.CategoryDAO;
 import dao.ChapterDAO;
 import dao.CourseDAO;
+import dao.EnrollDAO;
 import dao.RateDAO;
 import java.io.IOException;
 import java.util.List;
@@ -16,10 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Category;
 import modal.Chapter;
 import modal.Course;
 import modal.Rate;
+import modal.Student;
 
 /**
  *
@@ -57,6 +60,18 @@ public class CourseDetails extends HttpServlet {
         RateDAO rateDAO = new RateDAO();
         List<Rate> listRate = rateDAO.listRateByCourse(courseID);
         request.setAttribute("listRate", listRate);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("courseID", courseID);
+        EnrollDAO enrollDAO = new EnrollDAO();
+        Student student = (Student) session.getAttribute("student");
+        int studentId = student.getAccount().getAccountID();
+        
+        request.setAttribute("checkEnrolled", enrollDAO.checkEnrolled(studentId, Integer.parseInt(courseID)));
+        if (rateDAO.checkRated(studentId, Integer.parseInt(courseID))) {
+            request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(studentId, Integer.parseInt(courseID)));
+        }
+        
         //Get percent of star one, two, three, four, five and average star 
         if (!listRate.isEmpty()) {
             int sumStar = 0;

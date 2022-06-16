@@ -19,6 +19,11 @@ public class Rate {
     public Rate() {
     }
 
+    public Rate(int star, String content) {
+        this.star = star;
+        this.content = content;
+    }
+
     public Rate(int star, Course course) {
         this.star = star;
         this.course = course;

@@ -5,6 +5,7 @@
  */
 package dao;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,8 +55,10 @@ public class EnrollDAO extends DBContext {
         }
         return 0;
     }
+
     /**
-     * This method is number course enrolled by student from database 
+     * This method is number course enrolled by student from database
+     *
      * @param id is id of student
      * @return number course enrolled by student
      */
@@ -74,4 +77,30 @@ public class EnrollDAO extends DBContext {
         }
         return 0;
     }
+    /**
+     * This method  checks if this student is already registered for this course.
+     * @param studentID
+     * @param courseID
+     * @return true if registered , false if not.
+     */
+    public boolean checkEnrolled(int studentID, int courseID){
+        try {
+            String sql = "select  * from Enroll where studentID = ? and courseID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentID);
+            stm.setInt(2, courseID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public static void main(String[] args) {
+        EnrollDAO enrollDAO = new EnrollDAO();
+        System.out.println(enrollDAO.checkEnrolled(10, 1));
+    }
+    
 }

@@ -13,9 +13,46 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Course details</title>
         <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
         <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
+    <style>
 
+        body .edit:hover{
+            text-decoration: underline;
+        }
+        body .star-widget input{
+            display: none;
+        }
+
+        .star-widget label{
+            font-size: 40px;
+            color: #444;
+            padding: 10px;
+            float: right;
+            transition: all 0.2s ease;
+        }
+        input:not(:checked) ~ label:hover,
+        input:not(:checked) ~ label:hover ~ label{
+            color: #fd4;
+        }
+        input:checked ~ label{
+            color: #fd4;
+        }
+        input#rate-5:checked ~ label{
+            color: #fe7;
+            text-shadow: 0 0 20px #952;
+        }
+
+        .modal-body{
+            display: flex;
+            justify-content: center;
+        }
+        .wrapper-ratestar{
+            display: inline-block;
+        }
+
+    </style>
     <body onload="loader()">
         <jsp:include page="header.jsp"></jsp:include>
             <!-- Breadcrumb Starts Here -->
@@ -116,6 +153,7 @@
                                 <img src="${course.courseImage}" alt="img" />
                             </div>
                             <ul class="nav course-overview-nav nav-pills mb-3" id="pills-tab" role="tablist">
+
                                 <li class="nav-item" role="presentation">
                                     <button
                                         class="nav-link active font-para--lg"
@@ -163,6 +201,7 @@
                                         Review
                                     </button>
                                 </li>
+
                             </ul>
                             <div class="tab-content course-overview-content" id="pills-tabContentTwo">
                                 <div class="tab-pane fade show active" id="pills-courseoverview" role="tabpanel" aria-labelledby="pills-courseoverview-tab">
@@ -860,10 +899,78 @@
                                 </div>
                                 <div class="cart__checkout-process">
                                     <form action="#">
-                                        <button type="submit" class="button button-lg button--primary w-100">
+                                        <c:if test="${!checkEnrolled}">
+                                            <button type="submit" class="button button-lg button--primary w-100">
                                             Enroll  
                                         </button>
+                                        </c:if>
                                     </form>
+                                    <!-- Button trigger modal -->
+                                    <!-- Button trigger modal -->
+                                    <c:if test="${checkEnrolled}">
+                                        <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        Rate this course
+                                    </button>
+                                    </c:if>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <form action="RateCourse" method="post" >
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Rate this course</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="star-widget">
+                                                            <div class="wrapper-ratestar">
+                                                                <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${rate!=null && rate.star==5}">checked=""</c:if>>
+                                                                <label for="rate-5" class="fas fa-star"></label>
+                                                                <input type="radio" name="rate" id="rate-4" value="4" <c:if test="${rate!=null && rate.star==4}">checked=""</c:if>>
+                                                                <label for="rate-4" class="fas fa-star"></label>
+                                                                <input type="radio" name="rate" id="rate-3" value="3" <c:if test="${rate!=null && rate.star==3}">checked=""</c:if>>
+                                                                <label for="rate-3" class="fas fa-star"></label>
+                                                                <input type="radio" name="rate" id="rate-2" value="2" <c:if test="${rate!=null && rate.star==2}">checked=""</c:if>>
+                                                                <label for="rate-2" class="fas fa-star"></label>
+                                                                <input type="radio" name="rate" id="rate-1" value="1" <c:if test="${rate!=null && rate.star==1}">checked=""</c:if>>
+                                                                <label for="rate-1" class="fas fa-star"></label>
+                                                            </div>
+                                                            <div class="textarea">
+                                                                <textarea style="width: 100%;" cols="30" placeholder="Describe your experience.." name="contentRate"  > <c:if test="${rate!=null}">${rate.content}</c:if></textarea>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                        <script>
+                                                            const btn = document.querySelector("button");
+                                                            const post = document.querySelector(".post");
+                                                            const widget = document.querySelector(".star-widget");
+                                                            const editBtn = document.querySelector(".edit");
+                                                            btn.onclick = () => {
+                                                                widget.style.display = "none";
+                                                                post.style.display = "block";
+                                                                editBtn.onclick = () => {
+                                                                    widget.style.display = "block";
+                                                                    post.style.display = "none";
+                                                                }
+                                                                return false;
+                                                            }
+                                                        </script>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary">Rate</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    
+
+                                   
+                                    
                                 </div>
                                 <div class="cart__share-content">
                                     <h6 class="font-title--card">Share This Course</h6>
