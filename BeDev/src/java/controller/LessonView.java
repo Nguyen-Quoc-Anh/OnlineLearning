@@ -45,7 +45,10 @@ public class LessonView extends HttpServlet {
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
-
+        if (student == null) {
+            response.sendRedirect("SignIn");
+            return;
+        }
         //Get lesson details by lessonID
         LessonDAO lessonDAO = new LessonDAO();
         Lesson lesson = lessonDAO.getLessonDetails(lessonID);

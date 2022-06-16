@@ -32,14 +32,14 @@
                         </a>
                         <div class="topic-info">
                             <div class="topic-info-arrow">
-                                <a href="#">
+                                <a href="CourseDetails?courseID=${course.courseID}">
                                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.5 19.5L8.5 12.5L15.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </a>
                             </div>
                             <div class="topic-info-text">
-                                <h6 class="font-title--xs"><a href="CourseDetails">${course.courseName}</a></h6>
+                                <h6 class="font-title--xs"><a href="CourseDetails?courseID=${course.courseID}">${course.courseName}</a></h6>
                                 <div class="book-lesson">
                                     <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path
@@ -164,16 +164,39 @@
                                                     </div>
                                                 </div>
                                         </c:forEach>
+                                        <c:if test="${chapter.quiz.position != 0}">
+                                            <div class="main-wizard__wrapper">
+                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&quizID=${chapter.quiz.quizID}">
+                                                    <div class="main-wizard-icon">
+                                                        <svg 
+                                                            xmlns="http://www.w3.org/2000/svg" 
+                                                            width="24" 
+                                                            height="24" 
+                                                            viewBox="0 0 24 24" 
+                                                            fill="none" 
+                                                            stroke="currentColor" 
+                                                            stroke-width="2" 
+                                                            stroke-linecap="round" 
+                                                            stroke-linejoin="round" 
+                                                            class="feather feather-activity">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="main-wizard-title">
+                                                        <p>${chapter.quiz.position}. ${chapter.quiz.quizName}</p>
+                                                    </div>
+                                                </a>
+                                            </c:if>
+                                        </div>
                                     </div>
-                                </div>
-                            </c:forEach>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Course Description Ends Here -->
         </div>
-        <!-- Course Description Ends Here -->
-
         <jsp:include page="footer.jsp"></jsp:include>
         <script>
             $(".my-rating").starRating({

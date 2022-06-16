@@ -25,7 +25,7 @@ import modal.Account;
  *
  * @author MrLink
  */
-@WebFilter(filterName = "Accountfilter", urlPatterns = {"/ChangePassword", "/ResetPassword", "/StudentProfile", "/Quiz", "/QuizHandle"})
+@WebFilter(filterName = "Accountfilter", urlPatterns = {"/ChangePassword", "/ResetPassword", "/StudentProfile", "/QuizHandle"})
 public class Guestfilter implements Filter {
 
     private static final boolean debug = true;

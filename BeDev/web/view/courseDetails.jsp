@@ -903,6 +903,7 @@
                                     <c:if test="${isEnroll == false || student == null}">
                                         <form action="EnrollCourse">
                                             <input name="courseID" value="${course.courseID}" hidden="">
+                                            <input name="lessonID" value="${listChapter.get(0).lessons.get(0).lessonID}" hidden="">
                                             <button type="submit" class="button button-lg button--primary w-100">
                                                 Enroll
                                             </button>

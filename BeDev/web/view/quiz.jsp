@@ -28,46 +28,58 @@
             <div class="container-fluid">
                 <div class="coursedescription-header">
                     <div class="coursedescription-header-start">
-                        <a class="logo-image" href="index.html">
-                            <img src="../BeDev/view/dist/images/logo/logo.png" alt="Logo" />
+                        <a class="logo-image" href="#">
+                            <img src="" alt="" />
                         </a>
                         <div class="topic-info">
                             <div class="topic-info-arrow">
-                                <a href="#">
+                                <a href="CourseDetails?courseID=${course.courseID}">
                                     <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M15.5 19.5L8.5 12.5L15.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </a>
                             </div>
                             <div class="topic-info-text">
-                                <h6 class="font-title--xs"><a href="#">User Experience Design Essentials - Adobe XD UI UX Design</a></h6>
-                                <div class="lesson-hours">
-                                    <div class="book-lesson">
-                                        <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path
-                                            d="M1.5 2.75H6C6.79565 2.75 7.55871 3.06607 8.12132 3.62868C8.68393 4.19129 9 4.95435 9 5.75V16.25C9 15.6533 8.76295 15.081 8.34099 14.659C7.91903 14.2371 7.34674 14 6.75 14H1.5V2.75Z"
-                                            stroke="#00AF91"
-                                            stroke-width="1.8"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            />
-                                        <path
-                                            d="M16.5 2.75H12C11.2044 2.75 10.4413 3.06607 9.87868 3.62868C9.31607 4.19129 9 4.95435 9 5.75V16.25C9 15.6533 9.23705 15.081 9.65901 14.659C10.081 14.2371 10.6533 14 11.25 14H16.5V2.75Z"
-                                            stroke="#00AF91"
-                                            stroke-width="1.8"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            />
-                                        </svg>
-                                        <span>93 Lesson</span>
-                                    </div>
+                                <h6 class="font-title--xs"><a href="CourseDetails?courseID=${course.courseID}">${course.courseName}</a></h6>
+                                <div class="book-lesson">
+                                    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M1.5 2.75H6C6.79565 2.75 7.55871 3.06607 8.12132 3.62868C8.68393 4.19129 9 4.95435 9 5.75V16.25C9 15.6533 8.76295 15.081 8.34099 14.659C7.91903 14.2371 7.34674 14 6.75 14H1.5V2.75Z"
+                                        stroke="#00AF91"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        />
+                                    <path
+                                        d="M16.5 2.75H12C11.2044 2.75 10.4413 3.06607 9.87868 3.62868C9.31607 4.19129 9 4.95435 9 5.75V16.25C9 15.6533 9.23705 15.081 9.65901 14.659C10.081 14.2371 10.6533 14 11.25 14H16.5V2.75Z"
+                                        stroke="#00AF91"
+                                        stroke-width="1.8"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                    <span>${course.numberLesson} Lesson</span>
+                                    <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M9.94438 2.34287L11.7457 5.96656C11.8359 6.14934 12.0102 6.2769 12.2124 6.30645L16.2452 6.88901C16.4085 6.91079 16.5555 6.99635 16.6559 7.12701C16.8441 7.37201 16.8153 7.71891 16.5898 7.92969L13.6668 10.7561C13.5183 10.8961 13.4522 11.1015 13.4911 11.3014L14.1911 15.2898C14.2401 15.6204 14.0145 15.93 13.684 15.9836C13.5471 16.0046 13.4071 15.9829 13.2826 15.9214L9.69082 14.0384C9.51037 13.9404 9.29415 13.9404 9.1137 14.0384L5.49546 15.9315C5.1929 16.0855 4.82267 15.9712 4.65778 15.6748C4.59478 15.5551 4.57301 15.419 4.59478 15.286L5.29479 11.2975C5.32979 11.0984 5.26368 10.8938 5.11901 10.753L2.18055 7.92735C1.94099 7.68935 1.93943 7.30201 2.17821 7.06246C2.17899 7.06168 2.17977 7.06012 2.18055 7.05935C2.27932 6.9699 2.40066 6.91001 2.5321 6.88668L6.56569 6.30412C6.76713 6.27223 6.94058 6.14623 7.03236 5.96345L8.83215 2.34287C8.90448 2.19587 9.03281 2.08309 9.18837 2.03176C9.3447 1.97965 9.51582 1.99209 9.66282 2.06598C9.78337 2.12587 9.88215 2.22309 9.94438 2.34287Z"
+                                        stroke="#FF7A1A"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        />
+                                    </svg>
+                                    <span>${course.averageStar}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="coursedescription-header-end">
-                        <!-- <a href="#" class="btn btn-primary regular-fill-btn">Next Lession</a> -->
-                        <button class="button button--primary">Next Lession</button>
+                        <a href="#" class="button button--text" >Leave a Rating</a>
+                        <c:if test="${lessonDetails.lessonID < course.numberLesson}">
+                            <a href="LessonView?courseID=${course.courseID}&lessonID=${lessonDetails.lessonID + 1}" class="button button--primary">Next Lession</a>
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -79,31 +91,55 @@
             <div class="row course-description">
                 <div class="col-lg-8">
                     <div class="container">
-                        <h2>Quiz: ${quiz.getQuizName()}</h2>
+                        <h2>Quiz: ${quiz.quizName}</h2>
                         <br>
-                        <p>${numberOfQuestion} questions</p>
                         <br><br><br><br><br>
+                        <div class="d-flex justify-content-center">
+                            <c:if test="${quizRecord.recordID != 0}">
+                                <c:if test="${quiz.passRate > quizRecord.grade}">
+                                    <button type="button" class="btn btn-danger">Not pass</button>
+                                </c:if>
+                                <c:if test="${quiz.passRate <= quizRecord.grade}">
+                                    <button type="button" class="btn btn-success">Pass</button>
+                                </c:if>
+                            </c:if>
+                        </div>
                         <hr>
                         <div class="row mb-5 mt-4">
                             <div class="col-md-6" style="border-right: 2px solid #a19d9d;">
                                 <br>
                                 <h5><strong>Receive grade</strong></h5>
                                 <br>
-                                <span style="padding-right: 15px;">To Pass: </span><span><fmt:formatNumber type = "number" value = "${quiz.getPassRate()}"/>% or higher</span>
+                                <span style="padding-right: 15px;">To Pass: </span>${quiz.passRate}%<span> or higher</span>
                             </div>
                             <div class="col-md-6">
                                 <div style="padding-left: 60px;">
                                     <br>
                                     <h5><strong>Your grade</strong></h5>
                                     <br>
-                                    <span>#</span>
+                                    <c:if test="${quizRecord.recordID == 0}">
+                                        <span>#</span>
+                                    </c:if>
+                                    <c:if test="${quizRecord.recordID != 0}">
+                                        <span>${quizRecord.grade}%</span>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
                         <hr>
+                        <div class="d-flex justify-content-end">
+                            <a href="RecordController?qid=${quiz.quizID}"><button type="button" class="btn btn-info">History grade</button></a>
+                        </div>
                         <br>
                         <div class="text-center">
-                            <a class="btn btn-primary btn-lg text-white" href="QuizHandle?qid=${quiz.getQuizID()}">Start quiz</a>
+                            <a class="btn btn-primary btn-lg text-white" href="QuizHandle?qid=quiz.getQuizID">
+                                <c:if test="${quizRecord.recordID == 0}">
+                                    Start quiz
+                                </c:if>
+                                <c:if test="${quizRecord.recordID != 0}">
+                                    Retry quiz
+                                </c:if>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -111,349 +147,71 @@
                     <div class="videolist-area">
                         <div class="videolist-area-heading">
                             <h6>Course Contents</h6>
-                            <p>5% Completed</p>
-                        </div>
-                        <div class="videolist-area-bar">
-                            <span class="videolist-area-bar--progress"></span>
                         </div>
                         <div class="videolist-area-bar__wrapper">
-                            <div class="videolist-area-wizard">
-                                <div class="wizard-heading">
-                                    <h6 class="">Get Started</h6>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>1. Introduction to Adobe XD</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
+                            <c:forEach items="${listChapter}" var="chapter">
+                                <div class="videolist-area-wizard">
+                                    <div class="wizard-heading">
+                                        <h6 class="">${chapter.chapterName}</h6>
+                                    </div>
+                                    <div class="main-wizard">
+                                        <c:forEach items="${chapter.lessons}" var="lesson">
+                                            <div class="main-wizard__wrapper">
+                                                <a class="main-wizard-start" href="LessonView?courseID=${course.courseID}&lessonID=${lesson.lessonID}">
+                                                    <div class="main-wizard-icon">
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            width="24"
+                                                            height="24"
+                                                            viewBox="0 0 24 24"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            stroke-width="2"
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            class="feather feather-play-circle"
+                                                            >
+                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                        <polygon points="10 8 16 12 10 16 10 8"></polygon>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="main-wizard-title">
+                                                        <p>${lesson.position}. ${lesson.lessonName}</p>
+                                                    </div>
+                                                </a>
+                                                <div class="main-wizard-end d-flex align-items-center">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" <c:if test="${lesson.watched != 0}">checked</c:if> value="" style="border-radius: 0px; margin-left: 5px;" disabled=""/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        </c:forEach>
+                                        <c:if test="${chapter.quiz.position != 0}">
+                                            <div class="main-wizard__wrapper">
+                                                <a class="main-wizard-start" href="Quiz?courseID=${course.courseID}&quizID=${chapter.quiz.quizID}">
+                                                    <div class="main-wizard-icon">
+                                                        <svg 
+                                                            xmlns="http://www.w3.org/2000/svg" 
+                                                            width="24" 
+                                                            height="24" 
+                                                            viewBox="0 0 24 24" 
+                                                            fill="none" 
+                                                            stroke="currentColor" 
+                                                            stroke-width="2" 
+                                                            stroke-linecap="round" 
+                                                            stroke-linejoin="round" 
+                                                            class="feather feather-activity">
+                                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                                        </svg>
+                                                    </div>
+                                                    <div class="main-wizard-title">
+                                                        <p>${chapter.quiz.position}. ${chapter.quiz.quizName}</p>
+                                                    </div>
+                                                </a>
+                                            </c:if>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>2. Getting started with your Adobe XD project</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper active">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>3. What is UI vs UX - User Interface vs User Experie...</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="videolist-area-wizard">
-                                <div class="wizard-heading">
-                                    <h6 class="">The Project Brief</h6>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper border-0">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>4. The brief & persona for our real life project</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper download-wizard">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-file"
-                                                    >
-                                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                                                <polyline points="13 2 13 9 20 9"></polyline>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>4. Project Brief</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end">
-                                            <span>2.5 MB</span>
-                                            <small>Downlaod</small>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="videolist-area-wizard">
-                                <div class="wizard-heading">
-                                    <h6 class="">Low Fidelity Wireframing</h6>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>5. Wireframing (low fidelity) in Adobe XD</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>6. How wide should my website or app be in Ado...</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper border-0">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>7. Working with existing UI kits in Adobe XD</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper download-wizard">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-file"
-                                                    >
-                                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                                                <polyline points="13 2 13 9 20 9"></polyline>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>7. Low Fidelity Wireframes</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="videolist-area-wizard">
-                                <div class="wizard-heading">
-                                    <h6 class="">Type, Color & Icon Introduction</h6>
-                                </div>
-                                <div class="main-wizard">
-                                    <div class="main-wizard__wrapper">
-                                        <a class="main-wizard-start">
-                                            <div class="main-wizard-icon">
-                                                <svg
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    width="24"
-                                                    height="24"
-                                                    viewBox="0 0 24 24"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    stroke-width="2"
-                                                    stroke-linecap="round"
-                                                    stroke-linejoin="round"
-                                                    class="feather feather-play-circle"
-                                                    >
-                                                <circle cx="12" cy="12" r="10"></circle>
-                                                <polygon points="10 8 16 12 10 16 10 8"></polygon>
-                                                </svg>
-                                            </div>
-                                            <div class="main-wizard-title">
-                                                <p>8. Working with type in your XD wireframes</p>
-                                            </div>
-                                        </a>
-                                        <div class="main-wizard-end d-flex align-items-center">
-                                            <span>12:34</span>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value="" style="border-radius: 0px; margin-left: 5px;" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>
