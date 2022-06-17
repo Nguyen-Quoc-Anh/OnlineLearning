@@ -42,15 +42,17 @@ public class QuizDAO extends DBContext {
      * This method insert a quiz record into database.
      *
      * @param studentID id of student who take quiz
+     * @param grade grade of quiz record
      * @param quizID id of quiz
      * @return a quiz record id.
      */
-    public int insertQuizRecord(int studentID, int quizID) {
+    public int insertQuizRecord(int studentID, double grade, int quizID) {
         try {
-            String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, 0, ?)";
+            String sql = "insert into Quiz_Record (studentID, grade, quizID) values (?, ?, ?)";
             PreparedStatement stm = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             stm.setInt(1, studentID);
-            stm.setInt(2, quizID);
+            stm.setDouble(2, grade);
+            stm.setInt(3, quizID);
             stm.executeUpdate();
             ResultSet rs = stm.getGeneratedKeys();
             while (rs.next()) {
@@ -60,23 +62,5 @@ public class QuizDAO extends DBContext {
             System.out.println(e);
         }
         return -1;
-    }
-
-    /**
-     * This method update grade of a quiz record.
-     *
-     * @param grade student grade
-     * @param quizRecordID id of quiz record
-     */
-    public void updateQuizRecordGrade(double grade, int quizRecordID) {
-        try {
-            String sql = "update Quiz_Record set grade = ? where quizRecordID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setDouble(1, grade);
-            stm.setInt(2, quizRecordID);
-            stm.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
     }
 }
