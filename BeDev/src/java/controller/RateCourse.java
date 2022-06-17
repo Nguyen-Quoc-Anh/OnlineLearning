@@ -43,7 +43,7 @@ public class RateCourse extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
         int courseID = Integer.parseInt(session.getAttribute("courseID").toString());
-        if (request.getParameter("rate")==null) {
+        if (request.getParameter("rate")==null) {//if dont choose rate then do nothing
             response.sendRedirect("CourseDetails?courseID="+courseID);
             return;
         }
@@ -52,10 +52,10 @@ public class RateCourse extends HttpServlet {
         int studentId = student.getAccount().getAccountID();
         String contentRate = request.getParameter("contentRate");
         RateDAO rateDAO = new RateDAO();
-        if (rateDAO.checkRated(studentId, courseID)) {
+        if (rateDAO.checkRated(studentId, courseID)) {//if rated then update this rate
             rateDAO.updateRate(courseID, studentId, star, contentRate);
             response.sendRedirect("CourseDetails?courseID="+courseID);
-        }else{
+        }else{// if haven't rate then add rate
             rateDAO.rateCourse(courseID, studentId, star, contentRate);
             response.sendRedirect("CourseDetails?courseID="+courseID);
         }

@@ -76,6 +76,13 @@ public class Profile extends HttpServlet {
                     int id = account.getAccountID();
                     listCourseRegisterd = courseDAO.getCourseByStudentId(id);//get list registed course  of a student.
                     request.setAttribute("listCourseRegisterd", listCourseRegisterd);
+                    int numberOfCompletedCourse = 0;
+                    for (Course course : listCourseRegisterd) {//get number of completed course
+                        if (course.getPercentOfComplete()==1) {
+                            numberOfCompletedCourse++;
+                        }
+                    }
+                    request.setAttribute("numberOfCompletedCourse", numberOfCompletedCourse);
                     
                     processRequest(request, response);
                     session.setAttribute("student", student);

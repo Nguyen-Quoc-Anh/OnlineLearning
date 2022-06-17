@@ -61,7 +61,12 @@ public class RateDAO extends DBContext {
         return false;
     }
 
-    //huy
+    /**
+     * This method check if a student rated this course or not
+     * @param studentID
+     * @param courseID
+     * @return true if rated , false if did not rate
+     */
     public boolean checkRated(int studentID, int courseID) {
         try {
             String sql = "select * from Rate where studentID = ? and courseID = ?";
@@ -78,7 +83,12 @@ public class RateDAO extends DBContext {
         return false;
     }
 
-    //huy
+    /**
+     * This method get rate of a student about acouse
+     * @param studentID
+     * @param courseID
+     * @return a Rate 
+     */
     public Rate getRateByStudnetIdAndCourseId(int studentID, int courseID) {
         try {
             String sql = "select * from Rate where studentID = ? and courseID = ?";
@@ -95,7 +105,13 @@ public class RateDAO extends DBContext {
         return null;
     }
 
-    //huy
+    /**
+     * Update rate
+     * @param courseID
+     * @param studentID
+     * @param star
+     * @param contentRate 
+     */
     public void updateRate(int courseID, int studentID, int star, String contentRate) {
         try {
             String sql = "Update Rate \n"
@@ -110,7 +126,11 @@ public class RateDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    /**
+     * delete rate of a student about a course
+     * @param studentID
+     * @param courseID 
+     */
     public void deleteRate( int studentID, int courseID) {
         try {
             String sql = "Delete Rate \n"

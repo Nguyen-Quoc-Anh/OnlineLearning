@@ -52,9 +52,9 @@ public class CourseDetails extends HttpServlet {
         EnrollDAO enrollDAO = new EnrollDAO();
         RateDAO rateDAO = new RateDAO();
         if (student != null) {
-            boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());
+            boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());//check if this student is registered for this course
             request.setAttribute("isEnroll", isEnroll);
-            if (isEnroll) {
+            if (isEnroll) {// if registered then get his/her rate
                 request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
             }
         }else{

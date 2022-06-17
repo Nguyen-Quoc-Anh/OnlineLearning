@@ -98,7 +98,7 @@
                                             </svg>
                                         </div>
                                         <div class="completed-courses-text">
-                                            <h5 class="font-title--xs">19</h5>
+                                            <h5 class="font-title--xs">${numberOfCompletedCourse}</h5>
                                             <p class="fs-6 mt-1">Completed Courses</p>
                                         </div>
                                     </div>

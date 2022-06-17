@@ -248,6 +248,8 @@ public class CourseDAO extends DBContext {
     
     /**
      * This method enroll a course by course ID
+     * @param courseID
+     * @param accountID
      */
     public void enrollCourse(String courseID, int accountID) {
         try {
@@ -256,11 +258,15 @@ public class CourseDAO extends DBContext {
             stm.setString(1, courseID);
             stm.setInt(2, accountID);
             stm.executeUpdate();
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
     }
-
+    /**
+     * This method get list course that a student registered.
+     * @param id
+     * @return list course
+     */
     public List<Course> getCourseByStudentId(int id) {
         try {
             CourseDAO dao = new  CourseDAO();
@@ -282,7 +288,11 @@ public class CourseDAO extends DBContext {
         }
         return null;
     }
-
+    /**
+     * this method get the number of a course
+     * @param courseID
+     * @return the number of lesson
+     */
     public int getTotalLessionOfCourse(int courseID) {
         try {
             String sql = "select  count(c.courseID) as c1  from   Course c, Lesson l , Chapter ch\n"
@@ -299,7 +309,12 @@ public class CourseDAO extends DBContext {
         }
         return -1;
     }
-
+    /**
+     * this method get the number of learned lesson of a course by a student
+     * @param courseID
+     * @param studentID
+     * @return the number of 
+     */
     public int getTotalLessionLearned(int courseID, int studentID) {
         try {
             String sql = "select  count(c.courseID) as c2 from   Course c, Lesson_Learned ll , Chapter ch, Lesson l\n"
