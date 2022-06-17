@@ -111,6 +111,18 @@ public class RateDAO extends DBContext {
         }
     }
 
+    public void deleteRate( int studentID, int courseID) {
+        try {
+            String sql = "Delete Rate \n"
+                    + "where studentID =? and courseID =?";
+            PreparedStatement stm =connection.prepareStatement(sql);
+            stm.setInt(1, studentID);
+            stm.setInt(2, courseID);
+            stm.executeUpdate();
+        } catch (SQLException e) {
+        }
+    }
+
     public static void main(String[] args) {
         RateDAO r = new RateDAO();
         System.out.println(r.getRateByStudnetIdAndCourseId(10, 1).getContent());;

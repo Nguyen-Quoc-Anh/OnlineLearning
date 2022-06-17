@@ -25,8 +25,8 @@ import modal.Student;
  *
  * @author ADMIN
  */
-@WebServlet(name = "RateCourse", urlPatterns = {"/RateCourse"})
-public class RateCourse extends HttpServlet {
+@WebServlet(name = "deleteRate", urlPatterns = {"/deleteRate"})
+public class deleteRate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,27 +40,13 @@ public class RateCourse extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession();
+        Student s = (Student) session.getAttribute("student");
+        int studentID = s.getAccount().getAccountID();
         int courseID = Integer.parseInt(session.getAttribute("courseID").toString());
-        if (request.getParameter("rate")==null) {
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-            return;
-        }
-        int star  = Integer.parseInt(request.getParameter("rate"));
-        Student student = (Student) session.getAttribute("student");
-        int studentId = student.getAccount().getAccountID();
-        String contentRate = request.getParameter("contentRate");
         RateDAO rateDAO = new RateDAO();
-        if (rateDAO.checkRated(studentId, courseID)) {
-            rateDAO.updateRate(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-        }else{
-            rateDAO.rateCourse(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-        }
-        
-       
+        rateDAO.deleteRate(studentID, courseID);
+        response.sendRedirect("CourseDetails?courseID="+courseID);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

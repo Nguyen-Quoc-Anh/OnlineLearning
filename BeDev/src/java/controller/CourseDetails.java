@@ -46,6 +46,7 @@ public class CourseDetails extends HttpServlet {
         CourseDAO courseDAO = new CourseDAO();
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
+        session.setAttribute("courseID", courseID);
         Student student = (Student) session.getAttribute("student");
         //Check student enroll a course
         EnrollDAO enrollDAO = new EnrollDAO();
@@ -56,6 +57,8 @@ public class CourseDetails extends HttpServlet {
             if (isEnroll) {
                 request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
             }
+        }else{
+            request.setAttribute("isEnroll", false);
         }
         //Get a course by course ID from courseDAO
         Course course = courseDAO.getCourseById(courseID);
