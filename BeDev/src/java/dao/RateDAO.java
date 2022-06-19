@@ -38,13 +38,20 @@ public class RateDAO extends DBContext {
             while (rs.next()) {
                 list.add(new Rate(rs.getInt(1), rs.getInt(2), new Student(new Account(rs.getInt(4)), rs.getString(5), rs.getString(6)), rs.getString(3)));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
 
-    //huy
+    /**
+     * This method used to rate course by student.
+     * @param courseID
+     * @param studentID
+     * @param star
+     * @param contentRate
+     * @return true if rate successfully, otherwise false.
+     */
     public boolean rateCourse(int courseID, int studentID, int star, String contentRate) {
         try {
             String sql = "Insert into Rate(star,studentID,content,courseID) values(?,?,?,?)";

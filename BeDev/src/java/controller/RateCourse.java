@@ -47,10 +47,10 @@ public class RateCourse extends HttpServlet {
             response.sendRedirect("CourseDetails?courseID="+courseID);
             return;
         }
-        int star  = Integer.parseInt(request.getParameter("rate"));
+        int star  = Integer.parseInt(request.getParameter("rate"));//get number of star
+        String contentRate = request.getParameter("contentRate");// get content of rate
         Student student = (Student) session.getAttribute("student");
         int studentId = student.getAccount().getAccountID();
-        String contentRate = request.getParameter("contentRate");
         RateDAO rateDAO = new RateDAO();
         if (rateDAO.checkRated(studentId, courseID)) {//if rated then update this rate
             rateDAO.updateRate(courseID, studentId, star, contentRate);
