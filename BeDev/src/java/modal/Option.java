@@ -59,6 +59,13 @@ public class Option {
         this.point = point;
     }
 
+    public Option(int optionID, String content, boolean isTrue, double point) {
+        this.optionID = optionID;
+        this.content = content;
+        this.isTrue = isTrue;
+        this.point = point;
+    }
+
     public int getOptionID() {
         return optionID;
     }
