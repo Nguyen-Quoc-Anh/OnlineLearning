@@ -62,7 +62,7 @@ public class QuizRecordDAO extends DBContext {
             stm.setInt(3, sid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                return new QuizRecord(rs.getInt(1), rs.getInt(2), rs.getString(3));
+                return new QuizRecord(rs.getFloat(1), rs.getInt(2), rs.getString(3));
             }
         } catch (SQLException e) {
             System.out.println(e);

@@ -61,6 +61,7 @@ public class QuizReview extends HttpServlet {
         try {
             int rid = Integer.parseInt(request.getParameter("rid"));
             int qid = Integer.parseInt(request.getParameter("qid"));
+            String courseID = request.getParameter("courseID");
             Student student = (Student) session.getAttribute("student");
             if (session.getAttribute("account") !=null ) {  //check login with account session
                 if (session.getAttribute("student") != null 
@@ -68,6 +69,7 @@ public class QuizReview extends HttpServlet {
                         && quizDAO.checkQuizExist(qid) != 0) { //check student login and have quiz record and quiz
                     QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());  // a record contain grade and passrate of quiz in a quizrecord
                     ArrayList<Question> questionList = questionDAO.listQuestionByQuizIdAndRecordId(qid, rid); // list question of quiz (contain option of question and answer of student)
+                    System.out.println(Double.toString(quizRecord.getGrade()).split("\\.")[0]);
                     request.setAttribute("quizRecord", quizRecord);
                     request.setAttribute("questionList", questionList);
                 } else {
@@ -78,6 +80,7 @@ public class QuizReview extends HttpServlet {
                 response.sendRedirect("SignIn");
                 return;
             }
+            request.setAttribute("courseID", courseID);
             request.setAttribute("rid", rid);
             request.setAttribute("qid", qid);          
         } catch (Exception e) {

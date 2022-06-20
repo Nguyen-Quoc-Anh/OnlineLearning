@@ -74,7 +74,7 @@
                                             <h5>
                                                 <span style=" padding-right: 20px;">
                                                     <span style="font-weight: 620;">Grade received</span> 
-                                                    <span style="color: rgb(29, 124, 80);" > <fmt:formatNumber type = "number" value = "${quizRecord.getGrade() * 10}"/>%</span>
+                                                    <span style="color: rgb(29, 124, 80);" > <fmt:formatNumber type="number" maxFractionDigits="1" value="${quizRecord.getGrade()*10}" />%</span>
                                                 </span> 
                                                 <span>To pass <fmt:formatNumber type = "number" value = "${quizRecord.getPassRate()}"/>% or higher</span>
                                             </h5>
@@ -84,7 +84,7 @@
                                 <div class="col-md-2">
                                     <div class="container d-flex h-100">
                                         <div class="row justify-content-center align-self-center">
-                                            <a href="Quiz?qid=${qid}" class="btn btn-primary btn-lg text-white">Back</a>
+                                            <a href="Quiz?quizID=${qid}&courseID=${courseID}" class="btn btn-primary btn-lg text-white">Back</a>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +110,8 @@
                                             <h5>
                                                 <span style=" padding-right: 20px;">
                                                     <span style="font-weight: 620;">Grade received</span> 
-                                                    <span style="color: rgb(211, 0, 1);" > <fmt:formatNumber type = "number" value = "${quizRecord.getGrade() * 10}"/>%</span>
+                                                    <span style="color: rgb(211, 0, 1);" > <fmt:formatNumber type="number" maxFractionDigits="1" value="${quizRecord.getGrade()*10}" />%</span>
+                                                    
                                                 </span> 
                                                 <span>To pass <fmt:formatNumber type = "number" value = "${quizRecord.getPassRate()}"/>% or higher</span>
                                             </h5>
@@ -120,7 +121,7 @@
                                 <div class="col-md-2">
                                     <div class="container d-flex h-100">
                                         <div class="row justify-content-center align-self-center">
-                                            <a href="QuizHandle?qid=${qid}" class="btn btn-primary btn-lg text-white">Try again</a>
+                                            <a href="QuizHandle?qid=${qid}?cid=${courseID}" class="btn btn-primary btn-lg text-white">Try again</a>
                                         </div>
                                     </div>
                                 </div>
@@ -218,8 +219,8 @@
                                         <svg aria-hidden="true" fill="none" focusable="false" height="20" viewBox="0 0 20 20" width="20" id="cds-181" class="css-1hltn8p"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.5a8.5 8.5 0 100 17 8.5 8.5 0 000-17zM.5 10a9.5 9.5 0 1119 0 9.5 9.5 0 01-19 0z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M13.646 14.354l-8-8 .708-.708 8 8-.708.708z" fill="currentColor"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.354 6.354l-8 8-.708-.708 8-8 .708.708z" fill="currentColor"></path></svg>
                                     </div>
                                     <div class="col-md-10 d-flex">
-                                        <p class="justify-content-center align-self-center" style="margin-right: 10px">Incorrect</p>                                               
-                                        <p> ( Not enough answer ) </p>
+                                        <p class="justify-content-center align-self-center" style="margin-right: 10px"></p>                                               
+                                        <p> Not enough answer  </p>
                                     </div>
                                 </div>
                             </div>
