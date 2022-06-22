@@ -63,4 +63,43 @@ public class QuizDAO extends DBContext {
         }
         return -1;
     }
+
+    /**
+     * This method used to check quiz existed in database
+     * @param quizID is quiz id
+     * @return number of quiz
+     */
+    public int checkQuizExist(int quizID) {
+        try {
+            String sql = "select count(q.quizID) from Quiz q\n"
+                    + "where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    /**
+     * This method update grade of a quiz record.
+     *
+     * @param grade student grade
+     * @param quizRecordID id of quiz record
+     */
+    public void updateQuizRecordGrade(double grade, int quizRecordID) {
+        try {
+            String sql = "update Quiz_Record set grade = ? where quizRecordID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDouble(1, grade);
+            stm.setInt(2, quizRecordID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 }

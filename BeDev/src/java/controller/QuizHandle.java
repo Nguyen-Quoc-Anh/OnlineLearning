@@ -31,6 +31,8 @@ import modal.Quiz;
 @WebServlet(name = "QuizHandle", urlPatterns = {"/QuizHandle"})
 public class QuizHandle extends HttpServlet {
 
+    ArrayList<Question> questionList;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.

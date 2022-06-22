@@ -1,29 +1,32 @@
+
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright(C) 2005, FPT university
+ * ...
+ * ...
+ *
+ * Record of change:
+ * DATE            Version             AUTHOR           DESCRIPTION
+ * 2018-09-10      1.0                 HuyTQ           First Implement
  */
 package controller;
 
-import dao.CourseDAO;
-import dao.QuestionDAO;
-import dao.QuizDAO;
+import dao.RateDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Account;
-import modal.Quiz;
+import modal.Student;
 
 /**
  *
- * @author ACER
+ * @author ADMIN
  */
-@WebServlet(name = "Quiz", urlPatterns = {"/Quiz"})
-public class QuizController extends HttpServlet {
+@WebServlet(name = "RateCourse", urlPatterns = {"/RateCourse"})
+public class RateCourse extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,8 +40,27 @@ public class QuizController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view//quiz.jsp").forward(request, response);
-
+        request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        int courseID = Integer.parseInt(session.getAttribute("courseID").toString());
+        if (request.getParameter("rate")==null) {
+            response.sendRedirect("CourseDetails?courseID="+courseID);
+            return;
+        }
+        int star  = Integer.parseInt(request.getParameter("rate"));
+        Student student = (Student) session.getAttribute("student");
+        int studentId = student.getAccount().getAccountID();
+        String contentRate = request.getParameter("contentRate");
+        RateDAO rateDAO = new RateDAO();
+        if (rateDAO.checkRated(studentId, courseID)) {
+            rateDAO.updateRate(courseID, studentId, star, contentRate);
+            response.sendRedirect("CourseDetails?courseID="+courseID);
+        }else{
+            rateDAO.rateCourse(courseID, studentId, star, contentRate);
+            response.sendRedirect("CourseDetails?courseID="+courseID);
+        }
+        
+       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,19 +75,6 @@ public class QuizController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        QuestionDAO questionDAO = new QuestionDAO();
-
-        try {
-            int quizID = Integer.parseInt(request.getParameter("qid"));
-            Quiz quiz = quizDAO.getQuizByID(quizID);
-            int numberOfQuestion = questionDAO.countQuestionsInQuiz(quizID);
-            request.setAttribute("numberOfQuestion", numberOfQuestion);
-            request.setAttribute("quiz", quiz);
-        } catch (Exception e) {
-            response.sendRedirect("Error");
-            return;
-        }
         processRequest(request, response);
     }
 

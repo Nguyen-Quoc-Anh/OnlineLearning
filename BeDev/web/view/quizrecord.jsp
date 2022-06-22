@@ -3,7 +3,7 @@
     Created on : Jun 5, 2022, 3:06:55 PM
     Author     : admin
 --%>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -56,7 +56,7 @@
                     <tbody>
                         <c:forEach var="re" items="${listRecord}">
                             <tr class="text-center">
-                                <th scope="row">${re.getGrade()}</th>
+                                <th scope="row"><fmt:formatNumber type="number" maxFractionDigits="2" value="${re.getGrade()}" /></th>                                  
                                 <td>${re.getTimeAttended().toString().substring(0, 10)} &emsp; ${re.getTimeAttended().toString().substring(11,19)}</td>
                                 <td><a href="QuizReview?rid=${re.getRecordID()}&qid=${re.getQuizID()}">View Detail</a></td>
                             </tr>
