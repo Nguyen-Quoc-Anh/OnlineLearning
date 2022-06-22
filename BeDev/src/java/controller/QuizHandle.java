@@ -31,8 +31,6 @@ import modal.Quiz;
 @WebServlet(name = "QuizHandle", urlPatterns = {"/QuizHandle"})
 public class QuizHandle extends HttpServlet {
 
-    ArrayList<Question> questionList;
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -65,16 +63,11 @@ public class QuizHandle extends HttpServlet {
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             int quizID = Integer.parseInt(request.getParameter("qid"));
-            String courseID = request.getParameter("cid");
-            if (courseID == null) {
-                throw new Exception();
-            }
-            CourseDAO courseDAO = new CourseDAO();
-            Course course = courseDAO.getCourseById(request.getParameter("cid"));
+            int courseID = Integer.parseInt(request.getParameter("cid"));
             Quiz quiz = quizDAO.getQuizByID(quizID);
-            questionList = questionDAO.getQuestionByQuizID(quizID);
+            ArrayList<Question> questionList = questionDAO.getQuestionByQuizID(quizID);
             request.setAttribute("questionList", questionList);
-            request.setAttribute("course", course);
+            request.setAttribute("courseID", courseID);
             request.setAttribute("quiz", quiz);
         } catch (Exception e) {
             response.sendRedirect("Error");
@@ -96,6 +89,7 @@ public class QuizHandle extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuizDAO quizDAO = new QuizDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
         HttpSession session = request.getSession();
         OptionDAO optionDAO = new OptionDAO();
 
@@ -103,7 +97,9 @@ public class QuizHandle extends HttpServlet {
         try {
             Account account = (Account) session.getAttribute("account");
             int quizID = Integer.parseInt(request.getParameter("qid"));
+            int courseID = Integer.parseInt(request.getParameter("cid"));
 
+            ArrayList<Question> questionList = questionDAO.getQuestionByQuizID(quizID);
             ArrayList<Question> questionRecord = new ArrayList<>();
             for (Question question : questionList) {
                 // get checked option
@@ -128,11 +124,13 @@ public class QuizHandle extends HttpServlet {
             int quizRecordID = quizDAO.insertQuizRecord(account.getAccountID(), (double) Math.round(totalGrade * 100) / 100, quizID);
             if (quizRecordID == -1) {   // can't insert into database
                 request.setAttribute("mess", "Cannot insert quiz record.");
+                request.setAttribute("quiz", new Quiz(quizID));
+                request.setAttribute("courseID", courseID);
                 processRequest(request, response);
                 return;
             }
             optionDAO.insertOptionRecord(questionRecord, quizRecordID);
-            response.sendRedirect("QuizReview?rid=" + quizRecordID + "&qid=" + quizID);    // redirect to view result
+            response.sendRedirect("QuizReview?rid=" + quizRecordID + "&qid=" + quizID + "&courseID=" + courseID);    // redirect to view result
         } catch (Exception e) {
             System.out.println(e);
             response.sendRedirect("Error");
