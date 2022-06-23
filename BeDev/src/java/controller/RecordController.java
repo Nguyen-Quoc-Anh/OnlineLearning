@@ -59,6 +59,7 @@ public class RecordController extends HttpServlet {
                 if (session.getAttribute("student") != null) { //check student login
                     Student student = (Student) session.getAttribute("student");
                     ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid); // list quiz record of student in a quiz
+                    
                     QuizRecord quizRecord = recordDAO.nameOfQuiz(qid); // name of quiz
                     request.setAttribute("listRecord", listRecord);
                     request.setAttribute("quizRecord", quizRecord);

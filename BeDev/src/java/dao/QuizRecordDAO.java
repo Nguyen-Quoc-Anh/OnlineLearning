@@ -9,6 +9,7 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import modal.QuizRecord;
 
@@ -28,14 +29,28 @@ public class QuizRecordDAO extends DBContext {
     public ArrayList<QuizRecord> listRecord(int sid, int qid) {
         ArrayList<QuizRecord> list = new ArrayList<>();
         try {
-            String sql = "select quizRecordID, quizID, time, grade from Quiz_Record\n"
-                    + "where studentID = ? and quizID = ?";
+            String sql = "select qu1.quizRecordID, qu1.grade, qu1.time, qu2.number_correct_answer, qu1.numberQuestion, qu2.quizID from\n"
+                    + "(select ar.quizRecordID, count(distinct(ar.questionID)) as numberQuestion, qr.grade, qr.time\n"
+                    + "from Answer_Record ar \n"
+                    + "join Quiz_Record qr on ar.quizRecordID = qr.quizRecordID\n"
+                    + "group by ar.quizRecordID,qr.grade, qr.time\n"
+                    + ") qu1\n"
+                    + "join\n"
+                    + "(select qr.quizRecordID, qr.quizID ,count(distinct(a.questionID)) as number_correct_answer from\n"
+                    + "(select ar.questionID, ar.quizRecordID, o.optionID, o.content, o.isTrue, ar.answerID from [Option] o\n"
+                    + "left join Answer_Record ar\n"
+                    + "on o.questionID = ar.questionID and o.optionID = ar.answerID)  a\n"
+                    + "join Quiz_Record qr on qr.quizRecordID = a.quizRecordID and qr.quizID = ? and qr.studentID = ?\n"
+                    + "where a.isTrue = 1 and a.optionID = a.answerID\n"
+                    + "group by qr.quizID, qr.quizRecordID ) qu2\n"
+                    + "on qu1.quizRecordID = qu2.quizRecordID\n"
+                    + "order by qu1.time desc";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, sid);
-            stm.setInt(2, qid);
+            stm.setInt(1, qid);
+            stm.setInt(2, sid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new QuizRecord(rs.getInt(1), rs.getInt(2), rs.getTimestamp(3).toLocalDateTime(), rs.getFloat(4), 0));
+                list.add(new QuizRecord(rs.getInt(1), rs.getFloat(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), rs.getInt(5), rs.getInt(6)));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -69,9 +84,10 @@ public class QuizRecordDAO extends DBContext {
         }
         return null;
     }
-    
+
     /**
      * This method used to check quiz record existed in database
+     *
      * @param sid is student id
      * @param rid is record id
      * @return number of quiz record
@@ -114,7 +130,7 @@ public class QuizRecordDAO extends DBContext {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         QuizRecordDAO d = new QuizRecordDAO();
         int k = d.checkExistQuizRecord(10, 1);

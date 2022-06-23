@@ -19,8 +19,10 @@ public class QuizRecord {
     float grade;
     int studentID;
     float passRate;
+    int numberQuestion;
+    int numberCorrectAnswer;
     String quizName;
-    
+
     public QuizRecord() {
     }
 
@@ -37,8 +39,15 @@ public class QuizRecord {
         this.passRate = passRate;
         this.quizName = quizName;
     }
-    
-    
+
+    public QuizRecord(int recordID, float grade, LocalDateTime timeAttended, int numberCorrectAnswer, int numberQuestion, int quizID) {
+        this.recordID = recordID;
+        this.grade = grade;
+        this.timeAttended = timeAttended;
+        this.numberCorrectAnswer = numberCorrectAnswer;
+        this.numberQuestion = numberQuestion;
+        this.quizID = quizID;
+    }
 
     public int getRecordID() {
         return recordID;
@@ -96,7 +105,21 @@ public class QuizRecord {
         this.quizName = quizName;
     }
 
-    
+    public int getNumberQuestion() {
+        return numberQuestion;
+    }
 
+    public void setNumberQuestion(int numberQuestion) {
+        this.numberQuestion = numberQuestion;
+    }
+
+    public int getNumberCorrectAnswer() {
+        return numberCorrectAnswer;
+    }
+
+    public void setNumberCorrectAnswer(int numberCorrectAnswer) {
+        this.numberCorrectAnswer = numberCorrectAnswer;
+    }
+    
     
 }
