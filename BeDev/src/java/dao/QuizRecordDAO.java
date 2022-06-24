@@ -36,16 +36,16 @@ public class QuizRecordDAO extends DBContext {
                     + "group by ar.quizRecordID,qr.grade, qr.time\n"
                     + ") qu1\n"
                     + "join\n"
-                    + "(select qr.quizRecordID, qr.quizID ,count(distinct(a.questionID)) as number_correct_answer from\n"
+                    + "(select qr.quizRecordID, qr.quizID , count(distinct(a.questionID)) as number_correct_answer from\n"
                     + "(select ar.questionID, ar.quizRecordID, o.optionID, o.content, o.isTrue, ar.answerID from [Option] o\n"
                     + "left join Answer_Record ar\n"
                     + "on o.questionID = ar.questionID and o.optionID = ar.answerID)  a\n"
-                    + "join Quiz_Record qr on qr.quizRecordID = a.quizRecordID and qr.quizID = ? and qr.studentID = ?\n"
-                    + "where a.isTrue = 1 and a.optionID = a.answerID\n"
+                    + "right join Quiz_Record qr on qr.quizRecordID = a.quizRecordID and qr.quizID =? and qr.studentID =? and a.isTrue = 1 and a.answerID = a.optionID\n"
                     + "group by qr.quizID, qr.quizRecordID ) qu2\n"
-                    + "on qu1.quizRecordID = qu2.quizRecordID\n"
+                    + "on qu1.quizRecordID = qu2.quizRecordID "
                     + "order by qu1.time desc";
             PreparedStatement stm = connection.prepareStatement(sql);
+            System.out.println(sql);
             stm.setInt(1, qid);
             stm.setInt(2, sid);
             ResultSet rs = stm.executeQuery();
@@ -133,7 +133,6 @@ public class QuizRecordDAO extends DBContext {
 
     public static void main(String[] args) {
         QuizRecordDAO d = new QuizRecordDAO();
-        int k = d.checkExistQuizRecord(10, 1);
-        System.out.println(k);
+        System.out.println(d.listRecord(10, 1).size());
     }
 }
