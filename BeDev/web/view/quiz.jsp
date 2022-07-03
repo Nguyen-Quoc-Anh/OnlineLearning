@@ -96,10 +96,10 @@
                         <br><br><br><br><br>
                         <div class="d-flex justify-content-center">
                             <c:if test="${quizRecord.recordID != 0}">
-                                <c:if test="${quiz.passRate > quizRecord.grade}">
+                                <c:if test="${quiz.passRate > quizRecord.grade * 10}">
                                     <button type="button" class="btn btn-danger">Not pass</button>
                                 </c:if>
-                                <c:if test="${quiz.passRate <= quizRecord.grade}">
+                                <c:if test="${quiz.passRate <= quizRecord.grade * 10}">
                                     <button type="button" class="btn btn-success">Pass</button>
                                 </c:if>
                             </c:if>

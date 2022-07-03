@@ -61,7 +61,7 @@
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb align-items-center bg-transparent p-0 mb-0">
                             <li class="breadcrumb-item">
-                                <a href="index.html" class="fs-6 text-secondary">Home</a>
+                                <a href="HomeControl" class="fs-6 text-secondary">Home</a>
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="#" class="fs-6 text-secondary">Course</a>
@@ -965,7 +965,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <p class="font-para--md">
-                                                                    ${rate.content} chua co du lieu
+                                                                    ${rate.content}
                                                                 </p>
                                                             </div>
                                                         </c:forEach>
@@ -1104,7 +1104,7 @@
                                                 <a href="CourseDetails?courseID=${course.courseID}" class="font-title--card">${course.courseName}</a>
                                             </h5>
                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                <a href="instructor-profile.html" class="contentCard-user d-flex align-items-center">
+                                                <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
                                                     <img src="${course.getExpert().img}" style="height: 20px" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">Brandon Dias</p>
                                                 </a>
