@@ -66,6 +66,7 @@ public class QuizDAO extends DBContext {
 
     /**
      * This method used to check quiz existed in database
+     *
      * @param quizID is quiz id
      * @return number of quiz
      */
@@ -101,5 +102,21 @@ public class QuizDAO extends DBContext {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public Quiz getQuiz(int qid) {
+        try {
+            String sql = "select q.quizID, q.quizName from Quiz q\n"
+                    + "where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, qid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Quiz(rs.getInt(1), rs.getString(2), 0);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
 }

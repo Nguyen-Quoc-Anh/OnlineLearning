@@ -190,7 +190,6 @@
                                     <span class="navbar-mobile__menu-link"> About </span>
                                 </a>
                             </li>
-
                         </ul>
                     </div>
                 </div>

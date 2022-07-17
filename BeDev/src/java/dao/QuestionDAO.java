@@ -153,6 +153,90 @@ public class QuestionDAO extends DBContext {
         return questions;
     }
 
+    public ArrayList<Question> getQuestionByQuiz(int qid) {
+        ArrayList<Question> questions = new ArrayList<>();
+        try {
+            String sql = "select q.questionID, q.content, q.explaination, q.status from Question q\n"
+                    + "where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, qid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                questions.add(new Question(rs.getInt(1), rs.getString(2), rs.getString(3), null, rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return questions;
+    }
+
+    public void inActiveQuestion(int questionID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set status = 0 where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void activeQuestion(int questionID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set status = 1 where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void editQuestion(String content, String explain, int quesID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set content = ?, explaination = ?\n"
+                    + "where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setNString(1, content);
+            stm.setNString(2, explain);
+            stm.setInt(3, quesID);
+            stm.setInt(4, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteQuestion(int questionID, int qid) {
+        try {
+            String sql = "delete from Question\n"
+                    + "where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public Question getQuestion(int questionID, int qid) {
+        try {
+            String sql = "select q.questionID, q.content, q.explaination, q.quizID from Question q\n"
+                    + "where q.questionID = ? and q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(rs.getInt(4)), true);
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         QuestionDAO d = new QuestionDAO();
         ArrayList<Question> list = d.listQuestionByQuizIdAndRecordId(1, 2);
