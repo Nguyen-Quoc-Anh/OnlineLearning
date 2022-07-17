@@ -12,6 +12,7 @@ import java.sql.Date;
  * @author Admin
  */
 public class Course {
+
     private int courseID;
     private String courseName;
     private String description;
@@ -23,15 +24,29 @@ public class Course {
     private int numberRegister;
     private int numberLesson;
     private int averageStar;
-    
+    private float percentOfComplete;
+
+    private int totalLession;
+    private int totalLearned;
+
     public Course() {
     }
 
     public Course(int courseID) {
         this.courseID = courseID;
     }
-    
-    
+
+    public Course(int totalLession, int totalLearned) {
+        this.totalLession = totalLession;
+        this.totalLearned = totalLearned;
+    }
+
+    public Course(int courseID, String courseName, String courseImage, Expert expert) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.courseImage = courseImage;
+        this.expert = expert;
+    }
 
     public Course(int courseID, String courseName, String description, String courseImage, Expert expert, double money, Date releasedDate, boolean status) {
         this.courseID = courseID;
@@ -92,8 +107,6 @@ public class Course {
         this.numberLesson = numberLesson;
         this.averageStar = averageStar;
     }
-    
-    
 
     public int getAverageStar() {
         return averageStar;
@@ -102,8 +115,6 @@ public class Course {
     public void setAverageStar(int averageStar) {
         this.averageStar = averageStar;
     }
-    
-    
 
     public int getNumberLesson() {
         return numberLesson;
@@ -112,8 +123,6 @@ public class Course {
     public void setNumberLesson(int numberLesson) {
         this.numberLesson = numberLesson;
     }
-    
-    
 
     public int getNumberRegister() {
         return numberRegister;
@@ -122,9 +131,7 @@ public class Course {
     public void setNumberRegister(int numberRegister) {
         this.numberRegister = numberRegister;
     }
-    
-    
-    
+
     public int getCourseID() {
         return courseID;
     }
@@ -189,10 +196,37 @@ public class Course {
         this.status = status;
     }
 
+    public int getTotalLession() {
+        return totalLession;
+    }
+
+    public void setTotalLession(int totalLession) {
+        this.totalLession = totalLession;
+    }
+
+    public int getTotalLearned() {
+        return totalLearned;
+    }
+
+    public void setTotalLearned(int totalLearned) {
+        this.totalLearned = totalLearned;
+    }
+
+//    public float getPercentOfComplete() {
+//        String format = String.format("%0.02f", (float) totalLearned / totalLession);
+//        return Float.parseFloat(format);
+//    }
+    public float getPercentOfComplete() {
+        return (float) totalLearned / totalLession;
+    }
+
+    public void setPercentOfComplete() {
+        this.percentOfComplete = (float) totalLearned / totalLession;
+    }
+
     @Override
     public String toString() {
         return "Course{" + "courseID=" + courseID + ", courseName=" + courseName + ", description=" + description + ", courseImage=" + courseImage + ", expert=" + expert + ", money=" + money + ", releasedDate=" + releasedDate + ", status=" + status + ", numberRegister=" + numberRegister + ", numberLesson=" + numberLesson + '}';
     }
-        
-   
+
 }

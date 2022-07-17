@@ -26,6 +26,11 @@ public class QuizRecord {
     public QuizRecord() {
     }
 
+    public QuizRecord(int recordID, float grade) {
+        this.recordID = recordID;
+        this.grade = grade;
+    }
+
     public QuizRecord(int recordID, int quizID, LocalDateTime timeAttended, float grade, int studentID) {
         this.recordID = recordID;
         this.quizID = quizID;

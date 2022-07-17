@@ -5,23 +5,29 @@
  */
 package controller;
 
+import dao.ChapterDAO;
 import dao.CourseDAO;
+import dao.LessonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Chapter;
+import modal.Course;
+import modal.Lesson;
 import modal.Student;
 
 /**
  *
- * @author Admin
+ * @author MrLink
  */
-@WebServlet(name = "EnrollCourse", urlPatterns = {"/EnrollCourse"})
-public class EnrollCourse extends HttpServlet {
+@WebServlet(name = "LessonView", urlPatterns = {"/LessonView"})
+public class LessonView extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,20 +41,28 @@ public class EnrollCourse extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String courseID = request.getParameter("courseID");
         String lessonID = request.getParameter("lessonID");
+        String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
-        if (courseID != null && student != null) {
-            CourseDAO courseDAO = new CourseDAO();
-            //Student enroll a course
-            courseDAO.enrollCourse(courseID, student.getAccount().getAccountID());
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("lessonID", lessonID);
-            request.getRequestDispatcher("LessonView").forward(request, response);
-        } else {
+        if (student == null) {
             response.sendRedirect("SignIn");
+            return;
         }
+        //Get lesson details by lessonID
+        LessonDAO lessonDAO = new LessonDAO();
+        Lesson lesson = lessonDAO.getLessonDetails(lessonID);
+        request.setAttribute("lessonDetails", lesson);
+        //Get course by courseID
+        CourseDAO courseDAO = new CourseDAO();
+        Course course = courseDAO.getCourseById(courseID);
+        request.setAttribute("course", course);
+        //Get list chapter of course by course ID from chapterDAO
+        ChapterDAO chapterDAO = new ChapterDAO();
+        List<Chapter> listChapter = chapterDAO.listChapterByEnrollCourse(courseID, student.getAccount().getAccountID());
+        request.setAttribute("listChapter", listChapter);
+        lessonDAO.addLessonLearned(lessonID, student.getAccount().getAccountID());
+        request.getRequestDispatcher("//view//watch.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

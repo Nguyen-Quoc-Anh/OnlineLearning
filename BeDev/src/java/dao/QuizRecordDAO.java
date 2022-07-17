@@ -130,7 +130,31 @@ public class QuizRecordDAO extends DBContext {
         }
         return null;
     }
-
+    
+    /**
+     * This method get a quiz record
+     *
+     * @param studentID
+     * @param quizID
+     * @return a quiz record
+     */
+    public QuizRecord getGrade(String quizID, int studentID) {
+        try {
+            String sql = "select top 1 quizRecordID, grade from Quiz_Record "
+                    + "where studentID = ? and quizID = ? order by time desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, studentID);
+            stm.setString(2, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new QuizRecord(rs.getInt(1), rs.getFloat(2));
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
         QuizRecordDAO d = new QuizRecordDAO();
         System.out.println(d.listRecord(10, 1).size());

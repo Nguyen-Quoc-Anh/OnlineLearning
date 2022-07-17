@@ -5,6 +5,7 @@
  */
 package dao;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +20,10 @@ import modal.Expert;
  * @author Admin
  */
 public class CourseDAO extends DBContext {
+
     /**
      * This method get list course from database
+     *
      * @return a list of course
      */
     public List<Course> listCourse() {
@@ -36,12 +39,12 @@ public class CourseDAO extends DBContext {
                     + "(select e.courseID, COUNT(e.courseID) as enrolCourse  from Enroll e "
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
-                    + "r.courseID) aoc on c.courseID = aoc.courseID";
+                    + "r.courseID) aoc on c.courseID = aoc.courseID where c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)), 
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)),
                         rs.getDouble(7), rs.getInt(8), rs.getInt(9), rs.getInt(10)));
             }
         } catch (Exception e) {
@@ -49,9 +52,10 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
      * This method get list course by category ID from database
+     *
      * @return a list of course
      */
     public List<Course> listCourseCategory(String categoryID) {
@@ -68,13 +72,13 @@ public class CourseDAO extends DBContext {
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
                     + "r.courseID) aoc on c.courseID = aoc.courseID left join "
-                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ?";
+                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, categoryID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)), 
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)),
                         rs.getDouble(7), rs.getInt(8), rs.getInt(9), rs.getInt(10)));
             }
         } catch (Exception e) {
@@ -82,9 +86,10 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
      * This method get list top 6 courses have highest register
+     *
      * @return a list of course
      */
     public List<Course> listFeatureCourse() {
@@ -100,7 +105,7 @@ public class CourseDAO extends DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), rs.getString(10), "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));              
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), new Expert(rs.getInt(5), rs.getString(9), rs.getString(10), "", ""), rs.getDouble(6), rs.getDate(7), rs.getBoolean(8), en.countEnrollOfCourse(rs.getInt(1)), le.countLessonOfCourse(rs.getInt(1))));
             }
         } catch (SQLException e) {
             System.out.println(e);
@@ -110,6 +115,7 @@ public class CourseDAO extends DBContext {
 
     /**
      * This method get list courses of expert
+     *
      * @param id is id of expert
      * @return a list of courses
      */
@@ -131,9 +137,10 @@ public class CourseDAO extends DBContext {
         }
         return list;
     }
-    
+
     /**
      * This method count number course create by expert
+     *
      * @param id is id of expert
      * @return number of course
      */
@@ -152,8 +159,8 @@ public class CourseDAO extends DBContext {
         }
         return 0;
     }
-    
-    public boolean checkStudentEnrollByQuizID (int quizID, int studentID) {
+
+    public boolean checkStudentEnrollByQuizID(int quizID, int studentID) {
         try {
             String sql = "select e.* from Enroll e, Quiz q, Chapter c where q.chapterID = c.chapterID and c.courseID = e.courseID and "
                     + "q.quizID = ? and e.studentID = ?";
@@ -172,6 +179,7 @@ public class CourseDAO extends DBContext {
 
     /**
      * This method get course by course ID
+     *
      * @return a course
      */
     public Course getCourseById(String courseID) {
@@ -187,14 +195,14 @@ public class CourseDAO extends DBContext {
                     + "COUNT(e.courseID) as enrolCourse  from Enroll e group by e.courseID) "
                     + "eoc on c.courseID = eoc.courseID left join (select r.courseID, "
                     + "AVG(star) as averageStar from Rate r group by r.courseID) "
-                    + "aoc on c.courseID = aoc.courseID where c.courseID = ?";
+                    + "aoc on c.courseID = aoc.courseID where c.courseID = ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setString(1, courseID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                return new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), 
+                return new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4),
                         new Expert(rs.getInt(5), rs.getString(6), rs.getString(7), rs.getString(8)),
-                        rs.getDouble(9), rs.getDate(10) ,rs.getInt(11), rs.getInt(12), rs.getInt(13));
+                        rs.getDouble(9), rs.getDate(10), rs.getInt(11), rs.getInt(12), rs.getInt(13));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -203,7 +211,9 @@ public class CourseDAO extends DBContext {
     }
 
     /**
-     * This method get 4 course by category ID and don't get a course have below course ID
+     * This method get 4 course by category ID and don't get a course have below
+     * course ID
+     *
      * @return a list of course
      */
     public List<Course> relatedCourse(String courseID, int categoryID) {
@@ -220,14 +230,14 @@ public class CourseDAO extends DBContext {
                     + "group by e.courseID) eoc on c.courseID = eoc.courseID left join "
                     + "(select r.courseID, AVG(star) as averageStar from Rate r group by "
                     + "r.courseID) aoc on c.courseID = aoc.courseID left join "
-                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.courseID != ?";
+                    + "Course_Category cc on cc.courseID = c.courseID where cc.categoryID = ? and c.courseID != ? and c.status = 1";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, categoryID);
             stm.setString(2, courseID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3), 
-                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)), 
+                list.add(new Course(rs.getInt(1), rs.getString(2), rs.getString(3),
+                        new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)),
                         rs.getDouble(7), rs.getInt(8), rs.getInt(9), rs.getInt(10)));
             }
         } catch (Exception e) {
@@ -251,11 +261,69 @@ public class CourseDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        CourseDAO dao = new CourseDAO();
-        for (Course category : dao.listCourseCategory("1")) {
-            System.out.println(category.toString());
+    public List<Course> getCourseByStudentId(int id) {
+        try {
+            CourseDAO dao = new  CourseDAO();
+            List<Course> listCourses = new ArrayList<>();
+            String sql = "select c.courseID,  c.courseName, c.courseImage, c.expertID, ex.name,ex.imageURL from Enroll e, Course c , Expert ex\n"
+                    + "where e.courseID =c.courseID and e.studentID =? and ex.expertID = c.expertID";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Course c = new Course(rs.getInt(1), rs.getString(2), rs.getString(3), new Expert(rs.getInt(4), rs.getString(5), rs.getString(6)));
+                c.setTotalLession(dao.getTotalLessionOfCourse(rs.getInt(1)));
+                c.setTotalLearned(dao.getTotalLessionLearned(rs.getInt(1), id));
+                listCourses.add(c);
+            }
+            return listCourses;
+        } catch (SQLException e) {
+            System.out.println(e);
         }
-//        System.out.println(dao.getCourseById("1"));
+        return null;
     }
+
+    public int getTotalLessionOfCourse(int courseID) {
+        try {
+            String sql = "select  count(c.courseID) as c1  from   Course c, Lesson l , Chapter ch\n"
+                    + "where c.courseID = ch.courseID and l.chapterID = ch.chapterID and c.courseID = ?\n"
+                    + "group by c.courseID";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    public int getTotalLessionLearned(int courseID, int studentID) {
+        try {
+            String sql = "select  count(c.courseID) as c2 from   Course c, Lesson_Learned ll , Chapter ch, Lesson l\n"
+                    + "where c.courseID = ch.courseID and l.chapterID = ch.chapterID and c.courseID = ? and ll.lessonID= l.lessonID and ll.studentID=?\n"
+                    + "group by c.courseID	";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            stm.setInt(2, studentID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        List<Course> listCourses = new ArrayList<>();
+        CourseDAO dao = new CourseDAO();
+        listCourses = dao.getCourseByStudentId(10);
+        System.out.println(dao.getTotalLessionOfCourse(3));
+        System.out.println(dao.getTotalLessionLearned(3, 10));
+    }
+
 }

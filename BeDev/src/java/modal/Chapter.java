@@ -18,6 +18,7 @@ public class Chapter {
     private int position;
     private boolean status;
     private List<Lesson> lessons;
+    private Quiz quiz;
 
     public Chapter() {
     }
@@ -30,11 +31,12 @@ public class Chapter {
         this.status = status;
     }
 
-    public Chapter(int chapterID, String chapterName, int position, List<Lesson> lessons) {
+    public Chapter(int chapterID, String chapterName, int position, List<Lesson> lessons, Quiz quiz) {
         this.chapterID = chapterID;
         this.chapterName = chapterName;
         this.position = position;
         this.lessons = lessons;
+        this.quiz = quiz;
     }
 
     public List<Lesson> getLessons() {
@@ -43,6 +45,14 @@ public class Chapter {
 
     public void setLessons(List<Lesson> lessons) {
         this.lessons = lessons;
+    }
+
+    public Quiz getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(Quiz quiz) {
+        this.quiz = quiz;
     }
 
     public int getChapterID() {

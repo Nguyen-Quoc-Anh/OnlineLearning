@@ -232,7 +232,7 @@
                                                     <img src="${course.getExpert().getImg()}" style="height: 30px" alt="client-image" class="rounded-circle" />
                                                     <p class="font-para--md">${course.getExpert().getExpertName()}</p>
                                                 </a>
-                                                <div class="price">
+                                                <div class="price">Expert
                                                     <span>${course.getMoney()} VND</span>
                                                 </div>
                                             </div>
