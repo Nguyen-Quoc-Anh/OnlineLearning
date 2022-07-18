@@ -69,7 +69,6 @@ public class QuizReview extends HttpServlet {
                         && quizDAO.checkQuizExist(qid) != 0) { //check student login and have quiz record and quiz
                     QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());  // a record contain grade and passrate of quiz in a quizrecord
                     ArrayList<Question> questionList = questionDAO.listQuestionByQuizIdAndRecordId(qid, rid); // list question of quiz (contain option of question and answer of student)
-                    System.out.println(Double.toString(quizRecord.getGrade()).split("\\.")[0]);
                     request.setAttribute("quizRecord", quizRecord);
                     request.setAttribute("questionList", questionList);
                 } else {
