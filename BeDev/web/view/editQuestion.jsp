@@ -39,14 +39,14 @@
                                 <div class="col-12">
                                     <label for="email">Content</label>
                                     <br>
-                                    <textarea name="content" cols="80" rows="5" style="width: 100%" required="">${question.getContent()}</textarea>
+                                    <textarea class="form-control" name="content" cols="80" rows="5" style="width: 100%" required="">${question.getContent()}</textarea>
                                 </div>
                             </div>
                             <div class="row g-3">
                                 <div class="col-12">
                                     <label for="email">Explaination</label>
                                     <br>                                  
-                                    <textarea name="explain" cols="80" rows="5" style="width: 100%">${question.getExplanation()}</textarea>
+                                    <textarea readonly="" class="form-control" name="explain" cols="80" rows="5" style="width: 100%">${question.getExplanation()}</textarea>
                                 </div>
                             </div>    
                             <div class="d-flex justify-content-lg-end justify-content-center mt-2">

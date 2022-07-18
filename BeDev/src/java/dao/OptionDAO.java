@@ -164,6 +164,23 @@ public class OptionDAO extends DBContext {
         return answers;
     }
 
+    public ArrayList<Option> listOption(int questionID) {
+        ArrayList<Option> option = new ArrayList<>();
+        try {
+            String sql = "select * from [Option]\n"
+                    + "where questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                option.add(new Option(rs.getInt(1), new Question(rs.getInt(2)), rs.getString(3), rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return option;
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
         ArrayList<Option> blabla = dao.listCompareResult(1, 11);
