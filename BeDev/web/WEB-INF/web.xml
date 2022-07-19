@@ -14,6 +14,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>QuizFilter</filter-name>
+        <url-pattern>/Quiz</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>QuizFilter</filter-name>
         <url-pattern>/QuizHandle</url-pattern>
     </filter-mapping>
     <filter-mapping>

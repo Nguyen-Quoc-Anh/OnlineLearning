@@ -70,22 +70,26 @@ public class OptionDAO extends DBContext {
     /**
      * This method insert student answers into database.
      *
-     * @param questionID id of question
-     * @param optionID id of option
+     * @param questionRecord record contain student choose.
      * @param quizRecordID id of record
      */
-    public void insertOptionRecord(int questionID, int optionID, int quizRecordID) {
+    public void insertOptionRecord(ArrayList<Question> questionRecord, int quizRecordID) {
         try {
             String sql = "insert into Answer_Record (quizRecordID, questionID, answerID) values (?, ?, ?)";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizRecordID);
-            stm.setInt(2, questionID);
-            if (optionID != -1) {
-                stm.setInt(3, optionID);
-            } else {
-                stm.setNull(3, Types.INTEGER);
+            for (Question question : questionRecord) {
+                stm.setInt(2, question.getQuestionID());
+                if (question.getOptionList() == null) {
+                    stm.setNull(3, Types.INTEGER);
+                    stm.executeUpdate();
+                    continue;
+                }
+                for (Option option : question.getOptionList()) {
+                    stm.setInt(3, option.getOptionID());
+                    stm.executeUpdate();
+                }
             }
-            stm.executeUpdate();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -109,9 +113,10 @@ public class OptionDAO extends DBContext {
 
     /**
      * This method get list answer of question in a record
+     *
      * @param rid is record id
      * @param questionId is question id
-     * @return 
+     * @return
      */
     public ArrayList<Option> getAnswerByRecordIdAndQuestionId(int rid, int questionId) {
         ArrayList<Option> opList = new ArrayList<>();
@@ -130,12 +135,14 @@ public class OptionDAO extends DBContext {
         }
         return opList;
     }
-    
+
     /**
-     * This method get list option compare between option of question and answer of student
+     * This method get list option compare between option of question and answer
+     * of student
+     *
      * @param rid is record id
      * @param questionID is question id
-     * @return 
+     * @return
      */
     public ArrayList<Option> listCompareResult(int rid, int questionID) {
         ArrayList<Option> answers = new ArrayList<>();
@@ -157,9 +164,26 @@ public class OptionDAO extends DBContext {
         return answers;
     }
 
+    public ArrayList<Option> listOption(int questionID) {
+        ArrayList<Option> option = new ArrayList<>();
+        try {
+            String sql = "select * from [Option]\n"
+                    + "where questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                option.add(new Option(rs.getInt(1), new Question(rs.getInt(2)), rs.getString(3), rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return option;
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
-        ArrayList<Option> blabla = dao.listCompareResult(1,11);
+        ArrayList<Option> blabla = dao.listCompareResult(1, 11);
         for (Option option : blabla) {
             System.out.println(option.getAnswerOption());
         }

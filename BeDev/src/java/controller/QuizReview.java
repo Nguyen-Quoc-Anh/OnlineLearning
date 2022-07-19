@@ -61,6 +61,7 @@ public class QuizReview extends HttpServlet {
         try {
             int rid = Integer.parseInt(request.getParameter("rid"));
             int qid = Integer.parseInt(request.getParameter("qid"));
+            String courseID = request.getParameter("courseID");
             Student student = (Student) session.getAttribute("student");
             if (session.getAttribute("account") !=null ) {  //check login with account session
                 if (session.getAttribute("student") != null 
@@ -78,6 +79,7 @@ public class QuizReview extends HttpServlet {
                 response.sendRedirect("SignIn");
                 return;
             }
+            request.setAttribute("courseID", courseID);
             request.setAttribute("rid", rid);
             request.setAttribute("qid", qid);          
         } catch (Exception e) {

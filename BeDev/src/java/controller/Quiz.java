@@ -41,7 +41,7 @@ public class Quiz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String quizID = request.getParameter("quizID");
+        String quizID = request.getParameter("qid");
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
         Student student = (Student) session.getAttribute("student");
