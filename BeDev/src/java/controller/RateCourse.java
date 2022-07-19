@@ -48,7 +48,9 @@ public class RateCourse extends HttpServlet {
             return;
         }
         int star  = Integer.parseInt(request.getParameter("rate"));//get number of star
-        String contentRate = request.getParameter("contentRate");// get content of rate
+        String contentRate = request.getParameter("contentRate");
+        
+        // get content of rate
         Student student = (Student) session.getAttribute("student");
         int studentId = student.getAccount().getAccountID();
         RateDAO rateDAO = new RateDAO();
