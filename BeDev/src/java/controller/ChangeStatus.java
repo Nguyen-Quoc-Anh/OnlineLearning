@@ -33,7 +33,7 @@ public class ChangeStatus extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,19 +49,19 @@ public class ChangeStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         QuestionDAO questionDAO = new QuestionDAO();
-        if(request.getParameter("action")!=null && request.getParameter("quesID")!= null && request.getParameter("qid")!= null){               
-                int quesID = Integer.parseInt(request.getParameter("quesID"));
-                int qid = Integer.parseInt(request.getParameter("qid"));
-                if(request.getParameter("action").equalsIgnoreCase("Inactive")){
-                    questionDAO.inActiveQuestion(quesID, qid);
-                } 
-                if(request.getParameter("action").equalsIgnoreCase("Active")){
-                    questionDAO.activeQuestion(quesID, qid);
-                }
-                if(request.getParameter("action").equalsIgnoreCase("Delete")){
-                    questionDAO.deleteQuestion(quesID, qid);
-                }
+        if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
+            int quesID = Integer.parseInt(request.getParameter("quesID"));
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
+                questionDAO.inActiveQuestion(quesID, qid);
             }
+            if (request.getParameter("action").equalsIgnoreCase("Active")) {
+                questionDAO.activeQuestion(quesID, qid);
+            }
+            if (request.getParameter("action").equalsIgnoreCase("Delete")) {
+                questionDAO.deleteQuestion(quesID, qid);
+            }
+        }
         response.sendRedirect("ManageQuestion");
     }
 

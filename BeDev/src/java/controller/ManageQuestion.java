@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.OptionDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class ManageQuestion extends HttpServlet {
         QuizDAO quizDAO = new QuizDAO();
         modal.Quiz quiz = new modal.Quiz();
         try {
-//            int id = Integer.parseInt(request.getParameter("qid"));                      
+//            int id = Integer.parseInt(request.getParameter("qid"));  
             listQuestion = questionDAO.getQuestionByQuiz(1);
             quiz = quizDAO.getQuiz(1);
         } catch (Exception e) {

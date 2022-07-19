@@ -181,6 +181,22 @@ public class OptionDAO extends DBContext {
         return option;
     }
 
+    public int checkQuestionCompleted(int questionID) {
+        try {
+            String sql = "select count(*) from Answer_Record\n"
+                    + "where questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
         ArrayList<Option> blabla = dao.listCompareResult(1, 11);

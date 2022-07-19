@@ -24,10 +24,21 @@ public class Question {
     private ArrayList<Option> answerList;
     private ArrayList<Option> compareList;
     private int numberAnswer;
+    private int checkQuestionCompleted;
     
     public Question() {
     }
 
+    public Question(int questionID, String content, String explanation, boolean status, int checkQuestionCompleted) {
+        this.questionID = questionID;
+        this.content = content;
+        this.explanation = explanation;
+        this.status = status;
+        this.checkQuestionCompleted = checkQuestionCompleted;
+    }
+
+    
+    
     public Question(int questionID) {
         this.questionID = questionID;
     }
@@ -162,6 +173,14 @@ public class Question {
 
     public void setNumberAnswer(int numberAnswer) {
         this.numberAnswer = numberAnswer;
+    }
+
+    public int getCheckQuestionCompleted() {
+        return checkQuestionCompleted;
+    }
+
+    public void setCheckQuestionCompleted(int checkQuestionCompleted) {
+        this.checkQuestionCompleted = checkQuestionCompleted;
     }
 
     
