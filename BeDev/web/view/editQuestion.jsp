@@ -14,6 +14,7 @@
         <title>Edit Question</title>
         <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
         <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
+
     </head>
     <body onload="loader()">
         <jsp:include page="header.jsp"></jsp:include>
@@ -35,7 +36,7 @@
                                     <input type="text" class="form-control" name="qid" value="${question.getQuiz().getQuizID()}" id="fname" readonly="" >
                                 </div>
                             </div>
-                            <div class="row g-3">
+                                <div class="row g-3" style="padding-bottom: 20px">
                                 <div class="col-12">
                                     <label for="email">Content</label>
                                     <br>
@@ -46,17 +47,18 @@
                                 <div class="col-12">
                                     <label for="email">Explaination</label>
                                     <br>                                  
-                                    <textarea readonly="" class="form-control" name="explain" cols="80" rows="5" style="width: 100%">${question.getExplanation()}</textarea>
+                                    <textarea class="form-control" name="explain" cols="80" rows="5" style="width: 100%">${question.getExplanation()}</textarea>
                                 </div>
                             </div>    
                             <div class="d-flex justify-content-lg-end justify-content-center mt-2">
                                 <button class="button button-lg button--primary" type="submit" onclick="return confirm('Are you want to save changes?')">Save Changes</button>
-                            </div>
+                            </div>                           
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <jsp:include page="footer.jsp"></jsp:include>
+        
     </body>
 </html>

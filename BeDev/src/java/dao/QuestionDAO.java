@@ -155,6 +155,7 @@ public class QuestionDAO extends DBContext {
 
     public ArrayList<Question> getQuestionByQuiz(int qid) {
         ArrayList<Question> questions = new ArrayList<>();
+        OptionDAO optionDAO = new OptionDAO();
         try {
             String sql = "select q.questionID, q.content, q.explaination, q.status from Question q\n"
                     + "where q.quizID = ?";
@@ -162,7 +163,7 @@ public class QuestionDAO extends DBContext {
             stm.setInt(1, qid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                questions.add(new Question(rs.getInt(1), rs.getString(2), rs.getString(3), null, rs.getBoolean(4)));
+                questions.add(new Question(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), optionDAO.checkQuestionCompleted(rs.getInt(1))));
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -239,7 +240,7 @@ public class QuestionDAO extends DBContext {
 
     public static void main(String[] args) {
         QuestionDAO d = new QuestionDAO();
-        ArrayList<Question> list = d.listQuestionByQuizIdAndRecordId(1, 2);
+        ArrayList<Question> list = d.getQuestionByQuiz(1);
         System.out.println(list.size());
     }
 }
