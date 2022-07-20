@@ -223,6 +223,44 @@ public class OptionDAO extends DBContext {
         }
     }
 
+    public void insertOption(int questionID, String content, int check) {
+        try {
+            String sql = "insert into [Option] values\n"
+                    + "(?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setString(2, content);
+            stm.setInt(3, check);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteOption(int opID, int questionID) {
+        try {
+            String sql = "delete from [Option]\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, opID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void updateOption(String content, int opID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set content = ?\n"
+                    + "where optionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, content);
+            stm.setInt(2, opID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
         ArrayList<Option> blabla = dao.listCompareResult(1, 11);

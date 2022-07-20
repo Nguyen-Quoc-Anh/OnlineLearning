@@ -16,10 +16,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author quang
+ * @author admin
  */
-@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
-public class SetUpOption extends HttpServlet {
+@WebServlet(name = "AddOption", urlPatterns = {"/AddOption"})
+public class AddOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,7 +32,7 @@ public class SetUpOption extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -47,30 +47,7 @@ public class SetUpOption extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OptionDAO optionDAO = new OptionDAO();
-        int quesID = 0 ;
-        try {
-            if (request.getParameter("quesID") != null && request.getParameter("opID") != null) {               
-                quesID = Integer.parseInt(request.getParameter("quesID"));
-                int opID = Integer.parseInt(request.getParameter("opID"));
-                if(request.getParameter("action").equalsIgnoreCase("true")){
-                    optionDAO.setTrueOption(quesID, opID);
-                }
-                if(request.getParameter("action").equalsIgnoreCase("false")){
-                    optionDAO.setFalseOption(quesID, opID);
-                }
-                if(request.getParameter("action").equalsIgnoreCase("delete")){
-                    optionDAO.deleteOption(opID, quesID);
-                }
-                if(request.getParameter("check")!=null){
-                    response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
-                }else{
-                    response.sendRedirect("EditOption?quesID="+quesID);
-                }    
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }      
+        processRequest(request, response);
     }
 
     /**
@@ -84,7 +61,28 @@ public class SetUpOption extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0;
+        try {
+            quesID = Integer.parseInt(request.getParameter("quesID"));
+            String content = request.getParameter("content");
+            String status = request.getParameter("status");
+            if(status.equalsIgnoreCase("true")){
+                optionDAO.insertOption(quesID, content, 1);
+            }else{
+                optionDAO.insertOption(quesID, content, 0);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("khong parse duoc");
+        }
+        if(request.getParameter("check").isEmpty()){
+            response.sendRedirect("EditOption?quesID="+quesID);
+        }else{
+            response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
+        }      
     }
 
     /**

@@ -33,73 +33,102 @@
                             <div class="col-12">
                                 <label for="email">Question Content</label>
                                 <br>
-                                <textarea readonly="" class="form-control" name="content" cols="80" rows="5" style="width: 100%">${question.getContent()}</textarea>
+                                <textarea readonly="" class="form-control" cols="80" rows="5" style="width: 100%">${question.getContent()}</textarea>
                             </div>
                         </div>
-                        <div class="row g-3" style="padding-top: 20px">
-                            <div class="col-12">
-                                <label for="email">Option List</label>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#123">Edit</button>
-                                <br>
-                                <form method="post" accept-charset="utf-8">
+                        <form method="post" accept-charset="utf-8">
+                            <div class="row g-3" style="padding-top: 20px">
+                                <div class="col-12">
+                                    <div>
+                                        <label for="email" style="padding-right: 50px">Option List</label>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                                            Create Option
+                                        </button>
+                                        <input name="quesID" value="${question.getQuestionID()}" type="hidden">
+                                        <input name="check" value="${check}" type="hidden">
+                                    </div>
+                                    <br>
                                     <ul>
                                         <c:forEach items="${listOption}" var="op">
                                             <li style="padding-bottom: 40px">
-                                                <div class="row col-12"></div>
-                                                <input style="color: ${op.isTrue() == true ? "green" : "red"}" type="text" id="${op.getOptionID()}" class="form-control" readonly="" value="${op.getContent()}">
+                                                <input style="color: ${op.isTrue() == true ? "green" : "red"}" type="text" id="${op.getOptionID()}" class="form-control" readonly="" name="content" value="${op.getContent()}">
                                                 <a onclick="editOption('${op.getOptionID()}')" class="btn" type="button"><i class="icon-edit" ></i> Edit</a>
-                                                <c:if test="${op.isTrue()==true}">
-                                                    <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=false" onclick="return confirm('Are you want to set this option is FALSE?')"><i class="icon-edit"></i> Set isFalse</a>
+                                                <c:if test="${op.isTrue()==true}">                                         
+                                                    <c:if test="${check!=null}">
+                                                        <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=false&check=true" onclick="return confirm('Do you want to set this option is FALSE?')"><i class="icon-edit"></i> Set isFalse</a>
+                                                    </c:if>
+                                                    <c:if test="${check==null}">
+                                                        <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=false" onclick="return confirm('Do you want to set this option is FALSE?')"><i class="icon-edit"></i> Set isFalse</a>
+                                                    </c:if>
                                                 </c:if>
                                                 <c:if test="${op.isTrue()==false}">
-                                                    <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=true" onclick="return confirm('Are you want to set this option is TRUE?')"><i class="icon-edit"></i> Set isTrue</a>
+                                                    <c:if test="${check!=null}">
+                                                        <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=true&check=true" onclick="return confirm('Do you want to set this option is FALSE?')"><i class="icon-edit"></i> Set isTrue</a>
+                                                    </c:if>
+                                                    <c:if test="${check==null}">
+                                                        <a type="button" class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=true" onclick="return confirm('Do you want to set this option is FALSE?')"><i class="icon-edit"></i> Set isTrue</a>
+                                                    </c:if>                                                 
                                                 </c:if>
                                                 <c:if test="${check!=null}"> 
-                                                    <a class="btn" href="#"><i class="icon-edit"></i> Delete</a>
+                                                    <a class="btn" href="SetUpOption?quesID=${question.getQuestionID()}&opID=${op.getOptionID()}&action=delete&check=true" onclick="return confirm('Do you want to delete this option ?')"><i class="icon-edit"></i> Delete</a>
                                                 </c:if>
-                                                <!-- Button trigger modal -->
-                                                <!-- Modal -->
-
                                             </li>
                                         </c:forEach>
                                     </ul>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-lg-end justify-content-center mt-2">
-                            <button class="button button-lg button--primary" type="submit" onclick="return confirm('Are you want to save changes?')">Save Changes</button>
-                        </div>
 
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-lg-end justify-content-center mt-2">
+                                <button class="button button-lg button--primary" type="submit" onclick="return confirm('Are you want to save changes?')">Save Changes</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <jsp:include page="footer.jsp"></jsp:include>  
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script>
-                                function editOption(id) {
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script>
+                                        function editOption(id) {
+                                            $("#" + id).removeAttr("readonly");
+                                        }
+            </script>
+            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <form action="AddOption" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Create Option</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
 
-                                    $("#" + id).removeAttr("readonly");
-                                }
-        </script>
-        <div class="modal fade" id="123" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
+                            <div class="modal-body">                               
+                                <label>Content</label>                           
+                                <input type="text" class="form-control" name="content" required="">
+                                <input name="quesID" value="${question.getQuestionID()}" type="hidden">
+                                <input name="check" value="${check}" type="hidden">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="true" id="1" name="status" required="" checked="">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    isTrue
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" value="false" id="2" name="status" required="">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    isFalse
+                                </label>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>   
                 </div>
             </div>
         </div>

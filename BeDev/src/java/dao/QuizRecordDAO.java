@@ -45,7 +45,6 @@ public class QuizRecordDAO extends DBContext {
                     + "on qu1.quizRecordID = qu2.quizRecordID "
                     + "order by qu1.time desc";
             PreparedStatement stm = connection.prepareStatement(sql);
-            System.out.println(sql);
             stm.setInt(1, qid);
             stm.setInt(2, sid);
             ResultSet rs = stm.executeQuery();

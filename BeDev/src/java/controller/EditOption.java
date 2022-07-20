@@ -86,7 +86,26 @@ public class EditOption extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        OptionDAO optionDAO = new OptionDAO();
+        ArrayList<Option> listOption = new ArrayList<>();
+        int quesID = 0;
+        try {
+            String []listNewOption = request.getParameterValues("content");
+            quesID = Integer.parseInt(request.getParameter("quesID"));
+            listOption = optionDAO.listOption(quesID);
+            for (int i = 0; i < listOption.size(); i++) {
+                optionDAO.updateOption(listNewOption[i], listOption.get(i).getOptionID());
+            }
+        } catch (Exception e) {
+        }
+        System.out.println(request.getParameter("check")+"ngu");
+        if(!request.getParameter("check").isEmpty()){
+            response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
+        }else{
+            response.sendRedirect("EditOption?quesID="+quesID);
+        }
+        
     }
 
     /**
