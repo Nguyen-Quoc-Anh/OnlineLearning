@@ -164,8 +164,13 @@
                                                         </c:if>
                                                         |
                                                         <a href="EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
-                                                        |                                                       
-                                                        <a href="EditOption?qid=${qid}&quesID=${ques.getQuestionID()}">Edit Option</a>                                                      
+                                                        |                                                  
+                                                        <c:if test="${ques.getCheckQuestionCompleted()==0}">
+                                                            <a href="EditOption?quesID=${ques.getQuestionID()}&check=true">Edit Option</a>
+                                                        </c:if> 
+                                                        <c:if test="${ques.getCheckQuestionCompleted()>0}">
+                                                            <a href="EditOption?quesID=${ques.getQuestionID()}">Edit Option</a>
+                                                        </c:if>
                                                         <c:if test="${ques.getCheckQuestionCompleted()==0}">
                                                             |
                                                             <a data-toggle="modal" data-target="#logoutModal" href="#" onclick="deleteQues(${ques.getQuestionID()},${qid})">Delete</a>           
@@ -228,31 +233,31 @@
             </div>
         </div>
 
-    
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
-    <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Core plugin JavaScript-->
-    <script src="../BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
+        <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="../BeDev/view/dist/js/sb-admin-2.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="../BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="../BeDev/view/dist/vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="../BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="../BeDev/view/dist/js/sb-admin-2.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
+        <!-- Page level plugins -->
+        <script src="../BeDev/view/dist/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="../BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <script>
-        function deleteQues(quesID){
-            document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
-        }
-    </script>
-    
-</body>
+        <!-- Page level custom scripts -->
+        <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
+
+        <script>
+                                                                function deleteQues(quesID) {
+                                                                    document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
+                                                                }
+        </script>
+
+    </body>
 </html>

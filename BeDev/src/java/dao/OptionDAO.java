@@ -197,6 +197,32 @@ public class OptionDAO extends DBContext {
         return 0;
     }
 
+    public void setTrueOption(int questionID, int optionID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set isTrue = 1\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, optionID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void setFalseOption(int questionID, int optionID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set isTrue = 0\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, optionID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
         ArrayList<Option> blabla = dao.listCompareResult(1, 11);

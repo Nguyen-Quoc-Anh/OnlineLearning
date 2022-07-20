@@ -212,23 +212,25 @@ public class QuestionDAO extends DBContext {
 
     public void deleteQuestion(int questionID, int qid) {
         try {
-            String sql = "delete from Question\n"
+            String sql = "delete from [Option]\n"
+                    + "where questionID = ?\n"
+                    + "delete from Question\n"
                     + "where questionID = ? and quizID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, questionID);
-            stm.setInt(2, qid);
+            stm.setInt(2, questionID);
+            stm.setInt(3, qid);
             stm.executeUpdate();
         } catch (Exception e) {
         }
     }
 
-    public Question getQuestion(int questionID, int qid) {
+    public Question getQuestion(int questionID) {
         try {
             String sql = "select q.questionID, q.content, q.explaination, q.quizID from Question q\n"
-                    + "where q.questionID = ? and q.quizID = ?";
+                    + "where q.questionID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, questionID);
-            stm.setInt(2, qid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(rs.getInt(4)), true);

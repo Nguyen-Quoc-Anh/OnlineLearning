@@ -56,15 +56,20 @@ public class EditOption extends HttpServlet {
         ArrayList<Option> listOption = new ArrayList<>();
         QuestionDAO questionDAO = new QuestionDAO();
         OptionDAO optionDAO = new OptionDAO();
+        String check = null;
         try {
             int quesID = Integer.parseInt(request.getParameter("quesID"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            question = questionDAO.getQuestion(quesID, qid);
+            if(request.getParameter("check")!=null)
+            {
+                check = request.getParameter("check");
+            }
+            question = questionDAO.getQuestion(quesID);
             listOption = optionDAO.listOption(quesID);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Can not parse");
         }
+        request.setAttribute("check", check);
         request.setAttribute("question", question);
         request.setAttribute("listOption", listOption);
         processRequest(request, response);

@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.QuestionDAO;
+import dao.OptionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +13,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import modal.Question;
 
 /**
  *
- * @author admin
+ * @author quang
  */
-@WebServlet(name = "EditQuestion", urlPatterns = {"/EditQuestion"})
-public class EditQuestion extends HttpServlet {
+@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
+public class SetUpOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,7 +33,6 @@ public class EditQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/view/editQuestion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -49,20 +47,23 @@ public class EditQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        Question question;
-        QuestionDAO questionDAO = new QuestionDAO();
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0 ;
         try {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            question = questionDAO.getQuestion(quesID);
+            if (request.getParameter("quesID") != null && request.getParameter("opID") != null) {
+                quesID = Integer.parseInt(request.getParameter("quesID"));
+                int opID = Integer.parseInt(request.getParameter("opID"));
+                if(request.getParameter("action").equalsIgnoreCase("true")){
+                    optionDAO.setTrueOption(quesID, opID);
+                }
+                if(request.getParameter("action").equalsIgnoreCase("false")){
+                    optionDAO.setFalseOption(quesID, opID);
+                }
+            }
         } catch (Exception e) {
-            System.out.println("Can not parse id");
-            response.sendRedirect("Error");
-            return;
+            System.out.println(e.getMessage());
         }
-        request.setAttribute("question", question);
-        processRequest(request, response);
+        response.sendRedirect("EditOption?quesID="+quesID);
     }
 
     /**
@@ -76,25 +77,7 @@ public class EditQuestion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        QuestionDAO questionDAO = new QuestionDAO();
-        try {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            String content = request.getParameter("content");
-            String explain = request.getParameter("explain");
-            System.out.println(content);
-            System.out.println(explain);
-            System.out.println(qid);
-            System.out.println(quesID);
-            questionDAO.editQuestion(content, explain, quesID, qid);
-        } catch (Exception e) {
-            System.out.println("Can not parse");
-            response.sendRedirect("Error");
-            return;
-        }
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**
