@@ -11,24 +11,21 @@
 package controller;
 
 import dao.ChapterDAO;
-import dao.QuizDAO;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import modal.Chapter;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "ManageQuiz", urlPatterns = {"/ManageQuiz"})
-public class ManageQuiz extends HttpServlet {
+@WebServlet(name = "AddNewQuiz", urlPatterns = {"/AddNewQuiz"})
+public class AddNewQuiz extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,7 +39,8 @@ public class ManageQuiz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/manageQuiz.jsp").forward(request, response);
+        request.setCharacterEncoding("UTF-8");
+       request.getRequestDispatcher("//view/addNewQuiz.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,20 +55,11 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        List<modal.Quiz> list = new ArrayList<>();
-        int chapterId = 1;
-        if (request.getParameter("chapterId")!=null) {
-            chapterId = Integer.parseInt(request.getParameter("chapterId"));
-        }
-        list = quizDAO.getListQuizByChapterId(chapterId);
-        ChapterDAO cdao = new ChapterDAO();
-        Chapter c = cdao.getChapterByChapterId(chapterId);
+         
+        int chapterId = Integer.parseInt(request.getParameter("chapterId").toString());
+        ChapterDAO chapterDAO = new ChapterDAO();
+        Chapter c = chapterDAO.getChapterByChapterId(chapterId);
         request.setAttribute("chapter", c);
-        request.setAttribute("listQuiz", list);
-        String currrentURL = request.getRequestURI()+"?"+request.getQueryString();
-        HttpSession session = request.getSession();
-        session.setAttribute("currentURL", currrentURL);
         processRequest(request, response);
     }
 
@@ -85,6 +74,9 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String quizName = request.getParameter("quizName");
+        double passRate = Double.parseDouble(request.getParameter("passRate"));
+        int chapterId = Integer.parseInt(request.getParameter("chapterId").toString());
         processRequest(request, response);
     }
 

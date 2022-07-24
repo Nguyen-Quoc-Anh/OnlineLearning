@@ -140,7 +140,7 @@
                                             <tr>
                                                 <th>Question ID</th>
                                                 <th>Content</th>
-                                                <th>Explaination</th>
+                                                <th>Explanation</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -156,7 +156,6 @@
                                                         <c:if test="${ques.isStatus()==true}">
                                                             <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Inactive" onclick="return confirm('Are you sure?')">Inactive</a>
                                                         </c:if>
-
                                                         <c:if test="${ques.isStatus()==false}">
                                                             <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Active" onclick="return confirm('Are you sure?')">Active | </a>
                                                         </c:if>
@@ -166,7 +165,6 @@
                                                         <a href="EditOption?qid=${qid}&quesID=${ques.getQuestionID()}">Edit Option</a>
                                                         |
                                                         <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Delete" onclick="return confirm('Are you sure to delete this question?')">Delete</a>
-                                                        
                                                     </td>
                                                 </tr>
                                             </c:forEach>

@@ -98,6 +98,20 @@ public class ChapterDAO extends DBContext {
         }
         return listChapter;
     }
+    public Chapter getChapterByChapterId(int id){
+        Chapter c = new Chapter();
+        try {
+            String sql ="select c.chapterID, c.chapterName from Chapter c where chapterID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Chapter(rs.getInt(1), rs.getNString(2));
+            }
+        } catch (Exception e) {
+        }
+        return c;
+    }
 
     public static void main(String[] args) {
         ChapterDAO c = new ChapterDAO();

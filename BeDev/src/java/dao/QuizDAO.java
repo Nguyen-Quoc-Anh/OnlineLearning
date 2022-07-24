@@ -8,7 +8,10 @@ package dao;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import modal.Quiz;
 
 /**
@@ -118,5 +121,97 @@ public class QuizDAO extends DBContext {
             System.out.println(e);
         }
         return null;
+    }
+
+    public List<Quiz> getListQuizByChapterId(int id) {
+        List<Quiz> list = new ArrayList<>();
+        try {
+            String sql = "select q.quizID,q.quizName,q.passRate,q.status  from Quiz q\n"
+                    + "where q.chapterID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, id);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new Quiz(rs.getInt(1), rs.getNString(2), rs.getInt(3), rs.getBoolean(4)));//add a quiz detail to list
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+    public boolean updateQuiz(int qid ,String quizName, double passRate){
+        try {
+            String sql = "Update Quiz set quizName = ?, passRate =? where quizID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setNString(1, quizName);
+            stm.setDouble(2, passRate);
+            stm.setInt(3, qid);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean updateStatus(int id,boolean  status){
+        try {
+            String sql = "Update Quiz set status=? where quizID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setBoolean(1, status);
+            stm.setInt(2, id);
+            stm.executeUpdate();
+            return true;
+            
+        } catch (SQLException e) {
+        }
+        return false;
+    }
+    public boolean getQuizStatus(int qid){
+        try {
+            String sql ="select q.status from Quiz q where q.quizID=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, qid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getBoolean(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean InsertNewQuiz(String quizName, double passRate, int chapterID){
+        try {
+            String sql = "Insert into Quiz(chapterID, quizName,passRate, position) values(?,?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, chapterID);
+            stm.setNString(2, quizName);
+            stm.setDouble(3, passRate);
+            QuizDAO dao = new QuizDAO();
+            stm.setInt(4, dao.getMaxPositionOfQuiz(chapterID));
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public  int getMaxPositionOfQuiz(int chapterId){
+        try {
+            String sql = "select max(position)  from Quiz where chapterID = ?" ;
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, chapterId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    public static void main(String[] args) {
+        QuizDAO q = new QuizDAO();
+        List<Quiz> list = q.getListQuizByChapterId(6);
+        System.out.println(list.size());
     }
 }

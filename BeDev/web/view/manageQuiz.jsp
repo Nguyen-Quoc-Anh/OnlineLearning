@@ -4,6 +4,7 @@
     Author     : ADMIN
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -115,54 +116,50 @@
                     <div class="container-fluid">
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">List question of Quiz </h6>
+                            <div class="card-header py-3 row">
+                                <h6 class="m-0 font-weight-bold text-primary col-md-6">List Quiz of Chapter: ${chapter.chapterName} </h6>
+                                <h6 class="col-md-6"><a href="AddNewQuiz?chapterId=${chapter.chapterID}">Add quiz for this chapter</a></h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Question ID</th>
-                                                <th>Content</th>
-                                                <th>Explaination</th>
+                                                <th>QuizID</th>
+                                                <th>QuizName</th>
+                                                <th>PassRate</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach >
-                                            <tr>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>a</td>
-                                                <td>
-                                            
-                                            </tr>
-                                        </c:forEach>
+                                            <c:forEach items="${listQuiz}" var="q">
+                                                <tr>
+                                                    <td>${q.quizID}</td>
+                                                    <td>${q.quizName}</td>
+                                                    <td>${q.passRate} %</td>
+                                                    <td>${q.status?"Active":"Inactive"}</td>
+                                                    <td>
+                                                        <c:if test="${q.status}">
+                                                            <a href="UpdateStatusQuiz?quizID=${q.quizID}">Inactive</a>
+                                                        </c:if>
+                                                        <c:if test="${!q.status}">
+                                                            <a href="UpdateStatusQuiz?quizID=${q.quizID}">Active</a>
+                                                        </c:if>
+                                                        |
+                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>
+                                                        |
+                                                        <a href="#">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
-
             </div>
             <!-- End of Content Wrapper -->
 
