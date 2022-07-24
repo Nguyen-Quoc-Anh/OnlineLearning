@@ -152,7 +152,7 @@
                                                 <tr>
                                                     <td>${ques.getQuestionID()}</td>
                                                     <td>${ques.getContent()}</td>
-                                                    <td>${ques.getExplanation() != "" ? ques.getExplanation() : "Không có"}</td>
+                                                    <td>${ques.getExplanation() != "" ? ques.getExplanation() : ""}</td>
                                                     <td>${ques.isStatus()==true ? "Active" : "Inactive"}</td>
                                                     <td>
                                                         <c:if test="${ques.isStatus()==true}">
