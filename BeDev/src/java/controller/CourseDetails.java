@@ -45,6 +45,7 @@ public class CourseDetails extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
+        session.setAttribute("courseID", courseID);
         Student student = (Student) session.getAttribute("student");
         //Get a course by course ID from courseDAO
         CourseDAO courseDAO = new CourseDAO();
@@ -120,8 +121,8 @@ public class CourseDetails extends HttpServlet {
             request.setAttribute("isEnroll", false);
         }
         //Get list course related with a course
-        List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
-        request.setAttribute("relatedCourse", relatedCourse);
+        //List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
+        //request.setAttribute("relatedCourse", relatedCourse);
         request.getRequestDispatcher("//view//courseDetails.jsp").forward(request, response);
     }
 
