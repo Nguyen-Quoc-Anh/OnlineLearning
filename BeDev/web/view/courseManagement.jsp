@@ -298,7 +298,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/addnewcourse" method="POST" enctype="multipart/form-data" id="add-course-form">
+                        <form action="/BeDev/expert/addnewcourse" method="POST" enctype="multipart/form-data" id="add-course-form">
                             <div class="form-group">
                                 <label for="name">Course Name</label>
                                 <input type="text" class="form-control" id="name" name="courseName" placeholder="Enter course name" required>
@@ -368,7 +368,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/editcourse" method="POST" enctype="multipart/form-data">
+                        <form action="/BeDev/expert/editcourse" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="course-id" name="courseId">
                             <div class="form-group">
                                 <label for="name">Course Name</label>
@@ -422,30 +422,7 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-success alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="editSuccessAlert">
-            Edit course successfully.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-danger alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="editFailedAlert">
-            Edit course failed.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-success alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="addCourseSuccessAlert">
-            Add course successfully.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-danger alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="addCourseFailedAlert">
-            Add course failed.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        
         <!-- Bootstrap core JavaScript-->
         <script src="/BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="/BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -497,7 +474,7 @@
                                             console.error(error);
                                         });
                                 function submitChangeStatus() {
-                                    $.post("/BeDev/manage/changecoursestatus", {courseId: courseID, status: currentStatus}, (response) => {
+                                    $.post("/BeDev/expert/changecoursestatus", {courseId: courseID, status: currentStatus}, (response) => {
                                         $('#logoutModal').modal('toggle');
                                         if (response == "success") {
                                             showMessage(response, "Change status successfully", true);
@@ -509,6 +486,9 @@
 
                                 function checkBeforeSubmit() {
                                     var mess = "";
+                                    if ($('#name').val().trim() == "") {
+                                        mess += "Course name can't be empty. ";
+                                    }
                                     if ($('#inputState').val() == "0") {
                                         mess += "Please choose a category. ";
                                     }
@@ -518,7 +498,7 @@
                                     if ($('#inputState').val() != "0" && $('#file-upload123').get(0).files.length !== 0) {
                                         $('#add-course-form').submit();
                                     } else {
-                                        $('#addmess').text(mess)
+                                        showMessage('failed', mess, false);
                                     }
                                 }
 
@@ -556,7 +536,7 @@
                                 }
                                 function deleteCourse() {
                                     $.ajax({
-                                        url: '/BeDev/manage/deletecourse?courseId=' + courseID,
+                                        url: '/BeDev/expert/deletecourse?courseId=' + courseID,
                                         type: 'DELETE',
                                         success: function (result) {
                                             if (result == 'success') {
@@ -568,52 +548,37 @@
                                     });
                                 }
 
-                                function openAddCourseFailedAlert() {
-
-                                    $('#addCourseSuccessAlert').hide();
-                                    $('#addCourseFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#addCourseFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openAddCourseSuccessAlert() {
-
-                                    $('#addCourseFailedAlert').hide();
-                                    $('#addCourseSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#addCourseSuccessAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openEditCourseFailedAlert() {
-
-                                    $('#editSuccessAlert').hide();
-                                    $('#editFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#editFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openEditCourseSuccessAlert() {
-
-                                    $('#editFailedAlert').hide();
-                                    $('#editSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#editSuccessAlert').hide();
-                                    }, 2500);
-                                }
                                 $('#file-upload123').change(() => {
-                                    var img = $('#file-upload123')["0"].files["0"]
+                                    var img = $('#file-upload123')["0"].files["0"];
+                                    if (img.name.split('.').pop() != 'png' && img.name.split('.').pop() != 'jpg' && img.name.split('.').pop() != 'jpeg') {
+                                        showMessage('failed', 'File type is not valid. Only allow jpg, jpeg and png file', false);
+                                        $("#file-upload123").val('');
+                                        return;
+                                    }
+                                    if (img.size > 1024 * 1024 * 20) {
+                                        showMessage('failed', 'File size is not valid. It must be equal or less than 20MB.', false);
+                                        $("#file-upload123").val('');
+                                        return;
+                                    }
                                     $("#playlist--img").attr("src", URL.createObjectURL(img));
                                 });
                                 $('#file-upload123edit').change(() => {
-                                    var img = $('#file-upload123edit')["0"].files["0"]
+                                    var img = $('#file-upload123edit')["0"].files["0"];
+                                    if (img.name.split('.').pop() != 'png' && img.name.split('.').pop() != 'jpg' && img.name.split('.').pop() != 'jpeg') {
+                                        showMessage('failed', 'File type is not valid. Only allow jpg, jpeg and png file', false);
+                                        $("#file-upload123edit").val('');
+                                        return;
+                                    }
+                                    if (img.size > 1024 * 1024 * 20) {
+                                        showMessage('failed', 'File size is not valid. It must be equal or less than 20MB.', false);
+                                        $("#file-upload123edit").val('');
+                                        return;
+                                    }
                                     $("#playlist--img2").attr("src", URL.createObjectURL(img));
                                 });
                                 $(document).ready(function () {
-            ${addCourse == null ? "" : addCourse == "success" ? "openAddCourseSuccessAlert()" : addCourse == "failed" ? "openAddCourseFailedAlert()" : ""}
-            ${editCourse == null ? "" : editCourse == "success" ? "openEditCourseSuccessAlert()" : editCourse == "failed" ? "openEditCourseFailedAlert()" : ""}
+            ${addCourse == null ? "" : addCourse == "success" ? "showMessage('success', 'Add new course successfully.', false)" : addCourse == "failed" ? "showMessage('success', 'Add new course failed.', false)" : ""}
+            ${editCourse == null ? "" : editCourse == "success" ? "showMessage('success', 'Edit course successfully.', false)" : editCourse == "failed" ? "showMessage('success', 'Add new course failed.', false)" : ""}
                                 });
         </script>
     </body>

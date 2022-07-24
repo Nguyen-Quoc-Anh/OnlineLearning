@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ACER
  */
-@WebServlet(name = "DeleteCourse", urlPatterns = {"/manage/deletecourse"})
+@WebServlet(name = "DeleteCourse", urlPatterns = {"/expert/deletecourse"})
 public class DeleteCourse extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -70,13 +70,10 @@
                             Course
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="about.html">About</a>
-                    </li>
                     `
                     <c:if test="${sessionScope.account!=null && sessionScope.admin!=null}">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="about.html">Admin Dashboard</a>
+                            <a class="nav-link" aria-current="page" href="/BeDev/admin/AdminDashboard">Admin Dashboard</a>
                         </li>
                     </c:if>
 

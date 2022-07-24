@@ -3,26 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.CourseManagement;
+package controller.dashboard;
 
-import dao.CategoryDAO;
-import dao.CourseDAO;
+import com.google.gson.Gson;
+import dao.EnrollDAO;
 import java.io.IOException;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Arrays;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
-import modal.Category;
-import modal.Course;
+import modal.Chart;
 
 /**
  *
  * @author ACER
  */
-public class CourseManagement extends HttpServlet {
+@WebServlet(name = "EnrollOverview", urlPatterns = {"/api/dashboard/EnrollOverview"})
+public class EnrollOverview extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -36,19 +38,21 @@ public class CourseManagement extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CourseDAO courseDAO = new CourseDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
         HttpSession session = request.getSession();
+        EnrollDAO enrollDAO = new EnrollDAO();
         Account account = (Account) session.getAttribute("account");
-        List<Course> coursesList = courseDAO.getCoursesByExpertId(5);
-        List<Category> categoryList = categoryDAO.listCategory();
-        request.setAttribute("coursesList", coursesList);
-        request.setAttribute("categoryList", categoryList);
-        request.setAttribute("addCourse", session.getAttribute("addcourse"));
-        request.setAttribute("editCourse", session.getAttribute("editcourse"));
-        session.removeAttribute("addcourse");
-        session.removeAttribute("editcourse");
-        request.getRequestDispatcher("/view/courseManagement.jsp").forward(request, response);
+        String[] months = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+        String[] monthsInYear = Arrays.copyOfRange(months, 0, LocalDate.now().getMonthValue());
+        int[] enroll = new int[LocalDate.now().getMonthValue()];
+        if (account.getRole().getRoleID() == 2) {
+//                int expertId = account.getAccountID();
+            int expertId = 5;
+            enroll = enrollDAO.getEnrollOverviewThisYearOfExpert(expertId);
+        } else if (account.getRole().getRoleID() == 1) {
+            enroll = enrollDAO.getEnrollOverviewThisYear();
+        }
+        response.getWriter().write(new Gson().toJson(new Chart("Enroll Course", monthsInYear, enroll)));
+
     }
 
     /**

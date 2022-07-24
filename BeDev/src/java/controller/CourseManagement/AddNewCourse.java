@@ -59,13 +59,13 @@ public class AddNewCourse extends HttpServlet {
         } catch (Exception ex) {
             System.out.println(ex);
             session.setAttribute("addcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
         Part image = request.getPart("file");
         if (image == null) {
             session.setAttribute("addcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
         String status = request.getParameter("status");
@@ -86,7 +86,7 @@ public class AddNewCourse extends HttpServlet {
         } else {
             session.setAttribute("addcourse", "failed");
         }
-        response.sendRedirect("/BeDev/manage/course");
+        response.sendRedirect("/BeDev/expert/course");
     }
 
     /**

@@ -122,6 +122,7 @@ public class RateDAO extends DBContext {
         } catch (SQLException e) {
         }
     }
+    
 
     public static void main(String[] args) {
         RateDAO r = new RateDAO();

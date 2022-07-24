@@ -10,7 +10,7 @@
     </filter>
     <filter-mapping>
         <filter-name>ExpertFilter</filter-name>
-        <url-pattern>/manage/course</url-pattern>
+        <url-pattern>/expert/*</url-pattern>
     </filter-mapping>
     <filter-mapping>
         <filter-name>QuizFilter</filter-name>
@@ -48,21 +48,45 @@
         <servlet-name>AddNewCourse</servlet-name>
         <servlet-class>controller.CourseManagement.AddNewCourse</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ExpertDashboard</servlet-name>
+        <servlet-class>controller.dashboard.ExpertDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminDashboard</servlet-name>
+        <servlet-class>controller.dashboard.AdminDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EarningOverviews</servlet-name>
+        <servlet-class>controller.dashboard.EarningOverviews</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/HomeControl</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CourseManagement</servlet-name>
-        <url-pattern>/manage/course</url-pattern>
+        <url-pattern>/expert/course</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangeCourseStatus</servlet-name>
-        <url-pattern>/manage/changecoursestatus</url-pattern>
+        <url-pattern>/expert/changecoursestatus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddNewCourse</servlet-name>
-        <url-pattern>/manage/addnewcourse</url-pattern>
+        <url-pattern>/expert/addnewcourse</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ExpertDashboard</servlet-name>
+        <url-pattern>/expert/ExpertDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboard</servlet-name>
+        <url-pattern>/admin/AdminDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EarningOverviews</servlet-name>
+        <url-pattern>/api/dashboard/EarningOverviews</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
