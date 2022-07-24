@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -48,21 +49,31 @@ public class ChangeStatus extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         QuestionDAO questionDAO = new QuestionDAO();
-        if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
-                questionDAO.inActiveQuestion(quesID, qid);
+        if (session.getAttribute("account") != null) {  //check login with account session
+            if (session.getAttribute("expert") != null) {
+                if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
+                    int quesID = Integer.parseInt(request.getParameter("quesID"));
+                    int qid = Integer.parseInt(request.getParameter("qid"));
+                    if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
+                        questionDAO.inActiveQuestion(quesID, qid);  //update status is false of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Active")) {
+                        questionDAO.activeQuestion(quesID, qid);    //update status is true of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Delete")) {
+                        questionDAO.deleteQuestion(quesID, qid);    //delete question in database by question id
+                    }
+                    response.sendRedirect("ManageQuestion");
+                }
+            } else {
+                response.sendRedirect("HomeControl");
             }
-            if (request.getParameter("action").equalsIgnoreCase("Active")) {
-                questionDAO.activeQuestion(quesID, qid);
-            }
-            if (request.getParameter("action").equalsIgnoreCase("Delete")) {
-                questionDAO.deleteQuestion(quesID, qid);
-            }
+        } else {
+            response.sendRedirect("SignIn");
         }
-        response.sendRedirect("ManageQuestion");
+        
     }
 
     /**

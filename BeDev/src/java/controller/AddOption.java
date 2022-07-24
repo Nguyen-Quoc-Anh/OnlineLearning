@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,7 +33,7 @@ public class AddOption extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");        
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,26 +64,36 @@ public class AddOption extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
         OptionDAO optionDAO = new OptionDAO();
         int quesID = 0;
         try {
-            quesID = Integer.parseInt(request.getParameter("quesID"));
-            String content = request.getParameter("content");
-            String status = request.getParameter("status");
-            if(status.equalsIgnoreCase("true")){
-                optionDAO.insertOption(quesID, content, 1);
-            }else{
-                optionDAO.insertOption(quesID, content, 0);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    quesID = Integer.parseInt(request.getParameter("quesID"));
+                    String content = request.getParameter("content");
+                    String status = request.getParameter("status");
+                    if (status.equalsIgnoreCase("true")) {
+                        optionDAO.insertOption(quesID, content, 1); //add new option into database with status is true
+                    } else {
+                        optionDAO.insertOption(quesID, content, 0); //add new option into database with status is false
+                    }
+                    if (request.getParameter("check").isEmpty()) {
+                        response.sendRedirect("EditOption?quesID=" + quesID);
+                    } else {
+                        response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+                    }
+                } else {
+                    response.sendRedirect("HomeControl");
+                }
+            } else {
+                response.sendRedirect("SignIn");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("khong parse duoc");
+            response.sendRedirect("Error");
         }
-        if(request.getParameter("check").isEmpty()){
-            response.sendRedirect("EditOption?quesID="+quesID);
-        }else{
-            response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
-        }      
     }
 
     /**

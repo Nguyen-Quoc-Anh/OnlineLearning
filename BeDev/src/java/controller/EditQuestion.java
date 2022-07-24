@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Question;
 
 /**
@@ -55,7 +56,7 @@ public class EditQuestion extends HttpServlet {
         QuestionDAO questionDAO = new QuestionDAO();
         try {
             int quesID = Integer.parseInt(request.getParameter("quesID"));
-            question = questionDAO.getQuestion(quesID);
+            question = questionDAO.getQuestion(quesID); //get question by id of the question
         } catch (Exception e) {
             System.out.println("Can not parse id");
             response.sendRedirect("Error");
@@ -76,6 +77,7 @@ public class EditQuestion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         QuestionDAO questionDAO = new QuestionDAO();
@@ -88,13 +90,22 @@ public class EditQuestion extends HttpServlet {
             System.out.println(explain);
             System.out.println(qid);
             System.out.println(quesID);
-            questionDAO.editQuestion(content, explain, quesID, qid);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    questionDAO.editQuestion(content, explain, quesID, qid); //update the question with information of question contains content, explain
+                    doGet(request, response);
+                } else {
+                    response.sendRedirect("HomeControl");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
+            }         
         } catch (Exception e) {
             System.out.println("Can not parse");
             response.sendRedirect("Error");
-            return;
         }
-        doGet(request, response);
     }
 
     /**

@@ -164,6 +164,11 @@ public class OptionDAO extends DBContext {
         return answers;
     }
 
+    /**
+     * This method get list option of the question by id of the quesion
+     * @param questionID is question id
+     * @return list option
+     */
     public ArrayList<Option> listOption(int questionID) {
         ArrayList<Option> option = new ArrayList<>();
         try {
@@ -181,6 +186,11 @@ public class OptionDAO extends DBContext {
         return option;
     }
 
+    /**
+     * This method count number answered by question id
+     * @param questionID is id of question
+     * @return number of answered
+     */
     public int checkQuestionCompleted(int questionID) {
         try {
             String sql = "select count(*) from Answer_Record\n"
@@ -223,6 +233,12 @@ public class OptionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allows insert new option into database
+     * @param questionID is id of question
+     * @param content is content of new option
+     * @param check  is status of option (true or false)
+     */
     public void insertOption(int questionID, String content, int check) {
         try {
             String sql = "insert into [Option] values\n"
@@ -248,6 +264,11 @@ public class OptionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allows update option in database
+     * @param content is new content will be update
+     * @param opID is option id
+     */
     public void updateOption(String content, int opID) {
         try {
             String sql = "update [Option]\n"

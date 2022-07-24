@@ -153,6 +153,11 @@ public class QuestionDAO extends DBContext {
         return questions;
     }
 
+    /**
+     * This method get list of question by id of the quiz
+     * @param qid is quiz id
+     * @return list of question
+     */
     public ArrayList<Question> getQuestionByQuiz(int qid) {
         ArrayList<Question> questions = new ArrayList<>();
         OptionDAO optionDAO = new OptionDAO();
@@ -171,6 +176,11 @@ public class QuestionDAO extends DBContext {
         return questions;
     }
 
+    /**
+     * This method allows update status of question by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */
     public void inActiveQuestion(int questionID, int qid) {
         try {
             String sql = "update Question\n"
@@ -183,6 +193,11 @@ public class QuestionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allows update status of question by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */
     public void activeQuestion(int questionID, int qid) {
         try {
             String sql = "update Question\n"
@@ -195,6 +210,13 @@ public class QuestionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allows update the question in database
+     * @param content is the new content will be update
+     * @param explain is the new explain will be update
+     * @param quesID is id of question
+     * @param qid  is id of quiz
+     */
     public void editQuestion(String content, String explain, int quesID, int qid) {
         try {
             String sql = "update Question\n"
@@ -210,6 +232,11 @@ public class QuestionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allows delete question in database by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */ 
     public void deleteQuestion(int questionID, int qid) {
         try {
             String sql = "delete from [Option]\n"
@@ -225,6 +252,11 @@ public class QuestionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method get the question by the id of the question
+     * @param questionID is question id
+     * @return a question
+     */
     public Question getQuestion(int questionID) {
         try {
             String sql = "select q.questionID, q.content, q.explaination, q.quizID from Question q\n"
