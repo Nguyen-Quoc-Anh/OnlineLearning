@@ -40,7 +40,7 @@
                             </div>   
                             
                             <div class="d-flex justify-content-lg-end justify-content-center mt-2">
-                                <button style="background-color: blue" class="button button-lg but ton--primary" type="submit" onclick="return confirm('Are you want to save changes?')">Save Changes</button>
+                                <button style="background-color: blue" class="button button-lg but ton--primary" type="submit" ">Add new</button>
                             </div>
                         </form>
                                 <h3></h3>

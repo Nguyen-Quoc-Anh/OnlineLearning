@@ -11,25 +11,23 @@
 package controller;
 
 import dao.ChapterDAO;
+import dao.QuestionDAO;
 import dao.QuizDAO;
-import dao.QuizRecordDAO;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Chapter;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "ManageQuiz", urlPatterns = {"/ManageQuiz"})
-public class ManageQuiz extends HttpServlet {
+@WebServlet(name = "DeleteQuiz", urlPatterns = {"/DeleteQuiz"})
+public class DeleteQuiz extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +41,17 @@ public class ManageQuiz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/manageQuiz.jsp").forward(request, response);
+        int quizId = Integer.parseInt(request.getParameter("quizId"));
+        QuizDAO dao = new QuizDAO();
+        HttpSession session = request.getSession();
+        String currentURL =session.getAttribute("currentURL").toString();
+        if (dao.deleteQuiz(quizId)) {
+            response.sendRedirect(currentURL);
+            return;
+        }else{
+            response.sendRedirect("Error");
+            return;
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,25 +66,6 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        List<modal.Quiz> list = new ArrayList<>();
-        int chapterId = 1;
-        if (request.getParameter("chapterId")!=null) {
-            chapterId = Integer.parseInt(request.getParameter("chapterId"));
-        }
-        list = quizDAO.getListQuizByChapterId(chapterId);
-        ChapterDAO cdao = new ChapterDAO();
-        Chapter c = cdao.getChapterByChapterId(chapterId);
-        request.setAttribute("chapter", c);
-        request.setAttribute("listQuiz", list);
-        QuizRecordDAO dao = new QuizRecordDAO();
-        for (modal.Quiz quiz : list) {
-            quiz.setCheckQuizrecord(dao.checkQuizRecordExist(quiz.getQuizID()));
-        }
-        String currrentURL = request.getRequestURI()+"?"+request.getQueryString();
-        HttpSession session = request.getSession();
-        session.setAttribute("currentURL", currrentURL);
-        
         processRequest(request, response);
     }
 
@@ -91,6 +80,7 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 

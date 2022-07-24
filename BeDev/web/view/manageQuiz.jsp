@@ -149,7 +149,10 @@
                                                         |
                                                         <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>
                                                         |
-                                                        <a href="#">Delete</a>
+                                                        <c:if test="${q.checkQuizrecord}">
+                                                            <a href="DeleteQuiz?quizId=${q.quizID}">Delete</a>
+                                                        </c:if>
+                                                        
                                                     </td>
                                                 </tr>
                                             </c:forEach>

@@ -45,7 +45,6 @@ public class QuizRecordDAO extends DBContext {
                     + "on qu1.quizRecordID = qu2.quizRecordID "
                     + "order by qu1.time desc";
             PreparedStatement stm = connection.prepareStatement(sql);
-            System.out.println(sql);
             stm.setInt(1, qid);
             stm.setInt(2, sid);
             ResultSet rs = stm.executeQuery();
@@ -153,6 +152,19 @@ public class QuizRecordDAO extends DBContext {
             System.out.println(e);
         }
         return null;
+    }
+    public boolean checkQuizRecordExist(int quizID){
+        try {
+            String sql ="select * from Quiz_record q where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
     }
     
     public static void main(String[] args) {

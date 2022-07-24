@@ -116,10 +116,12 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">                             
                                     <div class="dropdown-divider"></div>
+                                    <!-- Dropdown - User Information 
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
+                                    -->
                                 </div>
                             </li>
                         </ul>
@@ -161,12 +163,21 @@
                                                         </c:if>
                                                         |
                                                         <a href="EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
-                                                        |                                                       
-                                                        <a href="EditOption?qid=${qid}&quesID=${ques.getQuestionID()}">Edit Option</a>
-                                                        |
-                                                        <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Delete" onclick="return confirm('Are you sure to delete this question?')">Delete</a>
+                                                        |                                                  
+                                                        <c:if test="${ques.getCheckQuestionCompleted()==0}">
+                                                            <a href="EditOption?quesID=${ques.getQuestionID()}&check=true">Edit Option</a>
+                                                        </c:if> 
+                                                        <c:if test="${ques.getCheckQuestionCompleted()>0}">
+                                                            <a href="EditOption?quesID=${ques.getQuestionID()}">Edit Option</a>
+                                                        </c:if>
+                                                        <c:if test="${ques.getCheckQuestionCompleted()==0}">
+                                                            |
+                                                            <a data-toggle="modal" data-target="#logoutModal" href="#" onclick="deleteQues(${ques.getQuestionID()},${qid})">Delete</a>           
+                                                        </c:if>                                                         
                                                     </td>
                                                 </tr>
+
+
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -207,19 +218,22 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Đăng xuất?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Bạn có muốn đăng xuất không</div>
+                    <div class="modal-body">Do you want to delete this ?</div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                        <a class="btn btn-primary" href="Logout">Logout</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                        <a id="deleteThis" class="btn btn-primary" href="">Yes</a>
                     </div>
                 </div>
             </div>
         </div>
+
+
+
 
         <!-- Bootstrap core JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
@@ -237,6 +251,12 @@
 
         <!-- Page level custom scripts -->
         <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
+
+        <script>
+                                                                function deleteQues(quesID) {
+                                                                    document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
+                                                                }
+        </script>
 
     </body>
 </html>

@@ -214,6 +214,17 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
+    public boolean deleteQuiz(int quizID){
+        try {
+            String sql ="delete from Quiz where quizID =?";
+            PreparedStatement stm  =connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+        }
+        return false;
+    }
 
     public static void main(String[] args) {
         QuizDAO q = new QuizDAO();

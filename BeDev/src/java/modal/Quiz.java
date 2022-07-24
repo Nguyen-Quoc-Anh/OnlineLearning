@@ -20,6 +20,7 @@ public class Quiz {
     private boolean status;
     private ArrayList<Question> questionList;
     private double grade;
+    private  boolean  checkQuizrecord;
     public Quiz() {
     }
 
@@ -55,6 +56,14 @@ public class Quiz {
         this.quizID = quizID;
         this.quizName = quizName;
         this.passRate = passRate;
+    }
+
+    public boolean isCheckQuizrecord() {
+        return checkQuizrecord;
+    }
+
+    public void setCheckQuizrecord(boolean checkQuizrecord) {
+        this.checkQuizrecord = checkQuizrecord;
     }
 
     public int getQuizID() {

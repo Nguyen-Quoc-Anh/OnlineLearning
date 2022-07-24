@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.OptionDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import modal.Question;
 
 /**
@@ -51,14 +53,25 @@ public class ManageQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         ArrayList<Question> listQuestion = new ArrayList<>();
         QuestionDAO questionDAO = new QuestionDAO();
         QuizDAO quizDAO = new QuizDAO();
         modal.Quiz quiz = new modal.Quiz();
         try {
-//            int id = Integer.parseInt(request.getParameter("qid"));                      
-            listQuestion = questionDAO.getQuestionByQuiz(1);
-            quiz = quizDAO.getQuiz(1);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+//            int id = Integer.parseInt(request.getParameter("qid"));  
+                    listQuestion = questionDAO.getQuestionByQuiz(1);    //get question by id of the quiz
+                    quiz = quizDAO.getQuiz(1);  //get quiz by id of the quiz
+                } else {
+                    response.sendRedirect("HomeControl");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

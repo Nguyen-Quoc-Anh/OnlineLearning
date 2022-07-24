@@ -1,35 +1,25 @@
-
 /*
- * Copyright(C) 2005, FPT university
- * ...
- * ...
- *
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2018-09-10      1.0                 HuyTQ           First Implement
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
-import dao.ChapterDAO;
-import dao.QuizDAO;
-import dao.QuizRecordDAO;
+import dao.OptionDAO;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modal.Chapter;
 
 /**
  *
- * @author ADMIN
+ * @author quang
  */
-@WebServlet(name = "ManageQuiz", urlPatterns = {"/ManageQuiz"})
-public class ManageQuiz extends HttpServlet {
+@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
+public class SetUpOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +33,6 @@ public class ManageQuiz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/manageQuiz.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,26 +47,30 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        List<modal.Quiz> list = new ArrayList<>();
-        int chapterId = 1;
-        if (request.getParameter("chapterId")!=null) {
-            chapterId = Integer.parseInt(request.getParameter("chapterId"));
-        }
-        list = quizDAO.getListQuizByChapterId(chapterId);
-        ChapterDAO cdao = new ChapterDAO();
-        Chapter c = cdao.getChapterByChapterId(chapterId);
-        request.setAttribute("chapter", c);
-        request.setAttribute("listQuiz", list);
-        QuizRecordDAO dao = new QuizRecordDAO();
-        for (modal.Quiz quiz : list) {
-            quiz.setCheckQuizrecord(dao.checkQuizRecordExist(quiz.getQuizID()));
-        }
-        String currrentURL = request.getRequestURI()+"?"+request.getQueryString();
-        HttpSession session = request.getSession();
-        session.setAttribute("currentURL", currrentURL);
-        
-        processRequest(request, response);
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0 ;
+        try {
+            if (request.getParameter("quesID") != null && request.getParameter("opID") != null) {               
+                quesID = Integer.parseInt(request.getParameter("quesID"));
+                int opID = Integer.parseInt(request.getParameter("opID"));
+                if(request.getParameter("action").equalsIgnoreCase("true")){
+                    optionDAO.setTrueOption(quesID, opID);
+                }
+                if(request.getParameter("action").equalsIgnoreCase("false")){
+                    optionDAO.setFalseOption(quesID, opID);
+                }
+                if(request.getParameter("action").equalsIgnoreCase("delete")){
+                    optionDAO.deleteOption(opID, quesID);
+                }
+                if(request.getParameter("check")!=null){
+                    response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
+                }else{
+                    response.sendRedirect("EditOption?quesID="+quesID);
+                }    
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }      
     }
 
     /**
