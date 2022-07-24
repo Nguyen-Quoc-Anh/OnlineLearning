@@ -104,19 +104,18 @@ public class QuizDAO extends DBContext {
         }
     }
 
-    public Quiz getQuiz(int qid) {
+    public int getNumberQuestionByQuizID(String quizID) {
         try {
-            String sql = "select q.quizID, q.quizName from Quiz q\n"
-                    + "where q.quizID = ?";
+            String sql = "select COUNT(quizID) from Question where quizID = ? group by quizID";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, qid);
+            stm.setString(1, quizID);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                return new Quiz(rs.getInt(1), rs.getString(2), 0);
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-        return null;
+        return 0;
     }
 }

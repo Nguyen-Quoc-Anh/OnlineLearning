@@ -88,11 +88,11 @@
                                                 <div class="col-md-6 mb-4">
                                                     <div class="contentCard contentCard--course">
                                                         <div class="contentCard-top">
-                                                            <a href="course-details.html"><img src="${co.getCourseImage()}" alt="images" class="img-fluid" /></a>
+                                                            <a href="CourseDetails?courseID=${co.getCourseID()}" ><img src="${co.getCourseImage()}" alt="images" class="img-fluid" /></a>
                                                         </div>
                                                         <div class="contentCard-bottom">
                                                             <h5>
-                                                                <a href="course-details.html" class="font-title--card">${co.getCourseName()}</a>
+                                                                <a href="CourseDetails?courseID=${co.getCourseID()}" class="font-title--card">${co.getCourseName()}</a>
                                                             </h5>
                                                             <div class="contentCard-info d-flex align-items-center justify-content-between">
                                                                 <a href="#" class="contentCard-user d-flex align-items-center">

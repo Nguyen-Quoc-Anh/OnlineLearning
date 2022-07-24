@@ -27,51 +27,39 @@ public class QuestionDAO extends DBContext {
      */
     public ArrayList<Question> getQuestionByQuizID(int quizID) {
         ArrayList<Question> questions = new ArrayList<>();
-        OptionDAO answerDAO = new OptionDAO();
         try {
-            String sql = "select ques.questionID, ques.content, ques.explaination, count(o.optionID)\n"
-                    + "from Question ques, [Option] o \n"
-                    + "where ques.quizID = ? and ques.status = 1 and o.questionID = ques.questionID and o.isTrue = 1\n"
-                    + "group by ques.questionID, ques.content, ques.explaination";
+            String sql = "declare @pointPerQuestion float;\n"
+                    + "set @pointPerQuestion = (select 10.0/count(q.questionID) from Question q where q.quizID = ? and q.status = 1);\n"
+                    + "select ques.questionID, ques.content, o.optionID, o.content, o.isTrue, t.PointPerTrueOption, t.NumberOfTrueAnswer\n"
+                    + "from Question ques join [Option] o\n"
+                    + "on ques.quizID = ? and ques.status = 1 and o.questionID = ques.questionID\n"
+                    + "join (select ques.questionID, @pointPerQuestion/count(op.optionID) as PointPerTrueOption, count(op.optionID) as NumberOfTrueAnswer\n"
+                    + "from Question ques join [Option] op on ques.questionID = op.questionID and ques.quizID = ? and ques.status = 1 and op.isTrue = 1\n"
+                    + "group by ques.questionID) t on t.questionID = ques.questionID";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
+            stm.setInt(2, quizID);
+            stm.setInt(3, quizID);
             ResultSet rs = stm.executeQuery();
+            int questionID = 0, temp = 0;
+            Question question = new Question();
+            ArrayList<Option> options = new ArrayList<>();
             while (rs.next()) {
-                Question question = new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(quizID), true);
-                question.setMultipleChoice(rs.getInt(4) > 1);
-                ArrayList<Option> option = answerDAO.getOptionsByQuestionID(question.getQuestionID());
-                question.setOptionList(option);
-                questions.add(question);
+                temp = rs.getInt(1);
+                if (temp != questionID) {   // new question
+                    if (questionID != 0) {
+                        question.setOptionList(options);
+                        questions.add(question);
+                    }
+                    questionID = temp;
+                    question = new Question(rs.getInt(1), rs.getString(2), "", new Quiz(quizID), true);
+                    question.setMultipleChoice(rs.getInt(7) > 1);
+                    options = new ArrayList<>();
+                }
+                options.add(new Option(rs.getInt(3), rs.getNString(4), rs.getBoolean(5), rs.getDouble(6)));
             }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return questions;
-    }
-
-    /**
-     * This method get questions of quiz by id. Each question contain only true
-     * option
-     *
-     * @param quizID id of quiz
-     * @return list contain questions
-     */
-    public ArrayList<Question> getQuestionsAndTrueOption(int quizID) {
-        ArrayList<Question> questions = new ArrayList<>();
-        OptionDAO answerDAO = new OptionDAO();
-        try {
-            String sql = "select ques.questionID, 10.0/count(ques.questionID)\n"
-                    + "from Question ques join Question ques1 on ques.quizID = ? and ques.status = 1 and ques1.status =1\n"
-                    + "group by ques.questionID";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, quizID);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                Question question = new Question(rs.getInt(1), rs.getDouble(2));
-                ArrayList<Option> option = answerDAO.getTrueOptionsByQuestionID(question);
-                question.setOptionList(option);
-                questions.add(question);
-            }
+            question.setOptionList(options);
+            questions.add(question);
         } catch (Exception e) {
             System.out.println(e);
         }

@@ -18,6 +18,10 @@ public class Category {
     public Category() {
     }
 
+    public Category(int categoryID) {
+        this.categoryID = categoryID;
+    }
+
     public Category(int categoryID, String categoryName) {
         this.categoryID = categoryID;
         this.categoryName = categoryName;
@@ -28,7 +32,7 @@ public class Category {
         this.categoryName = categoryName;
         this.numberCourse = numberCourse;
     }
-
+    
     public int getCategoryID() {
         return categoryID;
     }
