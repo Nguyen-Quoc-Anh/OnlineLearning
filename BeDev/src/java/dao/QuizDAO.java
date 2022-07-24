@@ -139,7 +139,8 @@ public class QuizDAO extends DBContext {
         }
         return list;
     }
-    public boolean updateQuiz(int qid ,String quizName, double passRate){
+
+    public boolean updateQuiz(int qid, String quizName, double passRate) {
         try {
             String sql = "Update Quiz set quizName = ?, passRate =? where quizID=?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -153,7 +154,8 @@ public class QuizDAO extends DBContext {
         }
         return false;
     }
-    public boolean updateStatus(int id,boolean  status){
+
+    public boolean updateStatus(int id, boolean status) {
         try {
             String sql = "Update Quiz set status=? where quizID=?";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -161,14 +163,15 @@ public class QuizDAO extends DBContext {
             stm.setInt(2, id);
             stm.executeUpdate();
             return true;
-            
+
         } catch (SQLException e) {
         }
         return false;
     }
-    public boolean getQuizStatus(int qid){
+
+    public boolean getQuizStatus(int qid) {
         try {
-            String sql ="select q.status from Quiz q where q.quizID=?";
+            String sql = "select q.status from Quiz q where q.quizID=?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, qid);
             ResultSet rs = stm.executeQuery();
@@ -180,7 +183,8 @@ public class QuizDAO extends DBContext {
         }
         return false;
     }
-    public boolean InsertNewQuiz(String quizName, double passRate, int chapterID){
+
+    public boolean InsertNewQuiz(String quizName, double passRate, int chapterID) {
         try {
             String sql = "Insert into Quiz(chapterID, quizName,passRate, position) values(?,?,?,?)";
             PreparedStatement stm = connection.prepareStatement(sql);
@@ -188,7 +192,7 @@ public class QuizDAO extends DBContext {
             stm.setNString(2, quizName);
             stm.setDouble(3, passRate);
             QuizDAO dao = new QuizDAO();
-            stm.setInt(4, dao.getMaxPositionOfQuiz(chapterID));
+            stm.setInt(4, dao.getMaxPositionOfQuiz(chapterID)+1);
             stm.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -196,9 +200,10 @@ public class QuizDAO extends DBContext {
         }
         return false;
     }
-    public  int getMaxPositionOfQuiz(int chapterId){
+
+    public int getMaxPositionOfQuiz(int chapterId) {
         try {
-            String sql = "select max(position)  from Quiz where chapterID = ?" ;
+            String sql = "select max(position)  from Quiz where chapterID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, chapterId);
             ResultSet rs = stm.executeQuery();
@@ -209,6 +214,7 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
+
     public static void main(String[] args) {
         QuizDAO q = new QuizDAO();
         List<Quiz> list = q.getListQuizByChapterId(6);

@@ -11,6 +11,7 @@
 package controller;
 
 import dao.ChapterDAO;
+import dao.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -40,7 +41,7 @@ public class AddNewQuiz extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-       request.getRequestDispatcher("//view/addNewQuiz.jsp").forward(request, response);
+        request.getRequestDispatcher("//view/addNewQuiz.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,8 +56,8 @@ public class AddNewQuiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         
-        int chapterId = Integer.parseInt(request.getParameter("chapterId").toString());
+
+        int chapterId = Integer.parseInt(request.getParameter("chapterId"));
         ChapterDAO chapterDAO = new ChapterDAO();
         Chapter c = chapterDAO.getChapterByChapterId(chapterId);
         request.setAttribute("chapter", c);
@@ -76,8 +77,13 @@ public class AddNewQuiz extends HttpServlet {
             throws ServletException, IOException {
         String quizName = request.getParameter("quizName");
         double passRate = Double.parseDouble(request.getParameter("passRate"));
-        int chapterId = Integer.parseInt(request.getParameter("chapterId").toString());
-        processRequest(request, response);
+        int chapterId = Integer.parseInt(request.getParameter("chapterID"));
+        QuizDAO quizDAO = new QuizDAO();
+        if (quizDAO.InsertNewQuiz(quizName, passRate, chapterId)) {
+            response.sendRedirect("ManageQuiz?chapterId="+chapterId);
+        }else{
+            response.sendRedirect("Error");
+        }
     }
 
     /**
