@@ -153,14 +153,14 @@
                                                     <td>${ques.getQuestionID()}</td>
                                                     <td>${ques.getContent()}</td>
                                                     <td>${ques.getExplanation() != "" ? ques.getExplanation() : ""}</td>
-                                                    <td>${ques.isStatus()==true ? "Active" : "Inactive"}</td>
+                                                    <td>${ques.isStatus()==true ? "<span class=\"badge badge-success\">Active</span>" : "<span class=\"badge badge-danger\">Inactive</span>"}</td>
                                                     <td>
                                                         <c:if test="${ques.isStatus()==true}">
-                                                            <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Inactive" onclick="return confirm('Are you sure?')">Inactive</a>
+                                                            <a href="" data-toggle="modal" data-target="#logoutModal" onclick="changeStatus(${ques.isStatus()},${qid},${ques.getQuestionID()})">Inactive</a>                                                                          
                                                         </c:if>
 
                                                         <c:if test="${ques.isStatus()==false}">
-                                                            <a href="ChangeStatus?qid=${qid}&quesID=${ques.getQuestionID()}&action=Active" onclick="return confirm('Are you sure?')">Active | </a>
+                                                            <a href="" data-toggle="modal" data-target="#logoutModal" onclick="changeStatus(${ques.isStatus()},${qid},${ques.getQuestionID()})">Active | </a>
                                                         </c:if>
                                                         |
                                                         <a href="EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
@@ -224,7 +224,7 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Do you want to delete this ?</div>
+                    <div class="modal-body" id="confirmQuestion">Do you want to delete this ?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
                         <a id="deleteThis" class="btn btn-primary" href="">Yes</a>
@@ -256,6 +256,17 @@
         <script>
                                                                 function deleteQues(quesID) {
                                                                     document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
+                                                                }
+                                                                function changeStatus(status,qid,quesID){
+                                                                    if(status){
+                                                                        $('#exampleModalLabel').text("Inactive");
+                                                                        $('#confirmQuestion').text("Do you want to Inactice this question");
+                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Inactive";
+                                                                    }else{                                                            
+                                                                        $('#exampleModalLabel').text("Actice");
+                                                                        $('#confirmQuestion').text("Do you want to Actice this question");
+                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Active";
+                                                                    }
                                                                 }
         </script>
 

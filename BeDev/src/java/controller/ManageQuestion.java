@@ -63,7 +63,7 @@ public class ManageQuestion extends HttpServlet {
                 if (session.getAttribute("expert") != null) {
 //            int id = Integer.parseInt(request.getParameter("qid"));  
                     listQuestion = questionDAO.getQuestionByQuiz(1);    //get question by id of the quiz
-                    quiz = quizDAO.getQuiz(1);  //get quiz by id of the quiz
+                    quiz = quizDAO.getQuizByID(1);  //get quiz by id of the quiz
                 } else {
                     response.sendRedirect("HomeControl");
                     return;
