@@ -144,7 +144,8 @@
                                                         <a href="ManageQuestion">Manage question</a>
                                                         &emsp;
                                                         <c:if test="${!q.checkQuizrecord}">
-                                                            <a onclick="checkDelete()"  href="DeleteQuiz?quizId=${q.quizID}">Delete</a>
+                                                            
+                                                            <a onclick="changeInfoModalDelete('${q.quizID}', '${q.quizName}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
                                                         </c:if>
 
                                                     </td>
@@ -187,7 +188,23 @@
                 </div>
             </div>
         </div>
-
+        <div class="modal fade" id="deleteModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Quiz</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modal-body-delete"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger" onclick="deleteQuiz()">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Bootstrap core JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -233,9 +250,9 @@
                             }
 
 
-                            function changeInfoModalDelete(courseId, courseName) {
-                                courseID = courseId;
-                                $('#modal-body-delete').text(`Do you want to delete course ` + courseName);
+                            function changeInfoModalDelete(quizId, quizName) {
+                                quizID = quizId;;
+                                $('#modal-body-delete').text(`Do you want to delete quiz ` + quizName);
                             }
 
                             function showMessage(status, message, reload) {
@@ -255,13 +272,13 @@
                                     }
                                 });
                             }
-                            function deleteCourse() {
+                            function deleteQuiz() {
                                 $.ajax({
-                                    url: '/BeDev/manage/deletecourse?courseId=' + courseID,
+                                    url: '/BeDev/DeleteQuiz?quizId=' + quizID,
                                     type: 'DELETE',
                                     success: function (result) {
                                         if (result == 'success') {
-                                            showMessage(result, "Delete course successfully", true);
+                                            showMessage(result, "Delete quiz successfully", true);
                                         } else {
                                             showMessage(result, result, false);
                                         }
@@ -269,23 +286,7 @@
                                 });
                             }
 
-function checkDelete({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
-      'success'
-    )
-  }
-})
+
 
 
 

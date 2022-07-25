@@ -11,6 +11,7 @@
 package controller;
 
 import dao.ChapterDAO;
+import dao.CourseDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
@@ -50,6 +51,20 @@ public class DeleteQuiz extends HttpServlet {
         }else{
             response.sendRedirect("Error");
         }
+    }
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int quizId = Integer.parseInt(request.getParameter("quizId"));
+        QuizDAO dao = new QuizDAO();
+        HttpSession session = request.getSession();
+        String currentURL =session.getAttribute("currentURL").toString();
+        if (dao.deleteQuiz(quizId)) {
+            response.getWriter().write("success");
+        }else{
+            response.getWriter().write("Error, cannot delete course");
+        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
