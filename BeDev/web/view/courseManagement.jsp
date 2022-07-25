@@ -199,13 +199,13 @@
                                             <c:forEach var="course" items="${coursesList}">
                                                 <tr>
                                                     <td>${course.getCourseID()}</td>
-                                                    <td>${course.getCourseName()}</td>
+                                                    <td><a class="link link-dark" href="#">${course.getCourseName()}</a></td>
                                                     <td><img style="width: 200px; height: auto; border-radius: 20px;" src="${course.getCourseImage()}"></td>
                                                     <td><fmt:formatNumber value = "${course.getMoney()}" type = "number" maxFractionDigits = "0" /></td>
                                                     <td>${course.getReleasedDate()}</td>
                                                     <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${course.isStatus()}, '${course.getCourseID()}', '${course.getCourseName()}')">${course.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                     <td>
-                                                        <a onclick="changeInfoModalEdit('${course.getCourseID()}', '${course.getCourseName()}', '${course.getCourseImage()}', ${course.getMoney()}, '${course.getDescription()}', ${course.getCategory().getCategoryID()}, ${course.isStatus()})" 
+                                                        <a onclick="changeInfoModalEdit('${course.getCourseID()}')" 
                                                            data-toggle="modal" data-target="#editModal">Edit</a>
                                                         |
                                                         <a onclick="changeInfoModalDelete('${course.getCourseID()}', '${course.getCourseName()}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
@@ -422,7 +422,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Bootstrap core JavaScript-->
         <script src="/BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="/BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -502,14 +502,19 @@
                                     }
                                 }
 
-                                function changeInfoModalEdit(courseId, courseName, courseImage, price, description, categoryId, status) {
-                                    $('#course-id').val(courseId)
-                                    $('#course-name').val(courseName)
-                                    $('#course-price').val(price)
-                                    $("#playlist--img2").attr("src", courseImage);
-                                    editor2.setData(description);
-                                    $('#course-status').prop('checked', status);
-                                    $('#course-category').val(categoryId)
+                                function changeInfoModalEdit(courseId) {
+                                    $.get("/BeDev/expert/CourseInfo?courseId=" + courseId, (data) => {
+                                        data = JSON.parse(data);
+                                        console.log(data)
+                                        $('#course-id').val(data.courseId)
+                                        $('#course-name').val(data.courseName)
+                                        $('#course-price').val(data.money)
+                                        $("#playlist--img2").attr("src", data.courseImage);
+                                        editor2.setData(data.description);
+                                        $('#course-status').prop('checked', data.status);
+                                        $('#course-category').val(data.category.categoryId)
+                                    })
+
                                 }
 
                                 function changeInfoModalDelete(courseId, courseName) {

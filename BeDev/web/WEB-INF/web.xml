@@ -60,6 +60,10 @@
         <servlet-name>EarningOverviews</servlet-name>
         <servlet-class>controller.dashboard.EarningOverviews</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourseInfo</servlet-name>
+        <servlet-class>controller.CourseManagement.CourseInfo</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/HomeControl</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>EarningOverviews</servlet-name>
         <url-pattern>/api/dashboard/EarningOverviews</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseInfo</servlet-name>
+        <url-pattern>/expert/CourseInfo</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
