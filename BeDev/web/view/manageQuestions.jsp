@@ -66,8 +66,8 @@
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">Quản lí</h6>
-                            <a class="collapse-item" href="MangerUser">Create Question</a>
-                            <a class="collapse-item" href="ManageQuestion">Edit Questuon</a>
+                            <a class="collapse-item" href="AddListQuestion?qid=${quiz.getQuizID()}">Create Question</a>
+                            <a class="collapse-item" href="ManageQuestion?qid=${quiz.getQuizID()}">Manage Question</a>
                         </div>
                     </div>
                 </li>

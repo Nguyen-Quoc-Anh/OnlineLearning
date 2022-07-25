@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Expert;
 import modal.Option;
 import modal.Question;
 
@@ -63,12 +64,13 @@ public class EditOption extends HttpServlet {
         try {
             if (session.getAttribute("account") != null) {  //check login with account session
                 if (session.getAttribute("expert") != null) {
+                    Expert expert = (Expert) session.getAttribute("expert");
                     int quesID = Integer.parseInt(request.getParameter("quesID"));
                     if (request.getParameter("check") != null) {
                         check = request.getParameter("check");
                     }
-                    question = questionDAO.getQuestion(quesID); //get question by id of the question
-                    listOption = optionDAO.listOption(quesID); //get list option by the question id
+                    question = questionDAO.getQuestion(quesID, expert.getExpertID()); //get question by id of the question
+                    listOption = optionDAO.listOption(quesID, expert.getExpertID()); //get list option by the question id
                 } else {
                     response.sendRedirect("HomeControl");
                     return;
@@ -100,14 +102,26 @@ public class EditOption extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         OptionDAO optionDAO = new OptionDAO();
+        HttpSession session = request.getSession();
         ArrayList<Option> listOption = new ArrayList<>();
         int quesID = 0;
         try {
-            String[] listNewOption = request.getParameterValues("content"); //get the array string of parameter content
-            quesID = Integer.parseInt(request.getParameter("quesID"));
-            listOption = optionDAO.listOption(quesID);  //get list option of the question by id of question
-            for (int i = 0; i < listOption.size(); i++) {
-                optionDAO.updateOption(listNewOption[i], listOption.get(i).getOptionID());  //update inormation of option contain content, is True, is False by id of question
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    Expert expert = (Expert)session.getAttribute("expert");
+                    String[] listNewOption = request.getParameterValues("content"); //get the array string of parameter content
+                    quesID = Integer.parseInt(request.getParameter("quesID"));
+                    listOption = optionDAO.listOption(quesID,expert.getExpertID());  //get list option of the question by id of question
+                    for (int i = 0; i < listOption.size(); i++) {
+                        optionDAO.updateOption(listNewOption[i], listOption.get(i).getOptionID());  //update inormation of option contain content, is True, is False by id of question
+                    }
+                } else {
+                    response.sendRedirect("HomeControl");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

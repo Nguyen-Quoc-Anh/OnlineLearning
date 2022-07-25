@@ -546,6 +546,22 @@ public class CourseDAO extends DBContext {
         return false;
     }
 
+    public int checkCourseByExpertId(int eid) {
+        try {
+            String sql = "select count(*) from Course\n"
+                    + "where expertID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         List<Course> listCourses = new ArrayList<>();
         CourseDAO dao = new CourseDAO();

@@ -25,6 +25,7 @@ public class Question {
     private ArrayList<Option> compareList;
     private int numberAnswer;
     private int checkQuestionCompleted;
+    private Expert expert;
     
     public Question() {
     }
@@ -37,7 +38,14 @@ public class Question {
         this.checkQuestionCompleted = checkQuestionCompleted;
     }
 
-    
+    public Question(int questionID, String content, String explanation, boolean status, int checkQuestionCompleted, Expert expert) {
+        this.questionID = questionID;
+        this.content = content;
+        this.explanation = explanation;
+        this.status = status;
+        this.checkQuestionCompleted = checkQuestionCompleted;
+        this.expert = expert;
+    }
     
     public Question(int questionID) {
         this.questionID = questionID;
@@ -181,6 +189,14 @@ public class Question {
 
     public void setCheckQuestionCompleted(int checkQuestionCompleted) {
         this.checkQuestionCompleted = checkQuestionCompleted;
+    }
+
+    public Expert getExpert() {
+        return expert;
+    }
+
+    public void setExpert(Expert expert) {
+        this.expert = expert;
     }
 
     
