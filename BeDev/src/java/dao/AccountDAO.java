@@ -5,10 +5,13 @@
  */
 package dao;
 
+import com.sun.xml.ws.tx.at.v10.types.PrepareResponse;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import modal.Account;
 import modal.Admin;
 import modal.Expert;
@@ -23,6 +26,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * This method check email is exist or not.
+     *
      * @param email email need to check
      * @return true if email exist. Otherwise return false
      */
@@ -42,7 +46,9 @@ public class AccountDAO extends DBContext {
     }
 
     /**
-     * This method insert a new Account as a student into database base on register information
+     * This method insert a new Account as a student into database base on
+     * register information
+     *
      * @param student contain user information
      * @return true if insert success. Otherwise return false.
      */
@@ -70,6 +76,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * This method check account is exist or not.
+     *
      * @param account
      * @return true if account exist. Otherwise return false.
      */
@@ -127,8 +134,10 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
+
     /**
      * this method is used to check email and password when login..
+     *
      * @param email
      * @param password
      * @return a account if input is valid opposite return null.
@@ -171,8 +180,10 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
+
     /**
      * This method is used to get student by account ID
+     *
      * @param id
      * @return a student have this id.
      */
@@ -192,8 +203,10 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     /**
      * This method is used to get expert by account id.
+     *
      * @param id of account
      * @return a expert have this id
      */
@@ -213,8 +226,10 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     /**
      * This method is used to get a admin by account id.
+     *
      * @param id of account.
      * @return a admin have this id
      */
@@ -251,6 +266,49 @@ public class AccountDAO extends DBContext {
             System.out.println(e);
         }
         return -1;
+    }
+
+    public List<Account> getAllAccount() {
+        List<Account> list = new ArrayList<>();
+        try {
+            String sql = "select  a.accountID, a.email, a.role, a.status, r.roleName \n"
+                    + "from Account a , Role r where a.role= r.roleID";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account a = new Account(rs.getInt(1), rs.getString(2), new Role(rs.getInt(3), rs.getString(5)), rs.getBoolean(4));
+                list.add(a);
+            }
+        } catch (SQLException e) {
+        }
+        return list;    
+    }
+    public boolean changeStatusAccount(int accountID, boolean status){
+        try {
+            String sql = "update Account set status = ? where accountID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(2, accountID);
+            stm.setBoolean(1, status);
+             stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean getAccountStatus(int accountID){
+        try {
+            String sql ="select a.status from Account a where a.accountID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     public static void main(String[] args) {

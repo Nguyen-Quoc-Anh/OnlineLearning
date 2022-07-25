@@ -117,39 +117,30 @@
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 row">
-                                <h6 class="m-0 font-weight-bold text-primary col-md-8">List Quiz of Chapter: ${chapter.chapterName} </h6>
-                                <h6 class="col-md-4"><a class="btn btn-primary" href="AddNewQuiz?chapterId=${chapter.chapterID}">Add quiz for this chapter</a></h6>
+                                <h6 class="m-0 font-weight-bold text-primary col-md-8">List User </h6>
+                                
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>QuizID</th>
-                                                <th>QuizName</th>
-                                                <th>PassRate</th>
+                                                <th>UserId</th>    
+                                                <th>Email</th>
+                                                <th>Role</th>
                                                 <th>Status</th>
-                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${listQuiz}" var="q">
-                                                <tr>
-                                                    <td>${q.quizID}</td>
-                                                    <td>${q.quizName}</td>
-                                                    <td>${q.passRate} %</td>
-                                                    <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${q.isStatus()}, '${q.quizID}', '${q.quizName}')">${q.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
-                                                    <td>
-                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>&emsp;
-                                                        <a href="ManageQuestion">Manage question</a>
-                                                        &emsp;
-                                                        <c:if test="${!q.checkQuizrecord}">
-                                                            
-                                                            <a style="color:#4e73df" onclick="changeInfoModalDelete('${q.quizID}', '${q.quizName}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
-                                                        </c:if>
-
-                                                    </td>
+                                            <c:forEach items="${listAccount}" var="a">
+                                                <c:if test="${a.role.roleID!=1}">
+                                                    <tr>
+                                                    <td>${a.accountID}</td>
+                                                    <td>${a.email}</td>
+                                                    <td>${a.role.roleName}</td>
+                                                    <td  onclick="changeStatus(${a.isStatus()}, '${a.accountID}', '${a.email}')">${a.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                 </tr>
+                                                </c:if>
                                             </c:forEach>
                                         </tbody>
                                     </table>
@@ -223,23 +214,23 @@
         <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script>
                             let editor2;
-                            var currentStatus, quizID;
-                            function changeStatus(status, quizId, quizName) {
+                            var currentStatus, accountID;
+                            function changeStatus(status, accountId, email) {
                                 currentStatus = status;
-                                quizID = quizId;
+                                accountID = accountId;
                                 if (status) {
                                     $('#header-status').text("Inactive");
-                                    $('#modal-body-status').text(`Do you want to inactive quiz ` + quizName);
+                                    $('#modal-body-status').text(`Do you want to inactive account ` + email);
                                     $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
                                 } else {
                                     $('#header-status').text("Active");
-                                    $('#modal-body-status').text(`Do you want to active quiz ` + quizName);
+                                    $('#modal-body-status').text(`Do you want to active acoount ` + email);
                                     $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
                                 }
                             }
 
                             function submitChangeStatus() {
-                                $.post("/BeDev/UpdateStatusQuiz", {quizID: quizID}, (response) => {
+                                $.post("/BeDev/ChangeStatusAccount", {accountID: accountID}, (response) => {
                                     $('#logoutModal').modal('toggle');
                                     if (response == "success") {
                                         showMessage(response, "Change status successfully", true);
@@ -272,24 +263,8 @@
                                     }
                                 });
                             }
-                            function deleteQuiz() {
-                                $.ajax({
-                                    url: '/BeDev/DeleteQuiz?quizId=' + quizID,
-                                    type: 'DELETE',
-                                    success: function (result) {
-                                        if (result == 'success') {
-                                            showMessage(result, "Delete quiz successfully", true);
-                                        } else {
-                                            showMessage(result, result, false);
-                                        }
-                                    }
-                                });
-                            }
-
-
-
-
-
+                            
+                            
 
 
         </script>
