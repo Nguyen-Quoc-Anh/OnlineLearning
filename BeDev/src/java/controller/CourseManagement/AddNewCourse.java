@@ -59,18 +59,18 @@ public class AddNewCourse extends HttpServlet {
         } catch (Exception ex) {
             System.out.println(ex);
             session.setAttribute("addcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
         Part image = request.getPart("file");
         if (image == null) {
             session.setAttribute("addcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
         String status = request.getParameter("status");
         boolean isActive = status != null;
-        String filename = fileProcessor.uploadFile(image, fileProcessor.getFolderImage(request, "courses"));
+        String filename = fileProcessor.uploadFile(image, fileProcessor.getFolderImage(request, "courses"));    // upload file
         Course course = new Course();
         course.setCourseName(name);
         course.setCourseImage(FILEPATH + filename);
@@ -78,15 +78,14 @@ public class AddNewCourse extends HttpServlet {
         course.setMoney(price);
         course.setStatus(isActive);
         course.setCategory(new Category(categoryId));
-//        course.setExpert(new Expert(account.getAccountID()));
-        course.setExpert(new Expert(5));
+        course.setExpert(new Expert(account.getAccountID()));
         boolean success = courseDAO.insertCourse(course);
         if (success) {
             session.setAttribute("addcourse", "success");
         } else {
             session.setAttribute("addcourse", "failed");
         }
-        response.sendRedirect("/BeDev/manage/course");
+        response.sendRedirect("/BeDev/expert/course");
     }
 
     /**

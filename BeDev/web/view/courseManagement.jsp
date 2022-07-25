@@ -199,13 +199,13 @@
                                             <c:forEach var="course" items="${coursesList}">
                                                 <tr>
                                                     <td>${course.getCourseID()}</td>
-                                                    <td>${course.getCourseName()}</td>
+                                                    <td><a class="link link-dark" href="#">${course.getCourseName()}</a></td>
                                                     <td><img style="width: 200px; height: auto; border-radius: 20px;" src="${course.getCourseImage()}"></td>
                                                     <td><fmt:formatNumber value = "${course.getMoney()}" type = "number" maxFractionDigits = "0" /></td>
                                                     <td>${course.getReleasedDate()}</td>
                                                     <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${course.isStatus()}, '${course.getCourseID()}', '${course.getCourseName()}')">${course.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                     <td>
-                                                        <a onclick="changeInfoModalEdit('${course.getCourseID()}', '${course.getCourseName()}', '${course.getCourseImage()}', ${course.getMoney()}, '${course.getDescription()}', ${course.getCategory().getCategoryID()}, ${course.isStatus()})" 
+                                                        <a onclick="changeInfoModalEdit('${course.getCourseID()}')" 
                                                            data-toggle="modal" data-target="#editModal">Edit</a>
                                                         |
                                                         <a onclick="changeInfoModalDelete('${course.getCourseID()}', '${course.getCourseName()}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
@@ -422,30 +422,7 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-success alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="editSuccessAlert">
-            Edit course successfully.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-danger alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="editFailedAlert">
-            Edit course failed.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-success alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="addCourseSuccessAlert">
-            Add course successfully.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="alert alert-danger alert-dismissible fade show" style="position: absolute; top: 100px; right: 20px; display: none"  role="alert" id="addCourseFailedAlert">
-            Add course failed.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+
         <!-- Bootstrap core JavaScript-->
         <script src="/BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="/BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -509,6 +486,12 @@
 
                                 function checkBeforeSubmit() {
                                     var mess = "";
+                                    if ($('#name').val().trim() == "") {
+                                        mess += "Course name can't be empty. ";
+                                    }
+                                    if ($('#price').val() == "0") {
+                                        mess += "Price must be greater than 0. ";
+                                    }
                                     if ($('#inputState').val() == "0") {
                                         mess += "Please choose a category. ";
                                     }
@@ -518,18 +501,23 @@
                                     if ($('#inputState').val() != "0" && $('#file-upload123').get(0).files.length !== 0) {
                                         $('#add-course-form').submit();
                                     } else {
-                                        $('#addmess').text(mess)
+                                        showMessage('failed', mess, false);
                                     }
                                 }
 
-                                function changeInfoModalEdit(courseId, courseName, courseImage, price, description, categoryId, status) {
-                                    $('#course-id').val(courseId)
-                                    $('#course-name').val(courseName)
-                                    $('#course-price').val(price)
-                                    $("#playlist--img2").attr("src", courseImage);
-                                    editor2.setData(description);
-                                    $('#course-status').prop('checked', status);
-                                    $('#course-category').val(categoryId)
+                                function changeInfoModalEdit(courseId) {
+                                    $.get("/BeDev/expert/CourseInfo?courseId=" + courseId, (data) => {
+                                        data = JSON.parse(data);
+                                        console.log(data);
+                                        $('#course-id').val(courseId);
+                                        $('#course-name').val(data.courseName);
+                                        $('#course-price').val(data.money);
+                                        $("#playlist--img2").attr("src", data.courseImage);
+                                        editor2.setData(data.description);
+                                        $('#course-status').prop('checked', data.status);
+                                        $('#course-category').val(data.category.categoryID)
+                                    })
+
                                 }
 
                                 function changeInfoModalDelete(courseId, courseName) {
@@ -568,52 +556,37 @@
                                     });
                                 }
 
-                                function openAddCourseFailedAlert() {
-
-                                    $('#addCourseSuccessAlert').hide();
-                                    $('#addCourseFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#addCourseFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openAddCourseSuccessAlert() {
-
-                                    $('#addCourseFailedAlert').hide();
-                                    $('#addCourseSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#addCourseSuccessAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openEditCourseFailedAlert() {
-
-                                    $('#editSuccessAlert').hide();
-                                    $('#editFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#editFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openEditCourseSuccessAlert() {
-
-                                    $('#editFailedAlert').hide();
-                                    $('#editSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#editSuccessAlert').hide();
-                                    }, 2500);
-                                }
                                 $('#file-upload123').change(() => {
-                                    var img = $('#file-upload123')["0"].files["0"]
+                                    var img = $('#file-upload123')["0"].files["0"];
+                                    if (img.name.split('.').pop() != 'png' && img.name.split('.').pop() != 'jpg' && img.name.split('.').pop() != 'jpeg') {
+                                        showMessage('failed', 'File type is not valid. Only allow jpg, jpeg and png file', false);
+                                        $("#file-upload123").val('');
+                                        return;
+                                    }
+                                    if (img.size > 1024 * 1024 * 20) {
+                                        showMessage('failed', 'File size is not valid. It must be equal or less than 20MB.', false);
+                                        $("#file-upload123").val('');
+                                        return;
+                                    }
                                     $("#playlist--img").attr("src", URL.createObjectURL(img));
                                 });
                                 $('#file-upload123edit').change(() => {
-                                    var img = $('#file-upload123edit')["0"].files["0"]
+                                    var img = $('#file-upload123edit')["0"].files["0"];
+                                    if (img.name.split('.').pop() != 'png' && img.name.split('.').pop() != 'jpg' && img.name.split('.').pop() != 'jpeg') {
+                                        showMessage('failed', 'File type is not valid. Only allow jpg, jpeg and png file', false);
+                                        $("#file-upload123edit").val('');
+                                        return;
+                                    }
+                                    if (img.size > 1024 * 1024 * 20) {
+                                        showMessage('failed', 'File size is not valid. It must be equal or less than 20MB.', false);
+                                        $("#file-upload123edit").val('');
+                                        return;
+                                    }
                                     $("#playlist--img2").attr("src", URL.createObjectURL(img));
                                 });
                                 $(document).ready(function () {
-            ${addCourse == null ? "" : addCourse == "success" ? "openAddCourseSuccessAlert()" : addCourse == "failed" ? "openAddCourseFailedAlert()" : ""}
-            ${editCourse == null ? "" : editCourse == "success" ? "openEditCourseSuccessAlert()" : editCourse == "failed" ? "openEditCourseFailedAlert()" : ""}
+            ${addCourse == null ? "" : addCourse == "success" ? "showMessage('success', 'Add new course successfully.', false)" : addCourse == "failed" ? "showMessage('success', 'Add new course failed.', false)" : ""}
+            ${editCourse == null ? "" : editCourse == "success" ? "showMessage('success', 'Edit course successfully.', false)" : editCourse == "failed" ? "showMessage('failed', 'Edit course failed.', false)" : ""}
                                 });
         </script>
     </body>

@@ -23,6 +23,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * This method check email is exist or not.
+     *
      * @param email email need to check
      * @return true if email exist. Otherwise return false
      */
@@ -42,7 +43,9 @@ public class AccountDAO extends DBContext {
     }
 
     /**
-     * This method insert a new Account as a student into database base on register information
+     * This method insert a new Account as a student into database base on
+     * register information
+     *
      * @param student contain user information
      * @return true if insert success. Otherwise return false.
      */
@@ -70,6 +73,7 @@ public class AccountDAO extends DBContext {
 
     /**
      * This method check account is exist or not.
+     *
      * @param account
      * @return true if account exist. Otherwise return false.
      */
@@ -127,8 +131,10 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
+
     /**
      * this method is used to check email and password when login..
+     *
      * @param email
      * @param password
      * @return a account if input is valid opposite return null.
@@ -171,8 +177,10 @@ public class AccountDAO extends DBContext {
         }
         return false;
     }
+
     /**
      * This method is used to get student by account ID
+     *
      * @param id
      * @return a student have this id.
      */
@@ -192,8 +200,10 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     /**
      * This method is used to get expert by account id.
+     *
      * @param id of account
      * @return a expert have this id
      */
@@ -213,8 +223,10 @@ public class AccountDAO extends DBContext {
         }
         return null;
     }
+
     /**
      * This method is used to get a admin by account id.
+     *
      * @param id of account.
      * @return a admin have this id
      */
@@ -253,6 +265,60 @@ public class AccountDAO extends DBContext {
         return -1;
     }
 
+    /**
+     *
+     * @return an integer represent for
+     */
+    public int getNumbersOfUser() {
+        try {
+            String sql = "select count(*) from Account\n";
+            PreparedStatement stm = connection.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    /**
+     *
+     * @return an integer represent for
+     */
+    public int getNumbersOfExpert() {
+        try {
+            String sql = "select count(*) from Expert\n";
+            PreparedStatement stm = connection.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+        /**
+     *
+     * @return an integer represent for
+     */
+    public int getNumbersOfStudent() {
+        try {
+            String sql = "select count(*) from Student\n";
+            PreparedStatement stm = connection.prepareCall(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+    
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
         Expert a = accountDAO.getExpertByAccountID(2);

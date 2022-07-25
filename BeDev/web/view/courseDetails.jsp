@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -61,10 +62,10 @@
                     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                         <ol class="breadcrumb align-items-center bg-transparent p-0 mb-0">
                             <li class="breadcrumb-item">
-                                <a href="HomeControl" class="fs-6 text-secondary">Home</a>
+                                <a href="/BeDev/HomeControl" class="fs-6 text-secondary">Home</a>
                             </li>
                             <li class="breadcrumb-item">
-                                <a href="#" class="fs-6 text-secondary">Course</a>
+                                <a href="/BeDev/CourseList" class="fs-6 text-secondary">Course</a>
                             </li>
                             <li class="breadcrumb-item fs-6 text-secondary d-none d-lg-inline-block" aria-current="page">
                             ${course.courseName}
@@ -991,22 +992,45 @@
                                     </div>
                                 </div>
                                 <div class="cart__checkout-process">
-                                    <c:if test="${isEnroll == false || student == null}">
-                                        <form action="EnrollCourse">
-                                            <input name="courseID" value="${course.courseID}" hidden="">
-                                            <input name="lessonID" value="${listChapter.get(0).lessons.get(0).lessonID}" hidden="">
-                                            <button type="submit" class="button button-lg button--primary w-100">
-                                                Enroll
+                                    <c:if test="${isEnroll == false && student == null}">
+                                        <button type="button" class="button button-lg button--primary w-100" onclick="forwardLogin()">
+                                            Enroll
+                                        </button>
+                                    </c:if>
+                                    <c:if test="${isEnroll == false && student != null}">
+                                        <c:if test="${listChapter.size() == 0}">
+                                            <button type="button" class="button button-lg button--primary w-100">
+                                                This course doesn't have any lesson. Comeback later
                                             </button>
-                                        </form>
+                                        </c:if>
+                                        <c:if test="${listChapter.size() > 0}">
+                                            <c:if test="${course.money > 0}">
+                                                <button type="button" class="button button-lg button--primary w-100" data-toggle="modal" data-target="#buyModal">
+                                                    Enroll
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${course.money == 0}">
+                                                <button type="submit" class="button button-lg button--primary w-100" onclick="executePayment(${course.courseID})">
+                                                    Enroll for free
+                                                </button>
+                                            </c:if>
+                                        </c:if>
                                     </c:if>
                                     <c:if test="${isEnroll == true}">
                                         <form action="LessonView">
                                             <input name="courseID" value="${course.courseID}" hidden="">
-                                            <input name="lessonID" value="${listChapter.get(0).lessons.get(0).lessonID}" hidden="">
-                                            <button type="submit" class="button button-lg button--primary w-100">
-                                                Watch
-                                            </button>
+                                            <c:if test="${listChapter.size() > 0}">
+                                                <input name="lessonID" value="${listChapter.get(0).lessons.get(0).lessonID}" hidden="">
+                                                <button type="submit" class="button button-lg button--primary w-100">
+                                                    Watch
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${listChapter.size() == 0}">
+                                                <button type="button" class="button button-lg button--primary w-100">
+                                                    This course doesn't have any lesson. Comeback later
+                                                </button>
+                                            </c:if>
+
                                         </form>
                                     </c:if>
                                 </div>
@@ -1146,5 +1170,37 @@
         </section>
         </c:if>
         <jsp:include page="footer.jsp"></jsp:include>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+            <script>
+                            function executePayment(courseID) {
+                                $.post("/BeDev/EnrollCourse?courseID=" + courseID, (result) => {
+                                    if (result == 'success') {
+                                        showMessage("success", "Payment successfully. Click OK to learn now.", true)
+                                    } else {
+                                        showMessage("Error", result, false);
+                                    }
+                                });
+                            }
+                            function showMessage(status, message, forward) {
+                                swal({
+                                    title: status == "success" ? "Success" : "Error",
+                                    text: message,
+                                    icon: status == "success" ? "success" : "error",
+                                    button: "OK",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                }).then(function () {
+                                    if (forward) {
+                                        window.location.href = "/BeDev/LessonView?courseID=${course.courseID}&lessonID=${listChapter.size() > 0 ? listChapter.get(0).lessons.size() > 0 ? listChapter.get(0).lessons.get(0).lessonID : 0 : 0}";
+                                    }
+                                });
+                            }
+                            
+                            function forwardLogin() {
+                                window.location.href = "/BeDev/SignIn";
+                            }
+        </script>
     </body>
 </html>

@@ -5,12 +5,13 @@
  */
 package dao;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import modal.Category;
@@ -264,11 +265,26 @@ public class CourseDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     /**
-     * This method get list course that a student registered.
-     * @param id
-     * @return list course
+     * This method insert a payment into transaction history by course ID
+     * @param courseID 
+     * @param studentID 
+     * @param amount 
      */
+    public void insertTransctionHistory(int courseID, int studentID, double amount) {
+        try {
+            String sql = "insert into Transaction_History (courseID, studentID, amount) values (?, ?, ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            stm.setInt(2, studentID);
+            stm.setDouble(3, amount);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public List<Course> getCourseByStudentId(int id) {
         try {
             CourseDAO dao = new CourseDAO();
@@ -490,26 +506,6 @@ public class CourseDAO extends DBContext {
         return false;
     }
 
-    /**
-     *
-     * @param cid
-     * @return
-     */
-    public int countNumberOfStudentEnrollByCourseId(int cid) {
-        try {
-            String sql = "select count(studentID) from Enroll where courseID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, cid);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return -1;
-    }
-
     public boolean deleteCourseById(int cid) {
         try {
             String sql = "\n"
@@ -559,6 +555,263 @@ public class CourseDAO extends DBContext {
             System.out.println(e);
         }
         return false;
+    }
+
+    /**
+     *
+     * @param eid
+     * @return
+     */
+    public int countTotalEnrollByExpertId(int eid) {
+        try {
+            String sql = "select count(*)from Course c \n"
+                    + "join Enroll e on c.courseID = e.courseID\n"
+                    + "where c.expertID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public int countTotalEnroll() {
+        try {
+            String sql = "select count(*) from Course c \n"
+                    + "join Enroll e on c.courseID = e.courseID\n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @param eid
+     * @return
+     */
+    public int countTotalStudentEnrollByExpertId(int eid) {
+        try {
+            String sql = "select count(distinct e.studentID) from Course c \n"
+                    + "join Enroll e on c.courseID = e.courseID\n"
+                    + "where c.expertID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @param eid
+     * @return
+     */
+    public double getTotalEarningOfExpertLastMonth(int eid) {
+        try {
+            String sql = " select sum(th.amount) from Course c \n"
+                    + " join Transaction_History th on th.courseID = c.courseID \n"
+                    + " where c.expertID = ? and MONTH(th.time) = ? and YEAR(th.time) = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            stm.setInt(2, LocalDateTime.now().getMonthValue() - 1);
+            stm.setInt(3, LocalDateTime.now().getYear());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getEarningLastMonth() {
+        try {
+            String sql = " select sum(th.amount) from Course c \n"
+                    + " join Transaction_History th on th.courseID = c.courseID \n"
+                    + " where MONTH(th.time) = ? and YEAR(th.time) = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, LocalDateTime.now().getMonthValue() - 1);
+            stm.setInt(2, LocalDateTime.now().getYear());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @param eid
+     * @return
+     */
+    public double getEarningOfExpertTotal(int eid) {
+        try {
+            String sql = " select sum(th.amount) from Course c \n"
+                    + " join Transaction_History th on th.courseID = c.courseID \n"
+                    + " where c.expertID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double getEarningTotal() {
+        try {
+            String sql = " select sum(th.amount) from Course c \n"
+                    + " join Transaction_History th on th.courseID = c.courseID \n";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getDouble(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+
+    /**
+     *
+     * @param eid
+     * @return
+     */
+    public List<Course> getListCourseAnalysisByExpertId(int eid) {
+        List<Course> listCourses = new ArrayList<>();
+        try {
+            String sql = "select c.courseID , c.courseName, count(ll.lessonID) as NumberOfView,\n"
+                    + "	(select count(e.courseID) from Enroll e left join Course cc on e.courseID = cc.courseID where cc.courseID = c.courseID) as NumberOfSold,\n"
+                    + "	(select sum(th.amount) from Transaction_History th where th.courseID = c.courseID) as TotalEarning,\n"
+                    + "	(select AVG(r.star) from Course cc left join Rate r on cc.courseID = r.courseID where cc.courseID = c.courseID ) as Rate,\n"
+                    + "	(select count(r.rateID) from Course cc left join Rate r on cc.courseID = r.courseID where cc.courseID = c.courseID ) as NumberOfRating\n"
+                    + "from Course c left join Chapter ch on c.courseID = ch.courseID\n"
+                    + "left join Lesson l on l.chapterID = ch.chapterID\n"
+                    + "left join Lesson_Learned ll on ll.lessonID = l.lessonID\n"
+                    + "where  c.expertID = ?\n"
+                    + "group by c.courseID , c.courseName, c.price";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                listCourses.add(new Course(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5) == null ? 0 : rs.getDouble(5), rs.getString(6) != null ? 0 : rs.getInt(6), rs.getInt(7)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listCourses;
+    }
+
+    /**
+     * This method get course by course ID
+     *
+     * @param courseID
+     * @return a course
+     */
+    public Course getCourseById(int courseID) {
+        try {
+            String sql = " select c.courseID, c.courseName, c.description, c.courseImage, c.price, c.status, cc.categoryID\n"
+                    + "  from Course c join Course_Category cc on cc.courseID = c.courseID\n"
+                    + "  where c.courseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Course(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getDouble(5), rs.getBoolean(6), new Category(rs.getInt(7)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param expertId
+     * @return
+     */
+    public double[] getEarningOverviewThisYearOfExpert(int expertId) {
+        double[] enrollOverview = new double[LocalDate.now().getMonthValue()];
+        try {
+            String sql = "select Month(th.time), sum(th.amount) \n"
+                    + "from Transaction_History th join Course c on c.courseID = th.courseID\n"
+                    + "where c.expertID = ? and Year(th.time) = ? and Month(th.time) = ?\n"
+                    + "group by Month(th.time)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, expertId);
+            stm.setInt(2, LocalDate.now().getYear());
+            for (int i = 1; i <= LocalDate.now().getMonthValue(); i++) {
+                stm.setInt(3, i);
+                ResultSet rs = stm.executeQuery();
+                while (rs.next()) {
+                    enrollOverview[i - 1] = rs.getDouble(2);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return enrollOverview;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public double[] getEarningOverviewThisYear() {
+        double[] enrollOverview = new double[LocalDate.now().getMonthValue()];
+        try {
+            String sql = "select Month(th.time), sum(th.amount) \n"
+                    + "from Transaction_History th join Course c on c.courseID = th.courseID\n"
+                    + "where Year(th.time) = ? and Month(th.time) = ?\n"
+                    + "group by Month(th.time)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, LocalDate.now().getYear());
+            for (int i = 1; i <= LocalDate.now().getMonthValue(); i++) {
+                stm.setInt(2, i);
+                ResultSet rs = stm.executeQuery();
+                while (rs.next()) {
+                    enrollOverview[i - 1] = rs.getDouble(2);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return enrollOverview;
     }
 
     public static void main(String[] args) {

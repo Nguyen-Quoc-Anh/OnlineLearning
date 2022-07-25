@@ -7,7 +7,6 @@ package controller.CourseManagement;
 
 import dao.CourseDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -19,14 +18,13 @@ import javax.servlet.http.Part;
 import modal.Account;
 import modal.Category;
 import modal.Course;
-import modal.Expert;
 import util.FileProcessor;
 
 /**
  *
  * @author ACER
  */
-@WebServlet(name = "EditCourse", urlPatterns = {"/manage/editcourse"})
+@WebServlet(name = "EditCourse", urlPatterns = {"/expert/editcourse"})
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
         maxFileSize = 1024 * 1024 * 10, // 10 MB
@@ -51,14 +49,16 @@ public class EditCourse extends HttpServlet {
         HttpSession session = request.getSession();
         FileProcessor fileProcessor = new FileProcessor();
         CourseDAO courseDAO = new CourseDAO();
-        String courseId = request.getParameter("courseId");
-        Course course = courseDAO.getCourseById(request.getParameter("courseId"));
-        if (course == null) {
+        int courseId;
+        try {
+            courseId = Integer.parseInt(request.getParameter("courseId"));
+        } catch (Exception ex) {
             session.setAttribute("editcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
-//        Account account = (Account) session.getAttribute("account");
+        Course course = courseDAO.getCourseById(courseId);
+        
         String name = request.getParameter("courseName");
         String desctiption = request.getParameter("description");
         int categoryId;
@@ -68,7 +68,7 @@ public class EditCourse extends HttpServlet {
             price = Double.parseDouble(request.getParameter("price"));
         } catch (Exception ex) {
             session.setAttribute("editcourse", "failed");
-            response.sendRedirect("/BeDev/manage/course");
+            response.sendRedirect("/BeDev/expert/course");
             return;
         }
         Part image = request.getPart("file");
@@ -84,15 +84,14 @@ public class EditCourse extends HttpServlet {
         course.setMoney(price);
         course.setStatus(isActive);
         course.setCategory(new Category(categoryId));
-//        course.setExpert(new Expert(account.getAccountID()));
-//        course.setExpert(new Expert(5));
+
         boolean success = courseDAO.updateCourse(course);
         if (success) {
             session.setAttribute("editcourse", "success");
         } else {
             session.setAttribute("editcourse", "failed");
         }
-        response.sendRedirect("/BeDev/manage/course");
+        response.sendRedirect("/BeDev/expert/course");
     }
 
     /**

@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.CourseManagement;
+package controller.dashboard;
 
-import dao.CategoryDAO;
 import dao.CourseDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +15,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
-import modal.Category;
 import modal.Course;
 
 /**
  *
  * @author ACER
  */
-public class CourseManagement extends HttpServlet {
+public class ExpertDashboard extends HttpServlet {
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -37,19 +36,20 @@ public class CourseManagement extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO courseDAO = new CourseDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        int expertId = account.getAccountID();
-        List<Course> coursesList = courseDAO.getCoursesByExpertId(expertId);
-        List<Category> categoryList = categoryDAO.listCategory();
-        request.setAttribute("coursesList", coursesList);
-        request.setAttribute("categoryList", categoryList);
-        request.setAttribute("addCourse", session.getAttribute("addcourse"));
-        request.setAttribute("editCourse", session.getAttribute("editcourse"));
-        session.removeAttribute("addcourse");
-        session.removeAttribute("editcourse");
-        request.getRequestDispatcher("/view/courseManagement.jsp").forward(request, response);
+        int totalEnroll = courseDAO.countTotalEnrollByExpertId(account.getAccountID());
+        int totalStudentEnroll = courseDAO.countTotalStudentEnrollByExpertId(account.getAccountID());
+        double totalEarningOfExpertLastMonth = courseDAO.getTotalEarningOfExpertLastMonth(account.getAccountID());
+        double totalEarningOfExpert = courseDAO.getEarningOfExpertTotal(account.getAccountID());
+        List<Course> listCourses = courseDAO.getListCourseAnalysisByExpertId(account.getAccountID());
+        request.setAttribute("totalEnroll", totalEnroll);
+        request.setAttribute("totalStudentEnroll", totalStudentEnroll);
+        request.setAttribute("totalEarningOfExpertLastMonth", totalEarningOfExpertLastMonth);
+        request.setAttribute("totalEarningOfExpertThisYear", totalEarningOfExpert);
+        request.setAttribute("listCourses", listCourses);
+
+        request.getRequestDispatcher("/view/expertDashboard.jsp").forward(request, response);
     }
 
     /**

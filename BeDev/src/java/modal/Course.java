@@ -26,7 +26,9 @@ public class Course {
     private int averageStar;
     private float percentOfComplete;
     private Category category;
-    
+    private int numberOfViews;
+    private int numberOfRating;
+    private double totalEarn;
     private int totalLession;
     private int totalLearned;
 
@@ -123,6 +125,60 @@ public class Course {
         this.releasedDate = releasedDate;
         this.status = status;
         this.category = category;
+    }
+
+    public Course(int courseID, String courseName, double money, int numberOfViews, int numberRegister, int averageStar, int numberOfRating) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.money = money;
+        this.numberOfViews = numberOfViews;
+        this.numberRegister = numberRegister;
+        this.averageStar = averageStar;
+        this.numberOfRating = numberOfRating;
+    }
+
+    public Course(int courseID, String courseName, String description, String courseImage, double money, boolean status, Category category) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.money = money;
+        this.status = status;
+        this.category = category;
+    }
+
+    public Course(int courseID, String courseName, int numberOfViews, int numberRegister, double totalEarn, int averageStar, int numberOfRating) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.numberRegister = numberRegister;
+        this.averageStar = averageStar;
+        this.numberOfViews = numberOfViews;
+        this.numberOfRating = numberOfRating;
+        this.totalEarn = totalEarn;
+    }
+
+    public double getTotalEarn() {
+        return totalEarn;
+    }
+
+    public void setTotalEarn(double totalEarn) {
+        this.totalEarn = totalEarn;
+    }
+
+    public int getNumberOfViews() {
+        return numberOfViews;
+    }
+
+    public void setNumberOfViews(int numberOfViews) {
+        this.numberOfViews = numberOfViews;
+    }
+
+    public int getNumberOfRating() {
+        return numberOfRating;
+    }
+
+    public void setNumberOfRating(int numberOfRating) {
+        this.numberOfRating = numberOfRating;
     }
 
     public Category getCategory() {

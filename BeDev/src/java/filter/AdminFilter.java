@@ -5,8 +5,6 @@
  */
 package filter;
 
-import dao.CourseDAO;
-import dao.QuizDAO;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -17,17 +15,18 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Account;
-import modal.Quiz;
 
 /**
  *
  * @author ACER
  */
-public class ExpertFilter implements Filter {
+@WebFilter(filterName = "AdminFilter", urlPatterns = {"/admin/*"})
+public class AdminFilter implements Filter {
 
     private static final boolean debug = true;
 
@@ -36,13 +35,13 @@ public class ExpertFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
 
-    public ExpertFilter() {
+    public AdminFilter() {
     }
 
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ExpertFilter:DoBeforeProcessing");
+            log("AdminFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -70,7 +69,7 @@ public class ExpertFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("ExpertFilter:DoAfterProcessing");
+            log("AdminFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -110,7 +109,7 @@ public class ExpertFilter implements Filter {
         Account account;
         try {
             account = (Account) session.getAttribute("account");
-            if (account.getRole().getRoleID() != 2) {
+            if (account.getRole().getRoleID() != 1) {
                 throw new Exception();
             }
             chain.doFilter(request, response);
@@ -148,7 +147,7 @@ public class ExpertFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {
-                log("ExpertFilter:Initializing filter");
+                log("AdminFilter:Initializing filter");
             }
         }
     }
@@ -159,9 +158,9 @@ public class ExpertFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("ExpertFilter()");
+            return ("AdminFilter()");
         }
-        StringBuffer sb = new StringBuffer("ExpertFilter(");
+        StringBuffer sb = new StringBuffer("AdminFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
