@@ -43,83 +43,89 @@ public class CourseDetails extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String courseID = request.getParameter("courseID");
-        HttpSession session = request.getSession();
-        session.setAttribute("courseID", courseID);
-        Student student = (Student) session.getAttribute("student");
-        //Get a course by course ID from courseDAO
-        CourseDAO courseDAO = new CourseDAO();
-        Course course = courseDAO.getCourseById(courseID);
-        request.setAttribute("course", course);
-        //Get list category by course ID from categoryDAO
-        CategoryDAO categoryDAO = new CategoryDAO();
-        List<Category> listCategory = categoryDAO.listCategoryByCourse(courseID);
-        request.setAttribute("categoryOfCourse", listCategory);
-        //Get list chapter of course by course ID from chapterDAO
-        ChapterDAO chapterDAO = new ChapterDAO();
-        List<Chapter> listChapter = chapterDAO.listChapterByCourse(courseID);
-        request.setAttribute("listChapter", listChapter);
-        //Get list rate of course by course ID from rateDAO
-        RateDAO rateDAO = new RateDAO();
-        List<Rate> listRate = rateDAO.listRateByCourse(courseID);
-        request.setAttribute("listRate", listRate);
-        request.setAttribute("courseID", courseID);
-        //Get percent of star one, two, three, four, five and average star 
-        if (!listRate.isEmpty()) {
-            int sumStar = 0;
-            int starOne = 0;
-            int starTwo = 0;
-            int starThree = 0;
-            int starFour = 0;
-            for (Rate rate : listRate) {
-                sumStar += rate.getStar();
-                switch (rate.getStar()) {
-                    case 1:
-                        starOne += 1;
-                        break;
-                    case 2:
-                        starTwo += 1;
-                        break;
-                    case 3:
-                        starThree += 1;
-                        break;
-                    case 4:
-                        starFour += 1;
-                        break;
-                    default:
-                        break;
+        try {
+            String courseID = request.getParameter("courseID");
+            HttpSession session = request.getSession();
+            session.setAttribute("courseID", courseID);
+            Student student = (Student) session.getAttribute("student");
+            //Get a course by course ID from courseDAO
+            CourseDAO courseDAO = new CourseDAO();
+            Course course = courseDAO.getCourseById(courseID);
+            request.setAttribute("course", course);
+            //Get list category by course ID from categoryDAO
+            CategoryDAO categoryDAO = new CategoryDAO();
+            List<Category> listCategory = categoryDAO.listCategoryByCourse(courseID);
+            request.setAttribute("categoryOfCourse", listCategory);
+            //Get list chapter of course by course ID from chapterDAO
+            ChapterDAO chapterDAO = new ChapterDAO();
+            List<Chapter> listChapter = chapterDAO.listChapterByCourse(courseID);
+            request.setAttribute("listChapter", listChapter);
+            //Get list rate of course by course ID from rateDAO
+            RateDAO rateDAO = new RateDAO();
+            List<Rate> listRate = rateDAO.listRateByCourse(courseID);
+            request.setAttribute("listRate", listRate);
+            request.setAttribute("courseID", courseID);
+            //Get percent of star one, two, three, four, five and average star 
+            if (!listRate.isEmpty()) {
+                int sumStar = 0;
+                int starOne = 0;
+                int starTwo = 0;
+                int starThree = 0;
+                int starFour = 0;
+                for (Rate rate : listRate) {
+                    sumStar += rate.getStar();
+                    switch (rate.getStar()) {
+                        case 1:
+                            starOne += 1;
+                            break;
+                        case 2:
+                            starTwo += 1;
+                            break;
+                        case 3:
+                            starThree += 1;
+                            break;
+                        case 4:
+                            starFour += 1;
+                            break;
+                        default:
+                            break;
+                    }
                 }
+                double percentStarOne = ((double) starOne / listRate.size()) * 100;
+                double percentStarTwo = ((double) starTwo / listRate.size()) * 100;
+                double percentStarThree = ((double) starThree / listRate.size()) * 100;
+                double percentStarFour = ((double) starFour / listRate.size()) * 100;
+                double percentStarFive = 100 - percentStarOne - percentStarTwo - percentStarThree - percentStarFour;
+                request.setAttribute("avgStar", sumStar / listRate.size());
+                request.setAttribute("percentStarOne", String.format("%.2f", percentStarOne));
+                request.setAttribute("percentStarTwo", String.format("%.2f", percentStarTwo));
+                request.setAttribute("percentStarThree", String.format("%.2f", percentStarThree));
+                request.setAttribute("percentStarFour", String.format("%.2f", percentStarFour));
+                request.setAttribute("percentStarFive", String.format("%.2f", percentStarFive));
+            } else {
+                request.setAttribute("avgStar", 0);
+                request.setAttribute("percentStarOne", 0);
+                request.setAttribute("percentStarTwo", 0);
+                request.setAttribute("percentStarThree", 0);
+                request.setAttribute("percentStarFour", 0);
+                request.setAttribute("percentStarFive", 0);
             }
-            double percentStarOne = ((double) starOne / listRate.size()) * 100;
-            double percentStarTwo = ((double) starTwo / listRate.size()) * 100;
-            double percentStarThree = ((double) starThree / listRate.size()) * 100;
-            double percentStarFour = ((double) starFour / listRate.size()) * 100;
-            double percentStarFive = 100 - percentStarOne - percentStarTwo - percentStarThree - percentStarFour;
-            request.setAttribute("avgStar", sumStar / listRate.size());
-            request.setAttribute("percentStarOne", String.format("%.2f", percentStarOne));
-            request.setAttribute("percentStarTwo", String.format("%.2f", percentStarTwo));
-            request.setAttribute("percentStarThree", String.format("%.2f", percentStarThree));
-            request.setAttribute("percentStarFour", String.format("%.2f", percentStarFour));
-            request.setAttribute("percentStarFive", String.format("%.2f", percentStarFive));
-        } else {
-            request.setAttribute("avgStar", 0);
-            request.setAttribute("percentStarOne", 0);
-            request.setAttribute("percentStarTwo", 0);
-            request.setAttribute("percentStarThree", 0);
-            request.setAttribute("percentStarFour", 0);
-            request.setAttribute("percentStarFive", 0);
-        }
-        //Check student enroll a course
-        EnrollDAO enrollDAO = new EnrollDAO();
-        if (student != null) {
-            boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());
-            request.setAttribute("isEnroll", isEnroll);
-            if (isEnroll) {
-                request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
+            //Check student enroll a course
+            EnrollDAO enrollDAO = new EnrollDAO();
+            if (student != null) {
+                boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());
+                request.setAttribute("isEnroll", isEnroll);
+                if (isEnroll) {
+                    request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
+                }
+            } else {
+                request.setAttribute("isEnroll", false);
             }
-        } else{
-            request.setAttribute("isEnroll", false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println(e);
         }
+
         //Get list course related with a course
         //List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
         //request.setAttribute("relatedCourse", relatedCourse);

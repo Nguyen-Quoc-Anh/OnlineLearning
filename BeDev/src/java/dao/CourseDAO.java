@@ -264,6 +264,25 @@ public class CourseDAO extends DBContext {
         }
     }
 
+    /**
+     * This method insert a payment into transaction history by course ID
+     * @param courseID 
+     * @param studentID 
+     * @param amount 
+     */
+    public void insertTransctionHistory(int courseID, int studentID, double amount) {
+        try {
+            String sql = "insert into Transaction_History (courseID, studentID, amount) values (?, ?, ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, courseID);
+            stm.setInt(2, studentID);
+            stm.setDouble(3, amount);
+            stm.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public List<Course> getCourseByStudentId(int id) {
         try {
             CourseDAO dao = new CourseDAO();

@@ -59,7 +59,6 @@ public class EditCourse extends HttpServlet {
         }
         Course course = courseDAO.getCourseById(courseId);
         
-//        Account account = (Account) session.getAttribute("account");
         String name = request.getParameter("courseName");
         String desctiption = request.getParameter("description");
         int categoryId;
@@ -85,8 +84,7 @@ public class EditCourse extends HttpServlet {
         course.setMoney(price);
         course.setStatus(isActive);
         course.setCategory(new Category(categoryId));
-//        course.setExpert(new Expert(account.getAccountID()));
-//        course.setExpert(new Expert(5));
+
         boolean success = courseDAO.updateCourse(course);
         if (success) {
             session.setAttribute("editcourse", "success");

@@ -177,6 +177,7 @@ public class EnrollDAO extends DBContext {
         return enrollOverview;
     }
 
+    
     public static void main(String[] args) {
         EnrollDAO enrollDAO = new EnrollDAO();
     }

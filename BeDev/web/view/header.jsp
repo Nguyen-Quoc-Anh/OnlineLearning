@@ -76,7 +76,11 @@
                             <a class="nav-link" aria-current="page" href="/BeDev/admin/AdminDashboard">Admin Dashboard</a>
                         </li>
                     </c:if>
-
+                    <c:if test="${sessionScope.account!=null && sessionScope.expert!=null}">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/BeDev/expert/ExpertDashboard">Expert Dashboard</a>
+                        </li>
+                    </c:if>
                 </ul>
                 <div class="d-flex align-items-center justify-content-between rightContent">
                     <form class="header__Search-form" id="searchForm">

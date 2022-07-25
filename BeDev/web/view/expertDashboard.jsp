@@ -77,22 +77,12 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link collapsed" href="../manage/course" data-toggle="collapse" data-target="#collapseCourse"
-                       aria-expanded="true" aria-controls="collapseCourse">
-                        <i class="fas fa-fw fa-cog"></i>
-                        <span>My Course</span>
-                    </a>
-                    <div id="collapseCourse" class="collapse" aria-labelledby="headingCourse" data-parent="#accordionSidebar">
-                        <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">My Course</h6>
-                            <a class="collapse-item" href="MangerUser">Create Question</a>
-                            <a class="collapse-item" href="ManageQuestion">Edit Questuon</a>
-                        </div>
-                    </div>
+                    <a class="nav-link" href="/BeDev/expert/course">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Course Manage</span></a>
                 </li>
-
                 <li class="nav-item">
-                    <a class="nav-link" href="/expert/ExpertDashboard">
+                    <a class="nav-link" href="/BeDev/expert/ExpertDashboard">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Dashboard</span></a>
                 </li>

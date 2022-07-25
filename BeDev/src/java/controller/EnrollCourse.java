@@ -5,6 +5,7 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import dao.CourseDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Account;
+import modal.Course;
 import modal.Student;
 
 /**
@@ -22,50 +25,6 @@ import modal.Student;
  */
 @WebServlet(name = "EnrollCourse", urlPatterns = {"/EnrollCourse"})
 public class EnrollCourse extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String courseID = request.getParameter("courseID");
-        String lessonID = request.getParameter("lessonID");
-        HttpSession session = request.getSession();
-        Student student = (Student) session.getAttribute("student");
-        if (courseID != null && student != null) {
-            CourseDAO courseDAO = new CourseDAO();
-            //Student enroll a course
-            courseDAO.enrollCourse(courseID, student.getAccount().getAccountID());
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("lessonID", lessonID);
-            request.getRequestDispatcher("LessonView").forward(request, response);
-        } else {
-            response.sendRedirect("SignIn");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -77,7 +36,24 @@ public class EnrollCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            HttpSession session = request.getSession();
+            int courseID = Integer.parseInt(request.getParameter("courseID"));
+            CourseDAO courseDAO = new CourseDAO();
+            AccountDAO accountDAO = new AccountDAO();
+            Course course = courseDAO.getCourseById(courseID);
+            Account account = (Account) session.getAttribute("account");
+            Student student = accountDAO.getStudentByAccountID(account.getAccountID());
+            if (course.getMoney() > student.getCashInWallet()) {
+                response.getWriter().write("Your cash is not enough to execute payment.");
+                return;
+            }
+            courseDAO.enrollCourse(Integer.toString(courseID), student.getAccount().getAccountID());
+            courseDAO.insertTransctionHistory(courseID, account.getAccountID(), course.getMoney());
+            response.getWriter().write("success");
+        } catch (Exception e) {
+            response.getWriter().write("Cannot enroll you to course.");
+        }
     }
 
     /**
