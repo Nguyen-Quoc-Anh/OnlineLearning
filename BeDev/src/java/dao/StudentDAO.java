@@ -150,6 +150,7 @@ public class StudentDAO extends DBContext {
             System.out.println(e);
         }
         return list;
+    }
     public boolean addMoney(double money, int studentID) {
         try {
             String sql = "Update Student set cashInWallet=cashInWallet+?\n"
