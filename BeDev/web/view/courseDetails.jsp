@@ -1084,7 +1084,7 @@
             </div>
         </section>
         <!-- Event Info Ends Here -->
-
+        <c:if test="${relatedCourse.size() > 0}">
         <section class="section new-course-feature section--bg-offwhite-five">
             <div class="container">
                 <div class="row justify-content-center">
@@ -1141,6 +1141,7 @@
                 </div>
             </div>
         </section>
+        </c:if>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

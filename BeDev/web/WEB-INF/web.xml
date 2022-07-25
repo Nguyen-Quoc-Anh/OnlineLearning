@@ -4,6 +4,14 @@
         <filter-name>QuizFilter</filter-name>
         <filter-class>filter.QuizFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>ExpertFilter</filter-name>
+        <filter-class>filter.ExpertFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ExpertFilter</filter-name>
+        <url-pattern>/manage/course</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>QuizFilter</filter-name>
         <url-pattern>/QuizHandle</url-pattern>
@@ -28,9 +36,33 @@
         <servlet-name>HomeControl</servlet-name>
         <servlet-class>controller.HomeControl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourseManagement</servlet-name>
+        <servlet-class>controller.CourseManagement.CourseManagement</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeCourseStatus</servlet-name>
+        <servlet-class>controller.CourseManagement.ChangeCourseStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewCourse</servlet-name>
+        <servlet-class>controller.CourseManagement.AddNewCourse</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeControl</servlet-name>
         <url-pattern>/HomeControl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourseManagement</servlet-name>
+        <url-pattern>/manage/course</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeCourseStatus</servlet-name>
+        <url-pattern>/manage/changecoursestatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewCourse</servlet-name>
+        <url-pattern>/manage/addnewcourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

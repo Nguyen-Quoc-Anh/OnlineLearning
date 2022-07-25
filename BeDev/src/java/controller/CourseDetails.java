@@ -45,6 +45,7 @@ public class CourseDetails extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
+        session.setAttribute("courseID", courseID);
         Student student = (Student) session.getAttribute("student");
         //Get a course by course ID from courseDAO
         CourseDAO courseDAO = new CourseDAO();
