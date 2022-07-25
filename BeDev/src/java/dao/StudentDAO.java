@@ -9,6 +9,9 @@ import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import modal.Account;
 import modal.Student;
 
@@ -56,6 +59,70 @@ public class StudentDAO extends DBContext {
         } catch (SQLException e) {
             System.out.println(e);
         }
+    }
+
+    public List<Student> listStudents() {
+        List<Student> list = new ArrayList<>();
+        try {
+            String sql = "select studentID, name, cashInWallet, imageURL from Student";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new Student(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    public boolean insertStudent(Student student, String email, String password) {
+        try {
+            String sql = "insert into Account values ((select top 1 accountID + 1 from Account order by accountID desc) ,?, ?, 1, 3, 1) "
+                    + "insert into Student values ((select top 1 accountID from Account order by accountID desc) ,?, ?, ?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, email);
+            stm.setString(2, password);
+            stm.setString(3, student.getName());
+            stm.setDouble(4, student.getCashInWallet());
+            stm.setString(5, student.getImageURL());
+            stm.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean editStudent(Student student) {
+        try {
+            String sql = "update Student set name = ?, cashInWallet = ?, imageURL = ? where studentID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, student.getName());
+            stm.setDouble(2, student.getCashInWallet());
+            stm.setString(3, student.getImageURL());
+            stm.setInt(4, student.getStudentID());
+            stm.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public Student getStudentById(String studentId) {
+        try {
+            String sql = "select studentID, name, cashInWallet, imageURL from Student where studentID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, studentId);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Student(rs.getInt(1), rs.getString(2), rs.getDouble(3), rs.getString(4));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
     }
     
     public static void main(String[] args) {

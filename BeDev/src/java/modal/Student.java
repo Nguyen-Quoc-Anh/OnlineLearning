@@ -10,6 +10,7 @@ package modal;
  * @author ACER
  */
 public class Student {
+    private int studentID;
     private Account account;
     private String name;
     private double cashInWallet;
@@ -18,6 +19,13 @@ public class Student {
     public Student() {
     }
 
+    public Student(int studentID, String name, double cashInWallet, String imageURL) {
+        this.studentID = studentID;
+        this.name = name;
+        this.cashInWallet = cashInWallet;
+        this.imageURL = imageURL;
+    }
+    
     public Student(Account account, String name, double cashInWallet, String imageURL) {
         this.account = account;
         this.name = name;
@@ -29,6 +37,14 @@ public class Student {
         this.account = account;
         this.name = name;
         this.imageURL = imageURL;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
     public Account getAccount() {
