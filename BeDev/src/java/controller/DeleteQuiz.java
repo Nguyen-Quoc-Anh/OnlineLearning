@@ -10,7 +10,10 @@
  */
 package controller;
 
-import dao.RateDAO;
+import dao.ChapterDAO;
+import dao.CourseDAO;
+import dao.QuestionDAO;
+import dao.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,14 +22,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Student;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "RateCourse", urlPatterns = {"/RateCourse"})
-public class RateCourse extends HttpServlet {
+@WebServlet(name = "DeleteQuiz", urlPatterns = {"/DeleteQuiz"})
+public class DeleteQuiz extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,29 +42,29 @@ public class RateCourse extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+        int quizId = Integer.parseInt(request.getParameter("quizId"));
+        QuizDAO dao = new QuizDAO();
         HttpSession session = request.getSession();
-        int courseID = Integer.parseInt(session.getAttribute("courseID").toString());
-        if (request.getParameter("rate")==null) {//if dont choose rate then do nothing
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-            return;
+        String currentURL =session.getAttribute("currentURL").toString();
+        if (dao.deleteQuiz(quizId)) {
+            response.sendRedirect(currentURL);
+        }else{
+            response.sendRedirect("Error");
         }
-        int star  = Integer.parseInt(request.getParameter("rate"));//get number of star
-        String contentRate = request.getParameter("contentRate");
-        
-        // get content of rate
-        Student student = (Student) session.getAttribute("student");
-        int studentId = student.getAccount().getAccountID();
-        RateDAO rateDAO = new RateDAO();
-        if (rateDAO.checkRated(studentId, courseID)) {//if rated then update this rate
-            rateDAO.updateRate(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-        }else{// if haven't rate then add rate
-            rateDAO.rateCourse(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
+    }
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int quizId = Integer.parseInt(request.getParameter("quizId"));
+        QuizDAO dao = new QuizDAO();
+        HttpSession session = request.getSession();
+        String currentURL =session.getAttribute("currentURL").toString();
+        if (dao.deleteQuiz(quizId)) {
+            response.getWriter().write("success");
+        }else{
+            response.getWriter().write("Error, cannot delete course");
         }
         
-       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -91,6 +93,7 @@ public class RateCourse extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         processRequest(request, response);
     }
 

@@ -153,6 +153,19 @@ public class QuizRecordDAO extends DBContext {
         }
         return null;
     }
+    public boolean checkQuizRecordExist(int quizID){
+        try {
+            String sql ="select * from Quiz_record q where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
     
     public static void main(String[] args) {
         QuizRecordDAO d = new QuizRecordDAO();

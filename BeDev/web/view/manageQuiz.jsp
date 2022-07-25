@@ -1,7 +1,7 @@
 <%-- 
-    Document   : manageQuestions
-    Created on : Jul 17, 2022, 1:13:50 PM
-    Author     : admin
+    Document   : manageQuiz
+    Created on : Jul 19, 2022, 10:45:51 PM
+    Author     : ADMIN
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,24 +10,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quản lí</title>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-        <!-- Custom fonts for this template -->
-        <link href="../BeDev/view/dist/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-        <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
-
-        <!-- Custom styles for this template -->
-        <link href="../BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
-
-        <!-- Custom styles for this page -->
-        <link href="../BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <title>JSP Page</title>
+        <%@include file="//view/adminLink/adminHeader.jsp" %>
     </head>
+
     <body id="page-top">
 
         <!-- Page Wrapper -->
@@ -116,12 +102,10 @@
                                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                      aria-labelledby="userDropdown">                             
                                     <div class="dropdown-divider"></div>
-                                    <!-- Dropdown - User Information 
                                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                         Logout
                                     </a>
-                                    -->
                                 </div>
                             </li>
                         </ul>
@@ -132,75 +116,48 @@
                     <div class="container-fluid">
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">List question of Quiz #${quiz.getQuizID()} :  ${quiz.getQuizName()}</h6>
+                            <div class="card-header py-3 row">
+                                <h6 class="m-0 font-weight-bold text-primary col-md-8">List Quiz of Chapter: ${chapter.chapterName} </h6>
+                                <h6 class="col-md-4"><a class="btn btn-primary" href="AddNewQuiz?chapterId=${chapter.chapterID}">Add quiz for this chapter</a></h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Question ID</th>
-                                                <th>Content</th>
-                                                <th>Explanation</th>
+                                                <th>QuizID</th>
+                                                <th>QuizName</th>
+                                                <th>PassRate</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach var="ques" items="${listQuestion}">
+                                            <c:forEach items="${listQuiz}" var="q">
                                                 <tr>
-                                                    <td>${ques.getQuestionID()}</td>
-                                                    <td>${ques.getContent()}</td>
-                                                    <td>${ques.getExplanation() != "" ? ques.getExplanation() : ""}</td>
-                                                    <td>${ques.isStatus()==true ? "<span class=\"badge badge-success\">Active</span>" : "<span class=\"badge badge-danger\">Inactive</span>"}</td>
+                                                    <td>${q.quizID}</td>
+                                                    <td>${q.quizName}</td>
+                                                    <td>${q.passRate} %</td>
+                                                    <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${q.isStatus()}, '${q.quizID}', '${q.quizName}')">${q.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                     <td>
-                                                        <c:if test="${ques.isStatus()==true}">
-                                                            <a href="" data-toggle="modal" data-target="#logoutModal" onclick="changeStatus(${ques.isStatus()},${qid},${ques.getQuestionID()})">Inactive</a>                                                                          
+                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>&emsp;
+                                                        <a href="ManageQuestion">Manage question</a>
+                                                        &emsp;
+                                                        <c:if test="${!q.checkQuizrecord}">
+                                                            
+                                                            <a onclick="changeInfoModalDelete('${q.quizID}', '${q.quizName}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
                                                         </c:if>
-                                                        <c:if test="${ques.isStatus()==false}">
-                                                            <a href="" data-toggle="modal" data-target="#logoutModal" onclick="changeStatus(${ques.isStatus()},${qid},${ques.getQuestionID()})">Active | </a>
-                                                        </c:if>
-                                                        |
-                                                        <a href="EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
-                                                        |                                                  
-                                                        <c:if test="${ques.getCheckQuestionCompleted()==0}">
-                                                            <a href="EditOption?quesID=${ques.getQuestionID()}&check=true">Edit Option</a>
-                                                        </c:if> 
-                                                        <c:if test="${ques.getCheckQuestionCompleted()>0}">
-                                                            <a href="EditOption?quesID=${ques.getQuestionID()}">Edit Option</a>
-                                                        </c:if>
-                                                        <c:if test="${ques.getCheckQuestionCompleted()==0}">
-                                                            |
-                                                            <a data-toggle="modal" data-target="#logoutModal" href="#" onclick="deleteQues(${ques.getQuestionID()},${qid})">Delete</a>           
-                                                        </c:if>                                                         
+
                                                     </td>
                                                 </tr>
-
-
                                             </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <!-- /.container-fluid -->
-
                 </div>
-                <!-- End of Main Content -->
-
-                <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
-                        </div>
-                    </div>
-                </footer>
-                <!-- End of Footer -->
-
             </div>
             <!-- End of Content Wrapper -->
 
@@ -218,27 +175,40 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Delete?</h5>
+                        <h5 class="modal-title" id="header-status"></h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Do you want to delete this ?</div>
+                    <div class="modal-body" id="modal-body-status"></div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
-                        <a id="deleteThis" class="btn btn-primary" href="">Yes</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn" id="btn-change-status" onclick="submitChangeStatus()"></a>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
-
+        <div class="modal fade" id="deleteModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Quiz</h5>
+                        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modal-body-delete"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn btn-danger" onclick="deleteQuiz()">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Bootstrap core JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- Core plugin JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -251,23 +221,78 @@
 
         <!-- Page level custom scripts -->
         <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
-
         <script>
-                                                                function deleteQues(quesID) {
-                                                                    document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
-                                                                }
-                                                                function changeStatus(status,qid,quesID){
-                                                                    if(status){
-                                                                        $('#exampleModalLabel').text("Inactive");
-                                                                        $('#confirmQuestion').text("Do you want to Inactice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Inactive";
-                                                                    }else{                                                            
-                                                                        $('#exampleModalLabel').text("Actice");
-                                                                        $('#confirmQuestion').text("Do you want to Actice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Active";
-                                                                    }
-                                                                }
-        </script>
+                            let editor2;
+                            var currentStatus, quizID;
+                            function changeStatus(status, quizId, quizName) {
+                                currentStatus = status;
+                                quizID = quizId;
+                                if (status) {
+                                    $('#header-status').text("Inactive");
+                                    $('#modal-body-status').text(`Do you want to inactive quiz ` + quizName);
+                                    $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                                } else {
+                                    $('#header-status').text("Active");
+                                    $('#modal-body-status').text(`Do you want to active quiz ` + quizName);
+                                    $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                }
+                            }
 
+                            function submitChangeStatus() {
+                                $.post("/BeDev/UpdateStatusQuiz", {quizID: quizID}, (response) => {
+                                    $('#logoutModal').modal('toggle');
+                                    if (response == "success") {
+                                        showMessage(response, "Change status successfully", true);
+                                    } else {
+                                        showMessage(response, "Change status failed", false);
+                                    }
+                                });
+                            }
+
+
+                            function changeInfoModalDelete(quizId, quizName) {
+                                quizID = quizId;;
+                                $('#modal-body-delete').text(`Do you want to delete quiz ` + quizName);
+                            }
+
+                            function showMessage(status, message, reload) {
+                                swal({
+                                    title: status == "success" ? "Success" : "Error",
+                                    text: message,
+                                    icon: status == "success" ? "success" : "error",
+                                    button: "OK",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                }).then(function () {
+                                    if (reload) {
+                                        if (status == "success") {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                            function deleteQuiz() {
+                                $.ajax({
+                                    url: '/BeDev/DeleteQuiz?quizId=' + quizID,
+                                    type: 'DELETE',
+                                    success: function (result) {
+                                        if (result == 'success') {
+                                            showMessage(result, "Delete quiz successfully", true);
+                                        } else {
+                                            showMessage(result, result, false);
+                                        }
+                                    }
+                                });
+                            }
+
+
+
+
+
+
+
+        </script>
     </body>
+
 </html>

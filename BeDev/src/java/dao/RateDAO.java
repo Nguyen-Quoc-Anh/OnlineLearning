@@ -38,13 +38,20 @@ public class RateDAO extends DBContext {
             while (rs.next()) {
                 list.add(new Rate(rs.getInt(1), rs.getInt(2), new Student(new Account(rs.getInt(4)), rs.getString(5), rs.getString(6)), rs.getString(3)));
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println(e);
         }
         return list;
     }
 
-    //huy
+    /**
+     * This method used to rate course by student.
+     * @param courseID
+     * @param studentID
+     * @param star
+     * @param contentRate
+     * @return true if rate successfully, otherwise false.
+     */
     public boolean rateCourse(int courseID, int studentID, int star, String contentRate) {
         try {
             String sql = "Insert into Rate(star,studentID,content,courseID) values(?,?,?,?)";
@@ -61,7 +68,12 @@ public class RateDAO extends DBContext {
         return false;
     }
 
-    //huy
+    /**
+     * This method check if a student rated this course or not
+     * @param studentID
+     * @param courseID
+     * @return true if rated , false if did not rate
+     */
     public boolean checkRated(int studentID, int courseID) {
         try {
             String sql = "select * from Rate where studentID = ? and courseID = ?";
@@ -78,7 +90,12 @@ public class RateDAO extends DBContext {
         return false;
     }
 
-    //huy
+    /**
+     * This method get rate of a student about acouse
+     * @param studentID
+     * @param courseID
+     * @return a Rate 
+     */
     public Rate getRateByStudnetIdAndCourseId(int studentID, int courseID) {
         try {
             String sql = "select * from Rate where studentID = ? and courseID = ?";
@@ -95,7 +112,13 @@ public class RateDAO extends DBContext {
         return null;
     }
 
-    //huy
+    /**
+     * Update rate
+     * @param courseID
+     * @param studentID
+     * @param star
+     * @param contentRate 
+     */
     public void updateRate(int courseID, int studentID, int star, String contentRate) {
         try {
             String sql = "Update Rate \n"
@@ -110,7 +133,11 @@ public class RateDAO extends DBContext {
         } catch (Exception e) {
         }
     }
-
+    /**
+     * delete rate of a student about a course
+     * @param studentID
+     * @param courseID 
+     */
     public void deleteRate( int studentID, int courseID) {
         try {
             String sql = "Delete Rate \n"

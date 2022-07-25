@@ -201,7 +201,7 @@
                                         Review
                                     </button>
                                 </li>
-                                <!--ratearea-->
+                                <!--rate area-->
                                 <c:if test="${isEnroll}">
                                     <li class="nav-item" role="presentation">
                                         <button
@@ -396,21 +396,24 @@
 
                                 </div>
                                 <div class="tab-pane fade" id="pills-rating" role="tabpanel" aria-labelledby="pills-rating-tab">
-                                    <!--ratearea-->
+                                    <!--rate area-->
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <form action="RateCourse" method="post">
                                                 <div class="star-widget">
                                                     <div class="wrapper-ratestar" style="">
-                                                        <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${rate!=null && rate.star==5}">checked=""</c:if>>
+                                                        
+                                                            <label for="rate-6" class="fas fa-star"></label>
+                                                            <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${ rate.star==5}">checked=""</c:if>>
                                                             <label for="rate-5" class="fas fa-star"></label>
-                                                            <input type="radio" name="rate" id="rate-4" value="4" <c:if test="${rate!=null && rate.star==4}">checked=""</c:if>>
+                                                            <input type="radio" name="rate" id="rate-4" value="4" <c:if test="${ rate.star==4}">checked=""</c:if>>
                                                             <label for="rate-4" class="fas fa-star"></label>
-                                                            <input type="radio" name="rate" id="rate-3" value="3" <c:if test="${rate!=null && rate.star==3}">checked=""</c:if>>
+                                                         
+                                                            <input type="radio" name="rate" id="rate-3" value="3" <c:if test="${ rate.star==3}">checked=""</c:if>>
                                                             <label for="rate-3" class="fas fa-star"></label>
-                                                            <input type="radio" name="rate" id="rate-2" value="2" <c:if test="${rate!=null && rate.star==2}">checked=""</c:if>>
+                                                            <input type="radio" name="rate" id="rate-2" value="2" <c:if test="${ rate.star==2}">checked=""</c:if>>
                                                             <label for="rate-2" class="fas fa-star"></label>
-                                                            <input type="radio" name="rate" id="rate-1" value="1" <c:if test="${rate!=null && rate.star==1}">checked=""</c:if>>
+                                                            <input type="radio" name="rate" id="rate-1" value="1" <c:if test="${rate.star==1}">checked=""</c:if>>
                                                             <label for="rate-1" class="fas fa-star"></label>
                                                         </div>
                                                         <div class="textarea form-group" style="margin-bottom: 20px; margin-top: 20px">
@@ -420,23 +423,23 @@
                                                     <button type="submit" class="button button-lg button--primary w-20">
                                                         Rate
                                                     </button>
-                                                        <c:if test="${rate!=null}">
-                                                            <a style="float: right" href="deleteRate">Delete Rate</a>
-                                                        </c:if>
-                                                </form>
-                                            </div>
+                                                <c:if test="${rate!=null}">
+                                                    <a style="float: right" href="deleteRate">Delete Rate</a>
+                                                </c:if>
+                                            </form>
                                         </div>
-                                        <!-- Course Details Instructor Ends Here -->
                                     </div>
-                                    <div class="tab-pane fade show course-review-content" id="pills-review" role="tabpanel" aria-labelledby="pills-review">
-                                        <!-- Course Details Review Starts Here -->
-                                        <div class="tab-content" id="pills-tabContent">
-                                            <div class="tab-pane fade show active" id="pills-pills-review" role="tabpanel" aria-labelledby="pills-pills-review">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="instructor-rating-area d-flex">
-                                                            <div class="rating-number">
-                                                                <h2>${avgStar}</h2>
+                                    <!-- Course Details Instructor Ends Here -->
+                                </div>
+                                <div class="tab-pane fade show course-review-content" id="pills-review" role="tabpanel" aria-labelledby="pills-review">
+                                    <!-- Course Details Review Starts Here -->
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-pills-review" role="tabpanel" aria-labelledby="pills-pills-review">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="instructor-rating-area d-flex">
+                                                        <div class="rating-number">
+                                                            <h2>${avgStar}</h2>
                                                             <div class="rating-icon">
                                                                 <ul class="list-inline">
                                                                     <c:forEach begin="1" end="${avgStar}">

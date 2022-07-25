@@ -1,16 +1,11 @@
-
 /*
- * Copyright(C) 2005, FPT university
- * ...
- * ...
- *
- * Record of change:
- * DATE            Version             AUTHOR           DESCRIPTION
- * 2018-09-10      1.0                 HuyTQ           First Implement
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
-import dao.RateDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,14 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Student;
 
 /**
  *
- * @author ADMIN
+ * @author admin
  */
-@WebServlet(name = "RateCourse", urlPatterns = {"/RateCourse"})
-public class RateCourse extends HttpServlet {
+@WebServlet(name = "ChangeStatus", urlPatterns = {"/ChangeStatus"})
+public class ChangeStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,29 +34,7 @@ public class RateCourse extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        HttpSession session = request.getSession();
-        int courseID = Integer.parseInt(session.getAttribute("courseID").toString());
-        if (request.getParameter("rate")==null) {//if dont choose rate then do nothing
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-            return;
-        }
-        int star  = Integer.parseInt(request.getParameter("rate"));//get number of star
-        String contentRate = request.getParameter("contentRate");
-        
-        // get content of rate
-        Student student = (Student) session.getAttribute("student");
-        int studentId = student.getAccount().getAccountID();
-        RateDAO rateDAO = new RateDAO();
-        if (rateDAO.checkRated(studentId, courseID)) {//if rated then update this rate
-            rateDAO.updateRate(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-        }else{// if haven't rate then add rate
-            rateDAO.rateCourse(courseID, studentId, star, contentRate);
-            response.sendRedirect("CourseDetails?courseID="+courseID);
-        }
-        
-       
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,7 +49,31 @@ public class RateCourse extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        QuestionDAO questionDAO = new QuestionDAO();
+        if (session.getAttribute("account") != null) {  //check login with account session
+            if (session.getAttribute("expert") != null) {
+                if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
+                    int quesID = Integer.parseInt(request.getParameter("quesID"));
+                    int qid = Integer.parseInt(request.getParameter("qid"));
+                    if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
+                        questionDAO.inActiveQuestion(quesID, qid);  //update status is false of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Active")) {
+                        questionDAO.activeQuestion(quesID, qid);    //update status is true of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Delete")) {
+                        questionDAO.deleteQuestion(quesID, qid);    //delete question in database by question id
+                    }
+                    response.sendRedirect("ManageQuestion");
+                }
+            } else {
+                response.sendRedirect("HomeControl");
+            }
+        } else {
+            response.sendRedirect("SignIn");
+        }
+        
     }
 
     /**

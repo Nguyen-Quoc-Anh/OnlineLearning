@@ -20,12 +20,21 @@ public class Quiz {
     private boolean status;
     private ArrayList<Question> questionList;
     private double grade;
+    private  boolean  checkQuizrecord;
     public Quiz() {
     }
 
     public Quiz(int quizID) {
         this.quizID = quizID;
     }
+
+    public Quiz(int quizID, String quizName, double passRate, boolean status) {
+        this.quizID = quizID;
+        this.quizName = quizName;
+        this.passRate = passRate;
+        this.status = status;
+    }
+    
 
     public Quiz(int quizID, String quizName, int position) {
         this.quizID = quizID;
@@ -47,6 +56,14 @@ public class Quiz {
         this.quizID = quizID;
         this.quizName = quizName;
         this.passRate = passRate;
+    }
+
+    public boolean isCheckQuizrecord() {
+        return checkQuizrecord;
+    }
+
+    public void setCheckQuizrecord(boolean checkQuizrecord) {
+        this.checkQuizrecord = checkQuizrecord;
     }
 
     public int getQuizID() {
