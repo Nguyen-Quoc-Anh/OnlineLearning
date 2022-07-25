@@ -35,16 +35,12 @@ public class ChapterManagement extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         String courseID = request.getParameter("courseId");
-        Account account = (Account) session.getAttribute("account");
-//        if (account.getRole().getRoleID() == 1) {
-            ChapterDAO chapterDAO = new ChapterDAO();
-            List<Chapter> chaptersList = chapterDAO.listChapterByCourseID(courseID);
-            request.setAttribute("chaptersList", chaptersList);
-            request.setAttribute("courseId", courseID);
-            request.getRequestDispatcher("/view/chapterManagement.jsp").forward(request, response);
-//        }
+        ChapterDAO chapterDAO = new ChapterDAO();
+        List<Chapter> chaptersList = chapterDAO.listChapterByCourseID(courseID);
+        request.setAttribute("chaptersList", chaptersList);
+        request.setAttribute("courseId", courseID);
+        request.getRequestDispatcher("/view/chapterManagement.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -403,7 +403,7 @@
                                             <form action="RateCourse" method="post">
                                                 <div class="star-widget">
                                                     <div class="wrapper-ratestar" style="">
-                                                            <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${ rate.star==5}">checked=""</c:if>>
+                                                        <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${ rate.star==5}">checked=""</c:if>>
                                                             <label for="rate-5" class="fas fa-star"></label>
                                                             <input type="radio" name="rate" id="rate-4" value="4" <c:if test="${ rate.star==4}">checked=""</c:if>>
                                                             <label for="rate-4" class="fas fa-star"></label>
@@ -1109,63 +1109,83 @@
         </section>
         <!-- Event Info Ends Here -->
         <c:if test="${relatedCourse.size() > 0}">
-        <section class="section new-course-feature section--bg-offwhite-five">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <h2 class="font-title--md text-center">Related Course</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 position-relative px-0 mx-0">
-                            <div class="new__courses">
-                                <c:forEach items="${relatedCourse}" var="course" begin="0" end="3">
-                                    <div class="contentCard contentCard--course contentCard--space">
-                                        <div class="contentCard-top">
-                                            <a href="CourseDetails?courseID=${course.courseID}"><img src="${course.courseImage}" alt="images" class="img-fluid" /></a>
-                                        </div>
-                                        <div class="contentCard-bottom">
-                                            <h5>
-                                                <a href="CourseDetails?courseID=${course.courseID}" class="font-title--card">${course.courseName}</a>
-                                            </h5>
-                                            <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
-                                                    <img src="${course.getExpert().img}" style="height: 20px" alt="client-image" class="rounded-circle" />
-                                                    <p class="font-para--md">Brandon Dias</p>
-                                                </a>
-                                                <div class="price">
-                                                    <span>${course.money}</span>
+            <section class="section new-course-feature section--bg-offwhite-five">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <h2 class="font-title--md text-center">Related Course</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 position-relative px-0 mx-0">
+                                <div class="new__courses">
+                                    <c:forEach items="${relatedCourse}" var="course" begin="0" end="3">
+                                        <div class="contentCard contentCard--course contentCard--space">
+                                            <div class="contentCard-top">
+                                                <a href="CourseDetails?courseID=${course.courseID}"><img src="${course.courseImage}" alt="images" class="img-fluid" /></a>
+                                            </div>
+                                            <div class="contentCard-bottom">
+                                                <h5>
+                                                    <a href="CourseDetails?courseID=${course.courseID}" class="font-title--card">${course.courseName}</a>
+                                                </h5>
+                                                <div class="contentCard-info d-flex align-items-center justify-content-between">
+                                                    <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
+                                                        <img src="${course.getExpert().img}" style="height: 20px" alt="client-image" class="rounded-circle" />
+                                                        <p class="font-para--md">Brandon Dias</p>
+                                                    </a>
+                                                    <div class="price">
+                                                        <span>${course.money}</span>
+                                                    </div>
+                                                </div>
+                                                <div class="contentCard-more">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="icon">
+                                                            <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
+                                                        </div>
+                                                        <span>${course.averageStar}</span>
+                                                    </div>
+                                                    <div class="eye d-flex align-items-center">
+                                                        <div class="icon">
+                                                            <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
+                                                        </div>
+                                                        <span>${course.numberRegister}</span>
+                                                    </div>
+                                                    <div class="book d-flex align-items-center">
+                                                        <div class="icon">
+                                                            <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
+                                                        </div>
+                                                        <span>${course.numberLesson} Lesson</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="contentCard-more">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
-                                                    </div>
-                                                    <span>${course.averageStar}</span>
-                                                </div>
-                                                <div class="eye d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
-                                                    </div>
-                                                    <span>${course.numberRegister}</span>
-                                                </div>
-                                                <div class="book d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
-                                                    </div>
-                                                    <span>${course.numberLesson} Lesson</span>
-                                                </div>
-                                            </div>
                                         </div>
-                                    </div>
-                                </c:forEach>
+                                    </c:forEach>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </c:if>
+        <!-- Event Info Ends Here -->
+        <div class="modal fade" id="buyModal">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Payment</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You need payment to continue learning.
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary text-white"  onclick="executePayment(${course.courseID})">Pay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <jsp:include page="footer.jsp"></jsp:include>
             <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -1194,7 +1214,7 @@
                                     }
                                 });
                             }
-                            
+
                             function forwardLogin() {
                                 window.location.href = "/BeDev/SignIn";
                             }

@@ -209,13 +209,13 @@
 
 <!-- Footer End here -->
 
-<script src="../BeDev/view/src/js/jquery.min.js"></script>
-<script src="../BeDev/view/src/js/bootstrap.bundle.min.js"></script>
-<script src="../BeDev/view/src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
-<script src="../BeDev/view/src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
-<script src="../BeDev/view/src/scss/vendors/plugin/js/slick.min.js"></script>
-<script src="../BeDev/view/src/scss/vendors/plugin/js/jquery.nice-select.min.js"></script>
-<script src="../BeDev/view/src/js/app.js"></script>
-<script src="../BeDev/view/dist/main.js"></script
+<script src="/BeDev/view/src/js/jquery.min.js"></script>
+<script src="/BeDev/view/src/js/bootstrap.bundle.min.js"></script>
+<script src="/BeDev/view/src/scss/vendors/plugin/js/isotope.pkgd.min.js"></script>
+<script src="/BeDev/view/src/scss/vendors/plugin/js/jquery.magnific-popup.min.js"></script>
+<script src="/BeDev/view/src/scss/vendors/plugin/js/slick.min.js"></script>
+<script src="/BeDev/view/src/scss/vendors/plugin/js/jquery.nice-select.min.js"></script>
+<script src="/BeDev/view/src/js/app.js"></script>
+<script src="/BeDev/view/dist/main.js"></script
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>

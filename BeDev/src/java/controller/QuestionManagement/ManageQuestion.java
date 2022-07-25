@@ -26,7 +26,7 @@ import modal.Question;
  *
  * @author admin
  */
-@WebServlet(name = "ManageQuestion", urlPatterns = {"/ManageQuestion"})
+@WebServlet(name = "ManageQuestion", urlPatterns = {"/expert/ManageQuestion"})
 public class ManageQuestion extends HttpServlet {
 
     /**

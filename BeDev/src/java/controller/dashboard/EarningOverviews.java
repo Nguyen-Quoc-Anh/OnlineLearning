@@ -43,8 +43,7 @@ public class EarningOverviews extends HttpServlet {
         String[] monthsInYear = Arrays.copyOfRange(months, 0, LocalDate.now().getMonthValue());
         double[] earning = new double[LocalDate.now().getMonthValue()];
         if (account.getRole().getRoleID() == 2) {
-            //        int expertId = account.getAccountID();
-            int expertId = 5;
+            int expertId = account.getAccountID();
             earning = courseDAO.getEarningOverviewThisYearOfExpert(expertId);
         } else if (account.getRole().getRoleID() == 1) {
             earning = courseDAO.getEarningOverviewThisYear();

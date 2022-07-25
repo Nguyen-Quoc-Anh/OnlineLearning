@@ -140,11 +140,10 @@
                                                     <td>${q.passRate} %</td>
                                                     <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${q.isStatus()}, '${q.quizID}', '${q.quizName}')">${q.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                     <td>
-                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>&emsp;
-                                                        <a href="ManageQuestion">Manage question</a>
+                                                        <a href="/BeDev/expert/EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>&emsp;
+                                                        <a href="/BeDev/expert/ManageQuestion?qid=${q.quizID}">Manage question</a>
                                                         &emsp;
                                                         <c:if test="${!q.checkQuizrecord}">
-                                                            
                                                             <a style="color:#4e73df" onclick="changeInfoModalDelete('${q.quizID}', '${q.quizName}')" data-toggle="modal" data-target="#deleteModal">Delete</a>
                                                         </c:if>
 

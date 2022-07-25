@@ -52,7 +52,7 @@
         <div class="container">
             <!-- Logo -->
             <a class="navbar-brand" href="HomeControl">
-                <img src="../BeDev/view/dist/images/logo/logo.png" alt="Logo" class="img-fluid" />
+                <img src="/BeDev/view/dist/images/logo/logo.png" alt="Logo" class="img-fluid" />
             </a>
             <button class="menu-icon-container">
                 <span class="menu-icon"></span>

@@ -205,8 +205,8 @@
 
                                                     </td>
                                                     <td>
-                                                        <div><a href="#${chapter.chapterID}">Lesson</a></div>
-                                                        <div><a href="#${chapter.chapterID}">Quiz</a></div>
+                                                        <div><a href="/BeDev/expert/lesson?chapterId=${chapter.chapterID}">Lesson</a></div>
+                                                        <div><a href="/BeDev/expert/ManageQuiz?chapterId=${chapter.chapterID}">Quiz</a></div>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

@@ -55,6 +55,7 @@ public class RecordController extends HttpServlet {
         QuizRecordDAO recordDAO = new QuizRecordDAO();
         try {
             int qid = Integer.parseInt(request.getParameter("qid"));
+            int cid = Integer.parseInt(request.getParameter("cid"));
             if (session.getAttribute("account") !=null ) { //check login with account session
                 if (session.getAttribute("student") != null) { //check student login
                     Student student = (Student) session.getAttribute("student");

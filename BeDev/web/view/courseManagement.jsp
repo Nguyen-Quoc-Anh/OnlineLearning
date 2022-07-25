@@ -61,13 +61,7 @@
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-laugh-wink"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">ADMIN đây</div>
-                </a>
+               
 
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
@@ -199,7 +193,7 @@
                                             <c:forEach var="course" items="${coursesList}">
                                                 <tr>
                                                     <td>${course.getCourseID()}</td>
-                                                    <td><a class="link link-dark" href="#">${course.getCourseName()}</a></td>
+                                                    <td><a class="link link-dark" href="/BeDev/expert/chapter?courseId=${course.getCourseID()}">${course.getCourseName()}</a></td>
                                                     <td><img style="width: 200px; height: auto; border-radius: 20px;" src="${course.getCourseImage()}"></td>
                                                     <td><fmt:formatNumber value = "${course.getMoney()}" type = "number" maxFractionDigits = "0" /></td>
                                                     <td>${course.getReleasedDate()}</td>

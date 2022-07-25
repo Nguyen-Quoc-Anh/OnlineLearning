@@ -79,6 +79,7 @@ public class ResetPassword extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         if (session.getAttribute("step") == null || ((int) session.getAttribute("step") == 1)) {
             String email = request.getParameter("email");
+            System.out.println(email);
             boolean validEmail = !accountDAO.isEmailExist(email);
             if (validEmail) {
                 String verificationCode = generateRandomString(8);
