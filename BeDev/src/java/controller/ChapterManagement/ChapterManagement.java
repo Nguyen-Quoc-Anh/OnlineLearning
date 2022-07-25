@@ -21,7 +21,7 @@ import modal.Chapter;
  *
  * @author Admin
  */
-@WebServlet(name = "ChapterManagement", urlPatterns = {"/manage/chapter"})
+@WebServlet(name = "ChapterManagement", urlPatterns = {"/expert/chapter"})
 public class ChapterManagement extends HttpServlet {
 
     /**

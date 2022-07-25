@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet(name = "ChangeChapterStatus", urlPatterns = {"/manage/changechapterstatus"})
+@WebServlet(name = "ChangeChapterStatus", urlPatterns = {"/expert/changechapterstatus"})
 public class ChangeChapterStatus extends HttpServlet {
 
     /**

@@ -293,7 +293,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/addnewlesson" method="POST">
+                        <form action="/BeDev/expert/addnewlesson" method="POST">
                             <input type="hidden" id="chapter-id" name="chapterId" value="${chapterId}">
                             <div class="form-group">
                                 <label for="name">Lesson Name</label>
@@ -343,7 +343,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/editlesson" method="POST">
+                        <form action="/BeDev/expert/editlesson" method="POST">
                             <input type="hidden" id="lesson-id" name="lessonId">
                             <input type="hidden" id="chapter-id" name="chapterId" value="${chapterId}">
                             <div class="form-group">
@@ -437,7 +437,7 @@
                                     }
                                 }
                                 function submitChangeStatus() {
-                                    $.post("/BeDev/manage/changelessonstatus", {lessonId: lessonID, status: currentStatus}, (response) => {
+                                    $.post("/BeDev/expert/changelessonstatus", {lessonId: lessonID, status: currentStatus}, (response) => {
                                         $('#logoutModal').modal('toggle');
                                         if (response == "success") {
                                             showMessage(response, "Change status successfully", true);
@@ -480,7 +480,7 @@
                                 }
                                 function deleteLesson() {
                                     $.ajax({
-                                        url: '/BeDev/manage/deletelesson?lessonId=' + lessonID,
+                                        url: '/BeDev/expert/deletelesson?lessonId=' + lessonID,
                                         type: 'POST',
                                         success: function (result) {
                                             if (result == 'success') {

@@ -298,7 +298,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/addnewcourse" method="POST" enctype="multipart/form-data" id="add-course-form">
+                        <form action="/BeDev/expert/addnewcourse" method="POST" enctype="multipart/form-data" id="add-course-form">
                             <div class="form-group">
                                 <label for="name">Course Name</label>
                                 <input type="text" class="form-control" id="name" name="courseName" placeholder="Enter course name" required>
@@ -368,7 +368,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/editcourse" method="POST" enctype="multipart/form-data">
+                        <form action="/BeDev/expert/editcourse" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="course-id" name="courseId">
                             <div class="form-group">
                                 <label for="name">Course Name</label>
@@ -497,7 +497,7 @@
                                             console.error(error);
                                         });
                                 function submitChangeStatus() {
-                                    $.post("/BeDev/manage/changecoursestatus", {courseId: courseID, status: currentStatus}, (response) => {
+                                    $.post("/BeDev/expert/changecoursestatus", {courseId: courseID, status: currentStatus}, (response) => {
                                         $('#logoutModal').modal('toggle');
                                         if (response == "success") {
                                             showMessage(response, "Change status successfully", true);
@@ -556,7 +556,7 @@
                                 }
                                 function deleteCourse() {
                                     $.ajax({
-                                        url: '/BeDev/manage/deletecourse?courseId=' + courseID,
+                                        url: '/BeDev/expert/deletecourse?courseId=' + courseID,
                                         type: 'DELETE',
                                         success: function (result) {
                                             if (result == 'success') {

@@ -20,7 +20,7 @@ import modal.Account;
  *
  * @author MrLink
  */
-@WebServlet(name = "AddNewLesson", urlPatterns = {"/manage/addnewlesson"})
+@WebServlet(name = "AddNewLesson", urlPatterns = {"/expert/addnewlesson"})
 public class AddNewLesson extends HttpServlet {
 
     /**

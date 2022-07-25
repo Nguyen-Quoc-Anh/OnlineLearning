@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author MrLink
  */
-@WebServlet(name = "ChangeLessonStatus", urlPatterns = {"/manage/changelessonstatus"})
+@WebServlet(name = "ChangeLessonStatus", urlPatterns = {"/expert/changelessonstatus"})
 public class ChangeLessonStatus extends HttpServlet {
 
     /**

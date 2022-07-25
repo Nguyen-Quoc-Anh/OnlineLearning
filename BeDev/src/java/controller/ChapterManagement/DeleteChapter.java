@@ -19,7 +19,7 @@ import modal.Account;
  *
  * @author Admin
  */
-@WebServlet(name = "DeleteChapter", urlPatterns = {"/manage/deletechapter"})
+@WebServlet(name = "DeleteChapter", urlPatterns = {"/expert/deletechapter"})
 public class DeleteChapter extends HttpServlet {
 
     /**

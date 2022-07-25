@@ -22,7 +22,7 @@ import modal.Lesson;
  *
  * @author MrLink
  */
-@WebServlet(name = "LessonManagement", urlPatterns = {"/manage/lesson"})
+@WebServlet(name = "LessonManagement", urlPatterns = {"/expert/lesson"})
 public class LessonManagement extends HttpServlet {
 
     /**

@@ -295,7 +295,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/addnewchapter" method="POST">
+                        <form action="/BeDev/expert/addnewchapter" method="POST">
                             <input type="hidden" id="course-id" name="courseId" value="${courseId}">
                             <div class="form-group">
                                 <label for="name">Chapter Name</label>
@@ -338,7 +338,7 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
-                        <form action="/BeDev/manage/editchapter" method="POST">
+                        <form action="/BeDev/expert/editchapter" method="POST">
                             <input type="hidden" id="course-id" name="courseId" value="${courseId}">
                             <input type="hidden" id="chapter-id" name="chapterId">
                             <div class="form-group">
@@ -424,7 +424,7 @@
                                     }
                                 }
                                 function submitChangeStatus() {
-                                    $.post("/BeDev/manage/changechapterstatus", {chapterId: chapterID, status: currentStatus}, (response) => {
+                                    $.post("/BeDev/expert/changechapterstatus", {chapterId: chapterID, status: currentStatus}, (response) => {
                                         $('#logoutModal').modal('toggle');
                                         if (response == "success") {
                                             showMessage(response, "Change status successfully", true);
@@ -465,7 +465,7 @@
                                 }
                                 function deleteChapter() {
                                     $.ajax({
-                                        url: '/BeDev/manage/deletechapter?chapterId=' + chapterID,
+                                        url: '/BeDev/expert/deletechapter?chapterId=' + chapterID,
                                         type: 'POST',
                                         success: function (result) {
                                             if (result == 'success') {

@@ -54,15 +54,15 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CourseManagement</servlet-name>
-        <url-pattern>/manage/course</url-pattern>
+        <url-pattern>/expert/course</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangeCourseStatus</servlet-name>
-        <url-pattern>/manage/changecoursestatus</url-pattern>
+        <url-pattern>/expert/changecoursestatus</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddNewCourse</servlet-name>
-        <url-pattern>/manage/addnewcourse</url-pattern>
+        <url-pattern>/expert/addnewcourse</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

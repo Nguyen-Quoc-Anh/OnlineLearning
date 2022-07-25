@@ -19,7 +19,7 @@ import modal.Account;
  *
  * @author Admin
  */
-@WebServlet(name = "AddNewChapter", urlPatterns = {"/manage/addnewchapter"})
+@WebServlet(name = "AddNewChapter", urlPatterns = {"/expert/addnewchapter"})
 public class AddNewChapter extends HttpServlet {
 
     /**
@@ -51,7 +51,7 @@ public class AddNewChapter extends HttpServlet {
             }
             session.removeAttribute("editChapter");
 //        }
-        response.sendRedirect("/BeDev/manage/chapter?courseId=" + courseId);
+        response.sendRedirect("/BeDev/expert/chapter?courseId=" + courseId);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

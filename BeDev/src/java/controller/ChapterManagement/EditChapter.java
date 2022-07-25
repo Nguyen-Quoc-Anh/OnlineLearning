@@ -19,7 +19,7 @@ import modal.Account;
  *
  * @author Admin
  */
-@WebServlet(name = "EditChapter", urlPatterns = {"/manage/editchapter"})
+@WebServlet(name = "EditChapter", urlPatterns = {"/expert/editchapter"})
 public class EditChapter extends HttpServlet {
 
     /**
@@ -56,7 +56,7 @@ public class EditChapter extends HttpServlet {
             } else {
                 session.setAttribute("editChapter", "failed");
             }
-            response.sendRedirect("/BeDev/manage/chapter?courseId=" + courseId);
+            response.sendRedirect("/BeDev/expert/chapter?courseId=" + courseId);
 //        }
     }
 
