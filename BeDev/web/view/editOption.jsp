@@ -79,7 +79,8 @@
 
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-lg-end justify-content-center mt-2">
+                            <div class="d-flex justify-content-lg-between justify-content-center mt-2">
+                                <a class="button button-lg button--primary" href="ManageQuestion?qid=${question.getQuiz().getQuizID()}">Return</a>
                                 <button class="button button-lg button--primary" type="button" data-toggle="modal" data-target="#logoutModal" onclick="saveChange()">Save Changes</button>
                             </div>
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

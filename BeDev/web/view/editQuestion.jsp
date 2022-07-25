@@ -51,8 +51,9 @@
                                     <textarea class="form-control" name="explain" cols="80" rows="5" style="width: 100%">${question.getExplanation()}</textarea>
                                 </div>
                             </div>    
-                            <div class="d-flex justify-content-lg-end justify-content-center mt-2">
-                                <button class="button button-lg button--primary" type="button" data-toggle="modal" data-target="#logoutModal" onclick="saveChange()">Save Changes</button>
+                            <div class="d-flex justify-content-lg-between justify-content-center mt-2">
+                                <a class="button button-lg button--primary" href="ManageQuestion?qid=${question.getQuiz().getQuizID()}" >Return</a>
+                                <button class="button button-lg button--primary" type="button" data-toggle="modal" data-target="#logoutModal" onclick="saveChange()">Save Changes</button>                          
                             </div>    
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                  aria-hidden="true">
