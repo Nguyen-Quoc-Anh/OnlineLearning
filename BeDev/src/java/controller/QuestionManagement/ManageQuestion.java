@@ -69,9 +69,6 @@ public class ManageQuestion extends HttpServlet {
                     qid = Integer.parseInt(request.getParameter("qid"));
                     listQuestion = questionDAO.getQuestionByQuiz(qid,expert.getExpertID());    //get question by id of the quiz
                     quiz = quizDAO.getQuizByID(qid);  //get quiz by id of the quiz
-                    for (Question question : listQuestion) {
-                        System.out.println(question.isStatus());
-                    }
                 } else {
                     response.sendRedirect("HomeControl");
                     return;

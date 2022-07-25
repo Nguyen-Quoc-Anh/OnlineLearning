@@ -25,7 +25,6 @@ public class Account {
     }
     
     
-
     public Account(int accountID, String email, String password, boolean emailVeriFy, Role role, boolean status) {
         this.accountID = accountID;
         this.email = email;

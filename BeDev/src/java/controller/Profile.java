@@ -22,6 +22,7 @@ import modal.Account;
 import modal.Course;
 import modal.Expert;
 import modal.Student;
+import modal.Transaction;
 
 /**
  *
@@ -62,6 +63,7 @@ public class Profile extends HttpServlet {
         StudentDAO studentDao = new StudentDAO();
         ExpertDAO expertDao = new ExpertDAO();
         EnrollDAO enrollDAO = new EnrollDAO();
+        ArrayList<Transaction> listTransaction = new ArrayList<>();
         try {
             if (session != null && session.getAttribute("account") != null) {
                 Account account = (Account) session.getAttribute("account");
@@ -69,14 +71,16 @@ public class Profile extends HttpServlet {
                 if (account.getRole().getRoleID() == 3) { //check account is student
                     Student student = studentDao.profile(account.getAccountID()); // get profile of student         
                     int countEnroll = enrollDAO.countEnrollOfStudent(account.getAccountID()); // count enroll of student
+                    listTransaction = studentDao.listTransactionByStudent(student.getAccount().getAccountID());
+                    for (Transaction transaction : listTransaction) {
+                    }
                     request.setAttribute("student", student);
-                    request.setAttribute("countEnroll", countEnroll);
-                    
+                    request.setAttribute("countEnroll", countEnroll);                  
                     List<Course> listCourseRegisterd = new ArrayList<>();
                     int id = account.getAccountID();
                     listCourseRegisterd = courseDAO.getCourseByStudentId(id);//get list registed course  of a student.
                     request.setAttribute("listCourseRegisterd", listCourseRegisterd);
-                    
+                    request.setAttribute("listTransaction", listTransaction);
                     processRequest(request, response);
                     session.setAttribute("student", student);
                 }
