@@ -40,7 +40,8 @@ public class CourseManagement extends HttpServlet {
         CategoryDAO categoryDAO = new CategoryDAO();
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        List<Course> coursesList = courseDAO.getCoursesByExpertId(5);
+        int expertId = account.getAccountID();
+        List<Course> coursesList = courseDAO.getCoursesByExpertId(expertId);
         List<Category> categoryList = categoryDAO.listCategory();
         request.setAttribute("coursesList", coursesList);
         request.setAttribute("categoryList", categoryList);

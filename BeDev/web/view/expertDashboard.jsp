@@ -305,7 +305,7 @@
                                                 <td>${course.getNumberOfViews()}</td>
                                                 <td>${course.getNumberRegister()}</td>
                                                 <td><fmt:formatNumber value = "${course.getTotalEarn()}" type = "number" maxFractionDigits = "0" /></td>
-                                                <td>${course.getAverageStar()} stars (${course.getNumberOfRating()})</td>
+                                                <td>${course.getAverageStar()} stars (${course.getNumberOfRating()} review)</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
@@ -376,7 +376,7 @@
                                                                 datasets: [{
                                                                         label: data.name,
                                                                         borderColor: "rgba(78, 115, 223, 1)",
-                                                                        data: data.name === "Enroll Course" ? data.yAxisForEnroll : data.yAxisForEarning
+                                                                        data: data.name === "Student enroll" ? data.yAxisForEnroll : data.yAxisForEarning
                                                                     }]
                                                             },
                                                             options: {

@@ -476,26 +476,6 @@ public class CourseDAO extends DBContext {
         return false;
     }
 
-    /**
-     *
-     * @param cid
-     * @return
-     */
-    public int countNumberOfStudentEnrollByCourseId(int cid) {
-        try {
-            String sql = "select count(studentID) from Enroll where courseID = ?";
-            PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, cid);
-            ResultSet rs = stm.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return -1;
-    }
-
     public boolean deleteCourseById(int cid) {
         try {
             String sql = "\n"

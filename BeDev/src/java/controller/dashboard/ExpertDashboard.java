@@ -38,17 +38,11 @@ public class ExpertDashboard extends HttpServlet {
         CourseDAO courseDAO = new CourseDAO();
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-//        int totalEnroll = courseDAO.countTotalEnrollByExpertId(account.getAccountID());
-//        int totalStudent = courseDAO.countTotalStudentEnrollByExpertId(account.getAccountID());
-//        double sumTotalEarningOfExpertThisMonth = courseDAO.sumTotalEarningOfExpertThisMonth(account.getAccountID());
-//        double sumTotalEarningOfExpertThisYear = courseDAO.sumTotalEarningOfExpertThisYear(account.getAccountID());
-//        List<Course> getListCourseAnalysisByExpertId = courseDAO.getListCourseAnalysisByExpertId(account.getAccountID());
-
-        int totalEnroll = courseDAO.countTotalEnrollByExpertId(5);
-        int totalStudentEnroll = courseDAO.countTotalStudentEnrollByExpertId(5);
-        double totalEarningOfExpertLastMonth = courseDAO.getTotalEarningOfExpertLastMonth(5);
-        double totalEarningOfExpert = courseDAO.getEarningOfExpertTotal(5);
-        List<Course> listCourses = courseDAO.getListCourseAnalysisByExpertId(5);
+        int totalEnroll = courseDAO.countTotalEnrollByExpertId(account.getAccountID());
+        int totalStudentEnroll = courseDAO.countTotalStudentEnrollByExpertId(account.getAccountID());
+        double totalEarningOfExpertLastMonth = courseDAO.getTotalEarningOfExpertLastMonth(account.getAccountID());
+        double totalEarningOfExpert = courseDAO.getEarningOfExpertTotal(account.getAccountID());
+        List<Course> listCourses = courseDAO.getListCourseAnalysisByExpertId(account.getAccountID());
         request.setAttribute("totalEnroll", totalEnroll);
         request.setAttribute("totalStudentEnroll", totalStudentEnroll);
         request.setAttribute("totalEarningOfExpertLastMonth", totalEarningOfExpertLastMonth);

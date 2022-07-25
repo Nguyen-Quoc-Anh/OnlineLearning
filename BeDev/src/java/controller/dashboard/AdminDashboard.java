@@ -33,12 +33,12 @@ public class AdminDashboard extends HttpServlet {
             throws ServletException, IOException {
         CourseDAO courseDAO = new CourseDAO();
         AccountDAO accountDAO = new AccountDAO();
+        double totalEarningLastMonth = courseDAO.getEarningLastMonth();
+        double totalEarning = courseDAO.getEarningTotal();
         int totalEnroll = courseDAO.countTotalEnroll();
         int numberOfUsers = accountDAO.getNumbersOfUser();
         int numberOfExperts = accountDAO.getNumbersOfExpert();
         int numberOfStudents = accountDAO.getNumbersOfStudent();
-        double totalEarningLastMonth = courseDAO.getEarningLastMonth();
-        double totalEarning = courseDAO.getEarningTotal();
         request.setAttribute("totalEnroll", totalEnroll);
         request.setAttribute("numberOfUsers", numberOfUsers);
         request.setAttribute("numberOfExperts", numberOfExperts);

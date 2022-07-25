@@ -41,6 +41,27 @@ public class EnrollDAO extends DBContext {
         return list;
     }
 
+    
+    /**
+     *
+     * @param cid
+     * @return
+     */
+    public int countNumberOfStudentEnrollByCourseId(int cid) {
+        try {
+            String sql = "select count(studentID) from Enroll where courseID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, cid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return -1;
+    }
+    
     public int countEnrollOfCourse(int id) {
         try {
             String sql = "select count(*)  from Enroll e\n"

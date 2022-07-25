@@ -45,13 +45,12 @@ public class EnrollOverview extends HttpServlet {
         String[] monthsInYear = Arrays.copyOfRange(months, 0, LocalDate.now().getMonthValue());
         int[] enroll = new int[LocalDate.now().getMonthValue()];
         if (account.getRole().getRoleID() == 2) {
-//                int expertId = account.getAccountID();
-            int expertId = 5;
+            int expertId = account.getAccountID();
             enroll = enrollDAO.getEnrollOverviewThisYearOfExpert(expertId);
         } else if (account.getRole().getRoleID() == 1) {
             enroll = enrollDAO.getEnrollOverviewThisYear();
         }
-        response.getWriter().write(new Gson().toJson(new Chart("Enroll Course", monthsInYear, enroll)));
+        response.getWriter().write(new Gson().toJson(new Chart("Student enroll", monthsInYear, enroll)));
 
     }
 

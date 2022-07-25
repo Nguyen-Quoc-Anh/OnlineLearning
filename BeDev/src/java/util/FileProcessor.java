@@ -88,47 +88,4 @@ public class FileProcessor {
             System.out.println(e);
         }
     }
-
-    /**
-     *
-     * @param UPLOAD_DIR
-     * @param param
-     * @param request
-     * @return
-     */
-    public List<String> uploadFiles(String UPLOAD_DIR, String param, HttpServletRequest request) {
-        List<String> fileNames = new ArrayList<>();
-        try {
-            List<Part> parts = (List<Part>) request.getParts();
-            if (parts.size() <= 0) {
-                return new ArrayList<>();
-            }
-            for (Part part : parts) {
-                if (part.getName().equalsIgnoreCase(param)) {
-                    String fileName = getFileName(part);
-                    if (fileName == null || fileName.equals("") || fileName.isEmpty()) {
-                        return new ArrayList<>();
-                    }
-                    fileNames.add(uploadFile(part, UPLOAD_DIR));
-                }
-            }
-        } catch (IOException | ServletException e) {
-            fileNames = null;
-        }
-        return fileNames;
-    }
-
-    /**
-     *
-     * @param part
-     * @return
-     */
-    private String getFileName(Part part) {
-        for (String content : part.getHeader("content-disposition").split(";")) {
-            if (content.trim().startsWith("filename")) {
-                return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
-        return null;
-    }
 }

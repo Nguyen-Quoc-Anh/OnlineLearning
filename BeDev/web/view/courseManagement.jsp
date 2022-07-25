@@ -489,6 +489,9 @@
                                     if ($('#name').val().trim() == "") {
                                         mess += "Course name can't be empty. ";
                                     }
+                                    if ($('#price').val() == "0") {
+                                        mess += "Price must be greater than 0. ";
+                                    }
                                     if ($('#inputState').val() == "0") {
                                         mess += "Please choose a category. ";
                                     }
@@ -505,14 +508,14 @@
                                 function changeInfoModalEdit(courseId) {
                                     $.get("/BeDev/expert/CourseInfo?courseId=" + courseId, (data) => {
                                         data = JSON.parse(data);
-                                        console.log(data)
-                                        $('#course-id').val(data.courseId)
-                                        $('#course-name').val(data.courseName)
-                                        $('#course-price').val(data.money)
+                                        console.log(data);
+                                        $('#course-id').val(courseId);
+                                        $('#course-name').val(data.courseName);
+                                        $('#course-price').val(data.money);
                                         $("#playlist--img2").attr("src", data.courseImage);
                                         editor2.setData(data.description);
                                         $('#course-status').prop('checked', data.status);
-                                        $('#course-category').val(data.category.categoryId)
+                                        $('#course-category').val(data.category.categoryID)
                                     })
 
                                 }
@@ -583,7 +586,7 @@
                                 });
                                 $(document).ready(function () {
             ${addCourse == null ? "" : addCourse == "success" ? "showMessage('success', 'Add new course successfully.', false)" : addCourse == "failed" ? "showMessage('success', 'Add new course failed.', false)" : ""}
-            ${editCourse == null ? "" : editCourse == "success" ? "showMessage('success', 'Edit course successfully.', false)" : editCourse == "failed" ? "showMessage('success', 'Add new course failed.', false)" : ""}
+            ${editCourse == null ? "" : editCourse == "success" ? "showMessage('success', 'Edit course successfully.', false)" : editCourse == "failed" ? "showMessage('failed', 'Edit course failed.', false)" : ""}
                                 });
         </script>
     </body>

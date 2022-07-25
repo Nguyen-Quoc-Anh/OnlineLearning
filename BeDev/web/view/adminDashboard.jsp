@@ -338,7 +338,7 @@
                                                                 datasets: [{
                                                                         label: data.name,
                                                                         borderColor: "rgba(78, 115, 223, 1)",
-                                                                        data: data.name === "Enroll Course" ? data.yAxisForEnroll : data.yAxisForEarning
+                                                                        data: data.name === "Student enroll" ? data.yAxisForEnroll : data.yAxisForEarning
                                                                     }]
                                                             },
                                                             options: {

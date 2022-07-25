@@ -6,6 +6,7 @@
 package controller.CourseManagement;
 
 import dao.CourseDAO;
+import dao.EnrollDAO;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -33,9 +34,10 @@ public class DeleteCourse extends HttpServlet {
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         CourseDAO courseDAO = new CourseDAO();
+        EnrollDAO enrollDAO = new EnrollDAO();
         try {
             int courseId = Integer.parseInt(request.getParameter("courseId"));
-            int numberOfEnroll = courseDAO.countNumberOfStudentEnrollByCourseId(courseId);
+            int numberOfEnroll = enrollDAO.countNumberOfStudentEnrollByCourseId(courseId);
             if (numberOfEnroll == 0) {
                 boolean deletesucess = courseDAO.deleteCourseById(courseId);
                 if (deletesucess) {
