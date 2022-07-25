@@ -141,9 +141,128 @@ public class QuestionDAO extends DBContext {
         return questions;
     }
 
+    /**
+     * This method get list of question by id of the quiz
+     * @param qid is quiz id
+     * @return list of question
+     */
+    public ArrayList<Question> getQuestionByQuiz(int qid) {
+        ArrayList<Question> questions = new ArrayList<>();
+        OptionDAO optionDAO = new OptionDAO();
+        try {
+            String sql = "select q.questionID, q.content, q.explaination, q.status from Question q\n"
+                    + "where q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, qid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                questions.add(new Question(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), optionDAO.checkQuestionCompleted(rs.getInt(1))));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return questions;
+    }
+
+    /**
+     * This method allows update status of question by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */
+    public void inActiveQuestion(int questionID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set status = 0 where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method allows update status of question by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */
+    public void activeQuestion(int questionID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set status = 1 where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method allows update the question in database
+     * @param content is the new content will be update
+     * @param explain is the new explain will be update
+     * @param quesID is id of question
+     * @param qid  is id of quiz
+     */
+    public void editQuestion(String content, String explain, int quesID, int qid) {
+        try {
+            String sql = "update Question\n"
+                    + "set content = ?, explaination = ?\n"
+                    + "where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setNString(1, content);
+            stm.setNString(2, explain);
+            stm.setInt(3, quesID);
+            stm.setInt(4, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method allows delete question in database by id of the question
+     * @param questionID is question id
+     * @param qid is quiz id
+     */ 
+    public void deleteQuestion(int questionID, int qid) {
+        try {
+            String sql = "delete from [Option]\n"
+                    + "where questionID = ?\n"
+                    + "delete from Question\n"
+                    + "where questionID = ? and quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setInt(2, questionID);
+            stm.setInt(3, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method get the question by the id of the question
+     * @param questionID is question id
+     * @return a question
+     */
+    public Question getQuestion(int questionID) {
+        try {
+            String sql = "select q.questionID, q.content, q.explaination, q.quizID from Question q\n"
+                    + "where q.questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(rs.getInt(4)), true);
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         QuestionDAO d = new QuestionDAO();
-        ArrayList<Question> list = d.listQuestionByQuizIdAndRecordId(1, 2);
+        ArrayList<Question> list = d.getQuestionByQuiz(1);
         System.out.println(list.size());
     }
 }

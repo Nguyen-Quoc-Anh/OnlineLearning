@@ -95,16 +95,7 @@
                         <h4>${numberQuestion} Questions</h4>
                         <br>
                         <br><br><br><br><br>
-                        <div class="d-flex justify-content-center">
-                            <c:if test="${quizRecord.recordID != 0}">
-                                <c:if test="${quiz.passRate > quizRecord.grade * 10}">
-                                    <button type="button" class="btn btn-danger">Not pass</button>
-                                </c:if>
-                                <c:if test="${quiz.passRate <= quizRecord.grade * 10}">
-                                    <button type="button" class="btn btn-success">Pass</button>
-                                </c:if>
-                            </c:if>
-                        </div>
+
                         <hr>
                         <div class="row mb-5 mt-4">
                             <div class="col-md-6" style="border-right: 2px solid #a19d9d;">

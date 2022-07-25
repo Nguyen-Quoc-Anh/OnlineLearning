@@ -164,6 +164,124 @@ public class OptionDAO extends DBContext {
         return answers;
     }
 
+    /**
+     * This method get list option of the question by id of the quesion
+     * @param questionID is question id
+     * @return list option
+     */
+    public ArrayList<Option> listOption(int questionID) {
+        ArrayList<Option> option = new ArrayList<>();
+        try {
+            String sql = "select * from [Option]\n"
+                    + "where questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                option.add(new Option(rs.getInt(1), new Question(rs.getInt(2)), rs.getString(3), rs.getBoolean(4)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return option;
+    }
+
+    /**
+     * This method count number answered by question id
+     * @param questionID is id of question
+     * @return number of answered
+     */
+    public int checkQuestionCompleted(int questionID) {
+        try {
+            String sql = "select count(*) from Answer_Record\n"
+                    + "where questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return 0;
+    }
+
+    public void setTrueOption(int questionID, int optionID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set isTrue = 1\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, optionID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void setFalseOption(int questionID, int optionID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set isTrue = 0\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, optionID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method allows insert new option into database
+     * @param questionID is id of question
+     * @param content is content of new option
+     * @param check  is status of option (true or false)
+     */
+    public void insertOption(int questionID, String content, int check) {
+        try {
+            String sql = "insert into [Option] values\n"
+                    + "(?,?,?)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, questionID);
+            stm.setString(2, content);
+            stm.setInt(3, check);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void deleteOption(int opID, int questionID) {
+        try {
+            String sql = "delete from [Option]\n"
+                    + "where optionID = ? and questionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, opID);
+            stm.setInt(2, questionID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    /**
+     * This method allows update option in database
+     * @param content is new content will be update
+     * @param opID is option id
+     */
+    public void updateOption(String content, int opID) {
+        try {
+            String sql = "update [Option]\n"
+                    + "set content = ?\n"
+                    + "where optionID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, content);
+            stm.setInt(2, opID);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
         OptionDAO dao = new OptionDAO();
         ArrayList<Option> blabla = dao.listCompareResult(1, 11);

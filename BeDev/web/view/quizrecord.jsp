@@ -17,7 +17,7 @@
         <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
     </head>
     <body onload="loader()">
-         <div class="loader">
+        <div class="loader">
             <span class="loader-spinner">Loading...</span>
         </div>
         <header class="bg-transparent">
@@ -48,17 +48,22 @@
                 <table class="table">
                     <thead class="bg-primary text-white">
                         <tr class="text-center">
+                            <th scope="col">STT</th>
                             <th scope="col">Grade</th>
+                            <th scope="col">Correct Answer</th>
                             <th scope="col">Time Attended</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach var="re" items="${listRecord}">
+                                               
+                        <c:forEach begin="0" end="${listRecord.size()-1}" step="1" var="i" >
                             <tr class="text-center">
-                                <th scope="row"><fmt:formatNumber type="number" maxFractionDigits="2" value="${re.getGrade()}" /></th>                                  
-                                <td>${re.getTimeAttended().toString().substring(0, 10)} &emsp; ${re.getTimeAttended().toString().substring(11,19)}</td>
-                                <td><a href="QuizReview?rid=${re.getRecordID()}&qid=${re.getQuizID()}">View Detail</a></td>
+                                <th>${i+1}</th>
+                                <td scope="row"><fmt:formatNumber type="number" maxFractionDigits="2" value="${listRecord.get(i).getGrade()}" /></td>  
+                                <td> ${listRecord.get(i).getNumberCorrectAnswer()} /  ${listRecord.get(i).getNumberQuestion()}</td>
+                                <td>${listRecord.get(i).getTimeAttended().toString().substring(0, 10)} &emsp; ${listRecord.get(i).getTimeAttended().toString().substring(11,19)}</td>
+                                <td><a href="QuizReview?rid=${listRecord.get(i).getRecordID()}&qid=${listRecord.get(i).getQuizID()}">View Detail</a></td>
                             </tr>
                         </c:forEach>
                     </tbody>

@@ -3,26 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.QuestionManagement;
 
-import dao.QuizRecordDAO;
+import controller.*;
+import dao.QuestionDAO;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.QuizRecord;
-import modal.Student;
+import modal.Question;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "RecordController", urlPatterns = {"/RecordController"})
-public class RecordController extends HttpServlet {
+@WebServlet(name = "EditQuestion", urlPatterns = {"/EditQuestion"})
+public class EditQuestion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +36,7 @@ public class RecordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/quizrecord.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/editQuestion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,32 +51,19 @@ public class RecordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        QuizRecordDAO recordDAO = new QuizRecordDAO();
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        Question question;
+        QuestionDAO questionDAO = new QuestionDAO();
         try {
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") !=null ) { //check login with account session
-                if (session.getAttribute("student") != null) { //check student login
-                    Student student = (Student) session.getAttribute("student");
-                    ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid); // list quiz record of student in a quiz
-                    
-                    QuizRecord quizRecord = recordDAO.nameOfQuiz(qid); // name of quiz
-                    request.setAttribute("listRecord", listRecord);
-                    request.setAttribute("quizRecord", quizRecord);
-                } else {
-                    response.sendRedirect("Error");
-                    return;
-                }
-            }else{
-                response.sendRedirect("SignIn");
-                return;
-            }
-            request.setAttribute("qid", qid);
+            int quesID = Integer.parseInt(request.getParameter("quesID"));
+            question = questionDAO.getQuestion(quesID); //get question by id of the question
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "Failed at RecordController");
+            System.out.println("Can not parse id");
             response.sendRedirect("Error");
-            return; 
+            return;
         }
+        request.setAttribute("question", question);
         processRequest(request, response);
     }
 
@@ -91,7 +78,35 @@ public class RecordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        QuestionDAO questionDAO = new QuestionDAO();
+        try {
+            int quesID = Integer.parseInt(request.getParameter("quesID"));
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            String content = request.getParameter("content");
+            String explain = request.getParameter("explain");
+            System.out.println(content);
+            System.out.println(explain);
+            System.out.println(qid);
+            System.out.println(quesID);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    questionDAO.editQuestion(content, explain, quesID, qid); //update the question with information of question contains content, explain
+                    doGet(request, response);
+                } else {
+                    response.sendRedirect("HomeControl");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
+            }         
+        } catch (Exception e) {
+            System.out.println("Can not parse");
+            response.sendRedirect("Error");
+        }
     }
 
     /**

@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.OptionManagement;
 
+import controller.*;
+import dao.OptionDAO;
 import dao.QuestionDAO;
-import dao.QuizDAO;
-import dao.QuizRecordDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,16 +17,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Option;
 import modal.Question;
-import modal.QuizRecord;
-import modal.Student;
 
 /**
  *
- * @author admin
+ * @author quang
  */
-@WebServlet(name = "QuizReview", urlPatterns = {"/QuizReview"})
-public class QuizReview extends HttpServlet {
+@WebServlet(name = "EditOption", urlPatterns = {"/EditOption"})
+public class EditOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,7 +39,7 @@ public class QuizReview extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/quizreview.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/editOption.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,38 +55,35 @@ public class QuizReview extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
+        Question question = new Question();
+        ArrayList<Option> listOption = new ArrayList<>();
         QuestionDAO questionDAO = new QuestionDAO();
-        QuizDAO quizDAO = new QuizDAO();
+        OptionDAO optionDAO = new OptionDAO();
+        String check = null;
         try {
-            int rid = Integer.parseInt(request.getParameter("rid"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            String courseID = request.getParameter("courseID");
-            Student student = (Student) session.getAttribute("student");
-            if (session.getAttribute("account") !=null ) {  //check login with account session
-                if (session.getAttribute("student") != null 
-                        && quizRecordDAO.checkExistQuizRecord(student.getAccount().getAccountID(), rid) != 0
-                        && quizDAO.checkQuizExist(qid) != 0) { //check student login and have quiz record and quiz
-                    QuizRecord quizRecord = quizRecordDAO.compareGrade(rid, qid, student.getAccount().getAccountID());  // a record contain grade and passrate of quiz in a quizrecord
-                    ArrayList<Question> questionList = questionDAO.listQuestionByQuizIdAndRecordId(qid, rid); // list question of quiz (contain option of question and answer of student)
-                    request.setAttribute("quizRecord", quizRecord);
-                    request.setAttribute("questionList", questionList);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    int quesID = Integer.parseInt(request.getParameter("quesID"));
+                    if (request.getParameter("check") != null) {
+                        check = request.getParameter("check");
+                    }
+                    question = questionDAO.getQuestion(quesID); //get question by id of the question
+                    listOption = optionDAO.listOption(quesID); //get list option by the question id
                 } else {
-                    response.sendRedirect("Error");
+                    response.sendRedirect("HomeControl");
                     return;
                 }
-            }else{
+            } else {
                 response.sendRedirect("SignIn");
                 return;
             }
-            request.setAttribute("courseID", courseID);
-            request.setAttribute("rid", rid);
-            request.setAttribute("qid", qid);          
         } catch (Exception e) {
-            System.out.println(e + "Failed at QuizReview");
-            response.sendRedirect("Error");
-            return;
+            System.out.println(e.getMessage());
+            System.out.println("Can not parse");
         }
+        request.setAttribute("check", check);
+        request.setAttribute("question", question);
+        request.setAttribute("listOption", listOption);
         processRequest(request, response);
     }
 
@@ -101,7 +98,26 @@ public class QuizReview extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        OptionDAO optionDAO = new OptionDAO();
+        ArrayList<Option> listOption = new ArrayList<>();
+        int quesID = 0;
+        try {
+            String[] listNewOption = request.getParameterValues("content"); //get the array string of parameter content
+            quesID = Integer.parseInt(request.getParameter("quesID"));
+            listOption = optionDAO.listOption(quesID);  //get list option of the question by id of question
+            for (int i = 0; i < listOption.size(); i++) {
+                optionDAO.updateOption(listNewOption[i], listOption.get(i).getOptionID());  //update inormation of option contain content, is True, is False by id of question
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Khong parse duoc");
+        }
+        if (!request.getParameter("check").isEmpty()) {
+            response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+        } else {
+            response.sendRedirect("EditOption?quesID=" + quesID);
+        }
     }
 
     /**

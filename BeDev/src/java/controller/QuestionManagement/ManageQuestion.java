@@ -3,10 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.QuestionManagement;
 
-import dao.QuizRecordDAO;
+import controller.*;
+import dao.OptionDAO;
+import dao.QuestionDAO;
+import dao.QuizDAO;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,15 +18,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.QuizRecord;
-import modal.Student;
+import modal.Question;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "RecordController", urlPatterns = {"/RecordController"})
-public class RecordController extends HttpServlet {
+@WebServlet(name = "ManageQuestion", urlPatterns = {"/ManageQuestion"})
+public class ManageQuestion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +39,7 @@ public class RecordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/quizrecord.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/manageQuestions.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -52,31 +55,30 @@ public class RecordController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        QuizRecordDAO recordDAO = new QuizRecordDAO();
+        ArrayList<Question> listQuestion = new ArrayList<>();
+        QuestionDAO questionDAO = new QuestionDAO();
+        QuizDAO quizDAO = new QuizDAO();
+        modal.Quiz quiz = new modal.Quiz();
         try {
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") !=null ) { //check login with account session
-                if (session.getAttribute("student") != null) { //check student login
-                    Student student = (Student) session.getAttribute("student");
-                    ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid); // list quiz record of student in a quiz
-                    
-                    QuizRecord quizRecord = recordDAO.nameOfQuiz(qid); // name of quiz
-                    request.setAttribute("listRecord", listRecord);
-                    request.setAttribute("quizRecord", quizRecord);
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+//            int id = Integer.parseInt(request.getParameter("qid"));  
+                    listQuestion = questionDAO.getQuestionByQuiz(1);    //get question by id of the quiz
+                    quiz = quizDAO.getQuizByID(1);  //get quiz by id of the quiz
                 } else {
-                    response.sendRedirect("Error");
+                    response.sendRedirect("HomeControl");
                     return;
                 }
-            }else{
+            } else {
                 response.sendRedirect("SignIn");
                 return;
             }
-            request.setAttribute("qid", qid);
         } catch (Exception e) {
-            System.out.println(e.getMessage() + "Failed at RecordController");
-            response.sendRedirect("Error");
-            return; 
+            System.out.println(e.getMessage());
         }
+        request.setAttribute("qid", 1);
+        request.setAttribute("quiz", quiz);
+        request.setAttribute("listQuestion", listQuestion);
         processRequest(request, response);
     }
 

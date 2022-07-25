@@ -3,26 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.OptionManagement;
 
-import dao.QuizRecordDAO;
+import controller.*;
+import dao.OptionDAO;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.QuizRecord;
-import modal.Student;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "RecordController", urlPatterns = {"/RecordController"})
-public class RecordController extends HttpServlet {
+@WebServlet(name = "AddOption", urlPatterns = {"/AddOption"})
+public class AddOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,7 +35,6 @@ public class RecordController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("//view/quizrecord.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,32 +49,6 @@ public class RecordController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        QuizRecordDAO recordDAO = new QuizRecordDAO();
-        try {
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            if (session.getAttribute("account") !=null ) { //check login with account session
-                if (session.getAttribute("student") != null) { //check student login
-                    Student student = (Student) session.getAttribute("student");
-                    ArrayList<QuizRecord> listRecord = recordDAO.listRecord(student.getAccount().getAccountID(), qid); // list quiz record of student in a quiz
-                    
-                    QuizRecord quizRecord = recordDAO.nameOfQuiz(qid); // name of quiz
-                    request.setAttribute("listRecord", listRecord);
-                    request.setAttribute("quizRecord", quizRecord);
-                } else {
-                    response.sendRedirect("Error");
-                    return;
-                }
-            }else{
-                response.sendRedirect("SignIn");
-                return;
-            }
-            request.setAttribute("qid", qid);
-        } catch (Exception e) {
-            System.out.println(e.getMessage() + "Failed at RecordController");
-            response.sendRedirect("Error");
-            return; 
-        }
         processRequest(request, response);
     }
 
@@ -91,7 +63,38 @@ public class RecordController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0;
+        try {
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    quesID = Integer.parseInt(request.getParameter("quesID"));
+                    String content = request.getParameter("content");
+                    String status = request.getParameter("status");
+                    if (status.equalsIgnoreCase("true")) {
+                        optionDAO.insertOption(quesID, content, 1); //add new option into database with status is true
+                    } else {
+                        optionDAO.insertOption(quesID, content, 0); //add new option into database with status is false
+                    }
+                    if (request.getParameter("check").isEmpty()) {
+                        response.sendRedirect("EditOption?quesID=" + quesID);
+                    } else {
+                        response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+                    }
+                } else {
+                    response.sendRedirect("HomeControl");
+                }
+            } else {
+                response.sendRedirect("SignIn");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("khong parse duoc");
+            response.sendRedirect("Error");
+        }
     }
 
     /**

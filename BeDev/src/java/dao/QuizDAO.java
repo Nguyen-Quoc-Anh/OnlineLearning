@@ -66,6 +66,7 @@ public class QuizDAO extends DBContext {
 
     /**
      * This method used to check quiz existed in database
+     *
      * @param quizID is quiz id
      * @return number of quiz
      */
