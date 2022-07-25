@@ -327,7 +327,7 @@
                                                         <p>Finish</p>
                                                     </div>
                                                 </div>
-                                                <a class="button button-md button--primary-outline w-100 my-3" href="watch.html">Watch Course</a>
+                                                <a class="button button-md button--primary-outline w-100 my-3" href="CourseDetails?courseID=${c.courseID}">Watch Course</a>
                                                 <div class="contentCard-watch--progress">
                                                     <span class="percentage" style="width: ${c.percentOfComplete * 100}%;"></span>
                                                 </div>
