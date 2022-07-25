@@ -17,9 +17,10 @@ import modal.Student;
  * @author ACER
  */
 public class StudentDAO extends DBContext {
-    
+
     /**
      * This method get information of a student from database
+     *
      * @param id is id of student
      * @return a student
      */
@@ -41,6 +42,7 @@ public class StudentDAO extends DBContext {
 
     /**
      * This method allows student update information and insert it to database
+     *
      * @param id is id of student
      * @param name is name updated
      */
@@ -57,7 +59,22 @@ public class StudentDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
+    public boolean addMoney(double money, int studentID) {
+        try {
+            String sql = "Update Student set cashInWallet=cashInWallet+?\n"
+                    + "where studentID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDouble(1, money);
+            stm.setInt(2, studentID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         StudentDAO dao = new StudentDAO();
         Student s = dao.profile(10);
