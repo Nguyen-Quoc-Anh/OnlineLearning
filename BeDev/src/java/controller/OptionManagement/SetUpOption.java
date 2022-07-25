@@ -3,28 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.OptionManagement;
 
+import controller.*;
 import dao.OptionDAO;
-import dao.QuestionDAO;
-import dao.QuizDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modal.Question;
 
 /**
  *
- * @author admin
+ * @author quang
  */
-@WebServlet(name = "ManageQuestion", urlPatterns = {"/ManageQuestion"})
-public class ManageQuestion extends HttpServlet {
+@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
+public class SetUpOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +34,6 @@ public class ManageQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/view/manageQuestions.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -53,32 +48,30 @@ public class ManageQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        ArrayList<Question> listQuestion = new ArrayList<>();
-        QuestionDAO questionDAO = new QuestionDAO();
-        QuizDAO quizDAO = new QuizDAO();
-        modal.Quiz quiz = new modal.Quiz();
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0 ;
         try {
-            if (session.getAttribute("account") != null) {  //check login with account session
-                if (session.getAttribute("expert") != null) {
-//            int id = Integer.parseInt(request.getParameter("qid"));  
-                    listQuestion = questionDAO.getQuestionByQuiz(1);    //get question by id of the quiz
-                    quiz = quizDAO.getQuizByID(1);  //get quiz by id of the quiz
-                } else {
-                    response.sendRedirect("HomeControl");
-                    return;
+            if (request.getParameter("quesID") != null && request.getParameter("opID") != null) {               
+                quesID = Integer.parseInt(request.getParameter("quesID"));
+                int opID = Integer.parseInt(request.getParameter("opID"));
+                if(request.getParameter("action").equalsIgnoreCase("true")){
+                    optionDAO.setTrueOption(quesID, opID);
                 }
-            } else {
-                response.sendRedirect("SignIn");
-                return;
+                if(request.getParameter("action").equalsIgnoreCase("false")){
+                    optionDAO.setFalseOption(quesID, opID);
+                }
+                if(request.getParameter("action").equalsIgnoreCase("delete")){
+                    optionDAO.deleteOption(opID, quesID);
+                }
+                if(request.getParameter("check")!=null){
+                    response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
+                }else{
+                    response.sendRedirect("EditOption?quesID="+quesID);
+                }    
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
-        request.setAttribute("qid", 1);
-        request.setAttribute("quiz", quiz);
-        request.setAttribute("listQuestion", listQuestion);
-        processRequest(request, response);
+        }      
     }
 
     /**

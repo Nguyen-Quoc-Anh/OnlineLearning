@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.OptionManagement;
 
+import controller.*;
 import dao.OptionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author quang
+ * @author admin
  */
-@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
-public class SetUpOption extends HttpServlet {
+@WebServlet(name = "AddOption", urlPatterns = {"/AddOption"})
+public class AddOption extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,30 +49,7 @@ public class SetUpOption extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        OptionDAO optionDAO = new OptionDAO();
-        int quesID = 0 ;
-        try {
-            if (request.getParameter("quesID") != null && request.getParameter("opID") != null) {               
-                quesID = Integer.parseInt(request.getParameter("quesID"));
-                int opID = Integer.parseInt(request.getParameter("opID"));
-                if(request.getParameter("action").equalsIgnoreCase("true")){
-                    optionDAO.setTrueOption(quesID, opID);
-                }
-                if(request.getParameter("action").equalsIgnoreCase("false")){
-                    optionDAO.setFalseOption(quesID, opID);
-                }
-                if(request.getParameter("action").equalsIgnoreCase("delete")){
-                    optionDAO.deleteOption(opID, quesID);
-                }
-                if(request.getParameter("check")!=null){
-                    response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
-                }else{
-                    response.sendRedirect("EditOption?quesID="+quesID);
-                }    
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }      
+        processRequest(request, response);
     }
 
     /**
@@ -84,7 +63,38 @@ public class SetUpOption extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        OptionDAO optionDAO = new OptionDAO();
+        int quesID = 0;
+        try {
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    quesID = Integer.parseInt(request.getParameter("quesID"));
+                    String content = request.getParameter("content");
+                    String status = request.getParameter("status");
+                    if (status.equalsIgnoreCase("true")) {
+                        optionDAO.insertOption(quesID, content, 1); //add new option into database with status is true
+                    } else {
+                        optionDAO.insertOption(quesID, content, 0); //add new option into database with status is false
+                    }
+                    if (request.getParameter("check").isEmpty()) {
+                        response.sendRedirect("EditOption?quesID=" + quesID);
+                    } else {
+                        response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+                    }
+                } else {
+                    response.sendRedirect("HomeControl");
+                }
+            } else {
+                response.sendRedirect("SignIn");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("khong parse duoc");
+            response.sendRedirect("Error");
+        }
     }
 
     /**

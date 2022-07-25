@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package controller.QuestionManagement;
 
+import controller.*;
 import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modal.Question;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "EditQuestion", urlPatterns = {"/EditQuestion"})
-public class EditQuestion extends HttpServlet {
+@WebServlet(name = "ChangeStatus", urlPatterns = {"/ChangeStatus"})
+public class ChangeStatus extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,7 +35,7 @@ public class EditQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/view/editQuestion.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,20 +50,31 @@ public class EditQuestion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        Question question;
+        HttpSession session = request.getSession();
         QuestionDAO questionDAO = new QuestionDAO();
-        try {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            question = questionDAO.getQuestion(quesID); //get question by id of the question
-        } catch (Exception e) {
-            System.out.println("Can not parse id");
-            response.sendRedirect("Error");
-            return;
+        if (session.getAttribute("account") != null) {  //check login with account session
+            if (session.getAttribute("expert") != null) {
+                if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
+                    int quesID = Integer.parseInt(request.getParameter("quesID"));
+                    int qid = Integer.parseInt(request.getParameter("qid"));
+                    if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
+                        questionDAO.inActiveQuestion(quesID, qid);  //update status is false of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Active")) {
+                        questionDAO.activeQuestion(quesID, qid);    //update status is true of the question in database by question id
+                    }
+                    if (request.getParameter("action").equalsIgnoreCase("Delete")) {
+                        questionDAO.deleteQuestion(quesID, qid);    //delete question in database by question id
+                    }
+                    response.sendRedirect("ManageQuestion");
+                }
+            } else {
+                response.sendRedirect("HomeControl");
+            }
+        } else {
+            response.sendRedirect("SignIn");
         }
-        request.setAttribute("question", question);
-        processRequest(request, response);
+        
     }
 
     /**
@@ -77,35 +88,7 @@ public class EditQuestion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        QuestionDAO questionDAO = new QuestionDAO();
-        try {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            int qid = Integer.parseInt(request.getParameter("qid"));
-            String content = request.getParameter("content");
-            String explain = request.getParameter("explain");
-            System.out.println(content);
-            System.out.println(explain);
-            System.out.println(qid);
-            System.out.println(quesID);
-            if (session.getAttribute("account") != null) {  //check login with account session
-                if (session.getAttribute("expert") != null) {
-                    questionDAO.editQuestion(content, explain, quesID, qid); //update the question with information of question contains content, explain
-                    doGet(request, response);
-                } else {
-                    response.sendRedirect("HomeControl");
-                    return;
-                }
-            } else {
-                response.sendRedirect("SignIn");
-                return;
-            }         
-        } catch (Exception e) {
-            System.out.println("Can not parse");
-            response.sendRedirect("Error");
-        }
+        processRequest(request, response);
     }
 
     /**
