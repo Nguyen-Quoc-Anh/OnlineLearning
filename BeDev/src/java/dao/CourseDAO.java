@@ -812,6 +812,7 @@ public class CourseDAO extends DBContext {
             System.out.println(e.getMessage());
         }
         return enrollOverview;
+    }
     public int checkCourseByExpertId(int eid) {
         try {
             String sql = "select count(*) from Course\n"
