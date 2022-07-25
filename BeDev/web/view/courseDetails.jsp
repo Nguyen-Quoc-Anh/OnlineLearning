@@ -403,13 +403,10 @@
                                             <form action="RateCourse" method="post">
                                                 <div class="star-widget">
                                                     <div class="wrapper-ratestar" style="">
-                                                        
-                                                            <label for="rate-6" class="fas fa-star"></label>
                                                             <input type="radio" name="rate" id="rate-5" value="5" <c:if test="${ rate.star==5}">checked=""</c:if>>
                                                             <label for="rate-5" class="fas fa-star"></label>
                                                             <input type="radio" name="rate" id="rate-4" value="4" <c:if test="${ rate.star==4}">checked=""</c:if>>
                                                             <label for="rate-4" class="fas fa-star"></label>
-                                                         
                                                             <input type="radio" name="rate" id="rate-3" value="3" <c:if test="${ rate.star==3}">checked=""</c:if>>
                                                             <label for="rate-3" class="fas fa-star"></label>
                                                             <input type="radio" name="rate" id="rate-2" value="2" <c:if test="${ rate.star==2}">checked=""</c:if>>

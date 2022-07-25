@@ -150,6 +150,19 @@ public class StudentDAO extends DBContext {
             System.out.println(e);
         }
         return list;
+    public boolean addMoney(double money, int studentID) {
+        try {
+            String sql = "Update Student set cashInWallet=cashInWallet+?\n"
+                    + "where studentID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setDouble(1, money);
+            stm.setInt(2, studentID);
+            stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
     }
 
     public static void main(String[] args) {

@@ -18,8 +18,8 @@
     rel="stylesheet">
 
 <!-- Custom styles for this template -->
-<link href="../BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
+<link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
 
 <!-- Custom styles for this page -->
-<link href="../BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 

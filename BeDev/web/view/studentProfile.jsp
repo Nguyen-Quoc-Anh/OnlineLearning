@@ -123,7 +123,7 @@
                                 <button class="nav-link" id="nav-purchase-tab" data-bs-toggle="tab" data-bs-target="#nav-purchase" type="button" role="tab" aria-controls="nav-purchase" aria-selected="false">Purchase History</button>
                             </c:if>
                             <button class="nav-link" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-setting" type="button" role="tab" aria-controls="nav-setting" aria-selected="false">Setting</button>
-
+                            <button class="nav-link" id="nav-setting-tab" data-bs-toggle="tab" data-bs-target="#nav-payment" type="button" role="tab" aria-controls="nav-payment" aria-selected="false">Payment</button>
                         </div>
                     </nav>
                 </div>
@@ -328,7 +328,7 @@
                                                         <p>Finish</p>
                                                     </div>
                                                 </div>
-                                                <a class="button button-md button--primary-outline w-100 my-3" href="watch.html">Watch Course</a>
+                                                <a class="button button-md button--primary-outline w-100 my-3" href="CourseDetails?courseID=${c.courseID}">Watch Course</a>
                                                 <div class="contentCard-watch--progress">
                                                     <span class="percentage" style="width: ${c.percentOfComplete * 100}%;"></span>
                                                 </div>
@@ -567,6 +567,20 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="tab-pane fade" id="nav-payment" role="tabpanel" aria-labelledby="nav-payment-tab">
+
+                            <form action="AddMoney" method="post">
+                                <input type="radio" value="100000" name="paymentValue">
+                                <label>100.000 VND</label><br>
+                                <input type="radio" value="200000" name="paymentValue">
+                                <label>200.000 VND</label><br>
+                                <input type="radio" value="500000" name="paymentValue">
+                                <label>500.000 VND</label><br>
+                                <input type="radio" value="1000000" name="paymentValue">
+                                <label>1.000.000 VND</label><br>
+                                <input  type="submit" value="Pay" class="btn btn-primary mt-4 text-white">
+                            </form>
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,13 @@ public class Account {
     public Account(int accountID) {
         this.accountID = accountID;
     }
+
+    public Account(int accountID, String email, Role role, boolean status) {
+        this.accountID = accountID;
+        this.email = email;
+        this.role = role;
+        this.status = status;
+    }
     
     
     public Account(int accountID, String email, String password, boolean emailVeriFy, Role role, boolean status) {

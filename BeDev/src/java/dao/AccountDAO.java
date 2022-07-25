@@ -5,10 +5,13 @@
  */
 package dao;
 
+import com.sun.xml.ws.tx.at.v10.types.PrepareResponse;
 import context.DBContext;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import modal.Account;
 import modal.Admin;
 import modal.Expert;
@@ -319,6 +322,49 @@ public class AccountDAO extends DBContext {
         return 0;
     }
     
+    public List<Account> getAllAccount() {
+        List<Account> list = new ArrayList<>();
+        try {
+            String sql = "select  a.accountID, a.email, a.role, a.status, r.roleName \n"
+                    + "from Account a , Role r where a.role= r.roleID";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Account a = new Account(rs.getInt(1), rs.getString(2), new Role(rs.getInt(3), rs.getString(5)), rs.getBoolean(4));
+                list.add(a);
+            }
+        } catch (SQLException e) {
+        }
+        return list;    
+    }
+    public boolean changeStatusAccount(int accountID, boolean status){
+        try {
+            String sql = "update Account set status = ? where accountID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(2, accountID);
+            stm.setBoolean(1, status);
+             stm.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+    public boolean getAccountStatus(int accountID){
+        try {
+            String sql ="select a.status from Account a where a.accountID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, accountID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return rs.getBoolean(1);
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         AccountDAO accountDAO = new AccountDAO();
         Expert a = accountDAO.getExpertByAccountID(2);
