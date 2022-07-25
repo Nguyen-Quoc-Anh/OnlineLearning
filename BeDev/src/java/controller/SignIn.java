@@ -60,6 +60,11 @@ public class SignIn extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if (session.getAttribute("account") != null) {
+            response.sendRedirect("HomeControl");
+            return;
+        }
 
         processRequest(request, response);
     }
@@ -88,26 +93,30 @@ public class SignIn extends HttpServlet {
             if (!account.isEmailVeriFy()) {// email have not verified.
                 mess = " Please verify youre email.";
             } else {
-                if (account.getRole().getRoleID() == 3) {// account is student
-                    Student student = new Student();
-                    student = accountDAO.getStudentByAccountID(account.getAccountID());
-                    session.setAttribute("student", student);
-
+                if (!account.isStatus()) {
+                    mess ="You are banned.Contact admin for more information";
                 } else {
-                    if (account.getRole().getRoleID()==2) {// account is expert
-                        Expert expert = new Expert();
-                        expert = accountDAO.getExpertByAccountID(account.getAccountID());
-                        session.setAttribute("expert", expert);
-                    }else{// account is admin
-                        Admin admin = new Admin();
-                        admin = accountDAO.getAdminByAccountID(account.getAccountID());
-                        session.setAttribute("admin", admin);
-                    }
+                    if (account.getRole().getRoleID() == 3) {// account is student
+                        Student student = new Student();
+                        student = accountDAO.getStudentByAccountID(account.getAccountID());
+                        session.setAttribute("student", student);
 
+                    } else {
+                        if (account.getRole().getRoleID() == 2) {// account is expert
+                            Expert expert = new Expert();
+                            expert = accountDAO.getExpertByAccountID(account.getAccountID());
+                            session.setAttribute("expert", expert);
+                        } else {// account is admin
+                            Admin admin = new Admin();
+                            admin = accountDAO.getAdminByAccountID(account.getAccountID());
+                            session.setAttribute("admin", admin);
+                        }
+
+                    }
+                    session.setAttribute("account", account);
+                    response.sendRedirect("HomeControl");
+                    return;
                 }
-                session.setAttribute("account", account);
-                response.sendRedirect("HomeControl");
-                return;
             }
         }
         request.setAttribute("mess", mess);

@@ -23,12 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Chapter;
+import modal.Expert;
 
 /**
  *
  * @author ADMIN
  */
-@WebServlet(name = "ManageQuiz", urlPatterns = {"/ManageQuiz"})
+@WebServlet(name = "ManageQuiz", urlPatterns = {"/expert/ManageQuiz"})
 public class ManageQuiz extends HttpServlet {
 
     /**
@@ -58,26 +59,37 @@ public class ManageQuiz extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        QuizDAO quizDAO = new QuizDAO();
-        List<modal.Quiz> list = new ArrayList<>();
         int chapterId = 1;
-        if (request.getParameter("chapterId")!=null) {
+        if (request.getParameter("chapterId") != null) {
             chapterId = Integer.parseInt(request.getParameter("chapterId"));
         }
-        list = quizDAO.getListQuizByChapterId(chapterId);
-        ChapterDAO cdao = new ChapterDAO();
-        Chapter c = cdao.getChapterByChapterId(chapterId);
-        request.setAttribute("chapter", c); 
-        request.setAttribute("listQuiz", list);
-        QuizRecordDAO dao = new QuizRecordDAO();
-        for (modal.Quiz quiz : list) {
-            quiz.setCheckQuizrecord(dao.checkQuizRecordExist(quiz.getQuizID()));
-        }
-        String currrentURL = request.getRequestURI()+"?"+request.getQueryString();
+        QuizDAO quizDAO = new QuizDAO();
         HttpSession session = request.getSession();
-        session.setAttribute("currentURL", currrentURL);
-        
-        processRequest(request, response);
+        if (session.getAttribute("expert") == null) {
+            response.sendRedirect("/beDev/HomeControl");
+            return;
+        } else {
+            Expert e = (Expert) session.getAttribute("expert");
+            if (!quizDAO.checkOwnerChapter(chapterId, e.getExpertID())) {
+                response.sendRedirect("/BeDev/HomeControl");
+                return;
+            } else {
+                List<modal.Quiz> list = new ArrayList<>();
+                list = quizDAO.getListQuizByChapterId(chapterId);
+                ChapterDAO cdao = new ChapterDAO();
+                Chapter c = cdao.getChapterByChapterId(chapterId);
+                request.setAttribute("chapter", c);
+                request.setAttribute("listQuiz", list);
+                QuizRecordDAO dao = new QuizRecordDAO();
+                for (modal.Quiz quiz : list) {
+                    quiz.setCheckQuizrecord(dao.checkQuizRecordExist(quiz.getQuizID()));
+                }
+                String currrentURL = request.getRequestURI() + "?" + request.getQueryString();
+                session.setAttribute("currentURL", currrentURL);
+                processRequest(request, response);
+            }
+        }
+
     }
 
     /**

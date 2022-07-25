@@ -121,6 +121,7 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
+
     public Quiz getQuiz(int qid) {
         try {
             String sql = "select q.quizID, q.quizName from Quiz q\n"
@@ -206,7 +207,7 @@ public class QuizDAO extends DBContext {
             stm.setNString(2, quizName);
             stm.setDouble(3, passRate);
             QuizDAO dao = new QuizDAO();
-            stm.setInt(4, dao.getMaxPositionOfQuiz(chapterID)+1);
+            stm.setInt(4, dao.getMaxPositionOfQuiz(chapterID) + 1);
             stm.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -228,14 +229,51 @@ public class QuizDAO extends DBContext {
         }
         return 0;
     }
-    public boolean deleteQuiz(int quizID){
+
+    public boolean deleteQuiz(int quizID) {
         try {
-            String sql ="delete from Quiz where quizID =?";
-            PreparedStatement stm  =connection.prepareStatement(sql);
+            String sql = "delete from Quiz where quizID =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, quizID);
             stm.executeUpdate();
             return true;
         } catch (SQLException e) {
+        }
+        return false;
+    }
+
+    public boolean checkOwnerQuiz(int quizID, int expertID) {
+        try {
+            String sql = "select * from Course c, Chapter ch, Quiz q \n"
+                    + "where c.courseID=ch.courseID and ch.chapterID = q.chapterID\n"
+                    + "and c.expertID = ? and q.quizID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(2, quizID);
+            stm.setInt(1, expertID);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+    public boolean checkOwnerChapter(int chapterID, int expertId) {
+        try {
+            String sql = "select * from Course c, Chapter ch\n"
+                    + "where c.courseID=ch.courseID \n"
+                    + "and c.expertID = ? and ch.chapterID = ?";
+            PreparedStatement stm  = connection.prepareStatement(sql);
+            stm.setInt(1, expertId);
+            stm.setInt(2, chapterID);
+            ResultSet rs  = stm.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
         return false;
     }
