@@ -35,11 +35,6 @@ public class Chapter {
         this.position = position;
         this.status = status;
     }
-
-    public Chapter(int chapterID, String chapterName) {
-        this.chapterID = chapterID;
-        this.chapterName = chapterName;
-    }
     
     public Chapter(int chapterID, String chapterName, int position, List<Lesson> lessons, Quiz quiz) {
         this.chapterID = chapterID;
