@@ -84,7 +84,7 @@
                                 <div class="col-md-2">
                                     <div class="container d-flex h-100">
                                         <div class="row justify-content-center align-self-center">
-                                            <a href="Quiz?quizID=${qid}&courseID=${courseID}" class="btn btn-primary btn-lg text-white">Back</a>
+                                            <a href="Quiz?qid=${qid}&courseID=${courseID}" class="btn btn-primary btn-lg text-white">Back</a>
                                         </div>
                                     </div>
                                 </div>

@@ -20,6 +20,10 @@ public class Expert {
     public Expert() {
     }
 
+    public Expert(int expertID) {
+        this.expertID = expertID;
+    }
+
     public Expert(int expertID, String expertName, String img) {
         this.expertID = expertID;
         this.expertName = expertName;

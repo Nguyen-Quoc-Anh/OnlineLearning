@@ -75,7 +75,7 @@
                         </div>
                     </div>
                     <div class="coursedescription-header-end">
-                        <a href="#" class="button button--text" >Leave a Rating</a>
+                        
                         <c:if test="${lessonDetails.lessonID < course.numberLesson}">
                             <a href="LessonView?courseID=${course.courseID}&lessonID=${lessonDetails.lessonID + 1}" class="button button--primary">Next Lession</a>
                         </c:if>

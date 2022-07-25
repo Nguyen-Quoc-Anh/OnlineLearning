@@ -47,10 +47,8 @@ public class DeleteQuiz extends HttpServlet {
         String currentURL =session.getAttribute("currentURL").toString();
         if (dao.deleteQuiz(quizId)) {
             response.sendRedirect(currentURL);
-            return;
         }else{
             response.sendRedirect("Error");
-            return;
         }
     }
 

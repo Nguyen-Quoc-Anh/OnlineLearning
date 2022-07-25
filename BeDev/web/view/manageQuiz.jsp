@@ -117,8 +117,8 @@
                         <!-- DataTales Example -->
                         <div class="card shadow mb-4">
                             <div class="card-header py-3 row">
-                                <h6 class="m-0 font-weight-bold text-primary col-md-6">List Quiz of Chapter: ${chapter.chapterName} </h6>
-                                <h6 class="col-md-6"><a href="AddNewQuiz?chapterId=${chapter.chapterID}">Add quiz for this chapter</a></h6>
+                                <h6 class="m-0 font-weight-bold text-primary col-md-8">List Quiz of Chapter: ${chapter.chapterName} </h6>
+                                <h6 class="col-md-4"><a class="btn btn-primary" href="AddNewQuiz?chapterId=${chapter.chapterID}">Add quiz for this chapter</a></h6>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -138,21 +138,15 @@
                                                     <td>${q.quizID}</td>
                                                     <td>${q.quizName}</td>
                                                     <td>${q.passRate} %</td>
-                                                    <td>${q.status?"Active":"Inactive"}</td>
+                                                    <td id="course-status-${course.getCourseID()}" onclick="changeStatus(${q.isStatus()}, '${q.quizID}', '${q.quizName}')">${q.isStatus()==true ? "<span class=\"badge badge-success\" data-toggle=\"modal\" data-target=\"#logoutModal\">Active</span>" : "<span class=\"badge badge-danger\" data-toggle=\"modal\" data-target=\"#logoutModal\">Inactive</span>"}</td>
                                                     <td>
-                                                        <c:if test="${q.status}">
-                                                            <a href="UpdateStatusQuiz?quizID=${q.quizID}">Inactive</a>
+                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>&emsp;
+                                                        <a href="ManageQuestion">Manage question</a>
+                                                        &emsp;
+                                                        <c:if test="${!q.checkQuizrecord}">
+                                                            <a onclick="checkDelete()"  href="DeleteQuiz?quizId=${q.quizID}">Delete</a>
                                                         </c:if>
-                                                        <c:if test="${!q.status}">
-                                                            <a href="UpdateStatusQuiz?quizID=${q.quizID}">Active</a>
-                                                        </c:if>
-                                                        |
-                                                        <a href="EditQuiz?chapterID=${chapter.chapterID}&quizID=${q.quizID}">Edit</a>
-                                                        |
-                                                        <c:if test="${q.checkQuizrecord}">
-                                                            <a href="DeleteQuiz?quizId=${q.quizID}">Delete</a>
-                                                        </c:if>
-                                                        
+
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -180,15 +174,15 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Đăng xuất?</h5>
+                        <h5 class="modal-title" id="header-status"></h5>
                         <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Bạn có muốn đăng xuất không</div>
+                    <div class="modal-body" id="modal-body-status"></div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                        <a class="btn btn-primary" href="Logout">Logout</a>
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <a class="btn" id="btn-change-status" onclick="submitChangeStatus()"></a>
                     </div>
                 </div>
             </div>
@@ -197,7 +191,7 @@
         <!-- Bootstrap core JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- Core plugin JavaScript-->
         <script src="../BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -210,7 +204,94 @@
 
         <!-- Page level custom scripts -->
         <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
+        <script>
+                            let editor2;
+                            var currentStatus, quizID;
+                            function changeStatus(status, quizId, quizName) {
+                                currentStatus = status;
+                                quizID = quizId;
+                                if (status) {
+                                    $('#header-status').text("Inactive");
+                                    $('#modal-body-status').text(`Do you want to inactive quiz ` + quizName);
+                                    $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                                } else {
+                                    $('#header-status').text("Active");
+                                    $('#modal-body-status').text(`Do you want to active quiz ` + quizName);
+                                    $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                }
+                            }
 
+                            function submitChangeStatus() {
+                                $.post("/BeDev/UpdateStatusQuiz", {quizID: quizID}, (response) => {
+                                    $('#logoutModal').modal('toggle');
+                                    if (response == "success") {
+                                        showMessage(response, "Change status successfully", true);
+                                    } else {
+                                        showMessage(response, "Change status failed", false);
+                                    }
+                                });
+                            }
+
+
+                            function changeInfoModalDelete(courseId, courseName) {
+                                courseID = courseId;
+                                $('#modal-body-delete').text(`Do you want to delete course ` + courseName);
+                            }
+
+                            function showMessage(status, message, reload) {
+                                swal({
+                                    title: status == "success" ? "Success" : "Error",
+                                    text: message,
+                                    icon: status == "success" ? "success" : "error",
+                                    button: "OK",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                }).then(function () {
+                                    if (reload) {
+                                        if (status == "success") {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                            function deleteCourse() {
+                                $.ajax({
+                                    url: '/BeDev/manage/deletecourse?courseId=' + courseID,
+                                    type: 'DELETE',
+                                    success: function (result) {
+                                        if (result == 'success') {
+                                            showMessage(result, "Delete course successfully", true);
+                                        } else {
+                                            showMessage(result, result, false);
+                                        }
+                                    }
+                                });
+                            }
+
+function checkDelete({
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, delete it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire(
+      'Deleted!',
+      'Your file has been deleted.',
+      'success'
+    )
+  }
+})
+
+
+
+
+
+        </script>
     </body>
 
 </html>

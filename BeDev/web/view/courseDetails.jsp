@@ -1088,62 +1088,7 @@
         </section>
         <!-- Event Info Ends Here -->
 
-        <section class="section new-course-feature section--bg-offwhite-five">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-12">
-                        <h2 class="font-title--md text-center">Related Course</h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 position-relative px-0 mx-0">
-                            <div class="new__courses">
-                                <c:forEach items="${relatedCourse}" var="course" begin="0" end="3">
-                                    <div class="contentCard contentCard--course contentCard--space">
-                                        <div class="contentCard-top">
-                                            <a href="CourseDetails?courseID=${course.courseID}"><img src="${course.courseImage}" alt="images" class="img-fluid" /></a>
-                                        </div>
-                                        <div class="contentCard-bottom">
-                                            <h5>
-                                                <a href="CourseDetails?courseID=${course.courseID}" class="font-title--card">${course.courseName}</a>
-                                            </h5>
-                                            <div class="contentCard-info d-flex align-items-center justify-content-between">
-                                                <a href="ExpertProfile?id=${course.getExpert().getExpertID()}" class="contentCard-user d-flex align-items-center">
-                                                    <img src="${course.getExpert().img}" style="height: 20px" alt="client-image" class="rounded-circle" />
-                                                    <p class="font-para--md">Brandon Dias</p>
-                                                </a>
-                                                <div class="price">
-                                                    <span>${course.money}</span>
-                                                </div>
-                                            </div>
-                                            <div class="contentCard-more">
-                                                <div class="d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/star.png" alt="star" />
-                                                    </div>
-                                                    <span>${course.averageStar}</span>
-                                                </div>
-                                                <div class="eye d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/eye.png" alt="eye" />
-                                                    </div>
-                                                    <span>${course.numberRegister}</span>
-                                                </div>
-                                                <div class="book d-flex align-items-center">
-                                                    <div class="icon">
-                                                        <img src="../BeDev/view/dist/images/icon/book.png" alt="location" />
-                                                    </div>
-                                                    <span>${course.numberLesson} Lesson</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
         <jsp:include page="footer.jsp"></jsp:include>
     </body>
 </html>

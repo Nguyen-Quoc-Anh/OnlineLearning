@@ -57,6 +57,8 @@ public class Quiz extends HttpServlet {
         QuizDAO quizDAO = new QuizDAO();
         modal.Quiz quiz = quizDAO.getQuizByID(Integer.parseInt(quizID));
         request.setAttribute("quiz", quiz);
+        int numberQuestion = quizDAO.getNumberQuestionByQuizID(quizID);
+        request.setAttribute("numberQuestion", numberQuestion);
         //Get receive grade by quizID and studentID
         QuizRecordDAO quizRecordDAO = new QuizRecordDAO();
         QuizRecord quizRecord = quizRecordDAO.getGrade(quizID, student.getAccount().getAccountID());
@@ -65,6 +67,8 @@ public class Quiz extends HttpServlet {
         ChapterDAO chapterDAO = new ChapterDAO();
         List<Chapter> listChapter = chapterDAO.listChapterByEnrollCourse(courseID, student.getAccount().getAccountID());
         request.setAttribute("listChapter", listChapter);
+        
+        
         request.getRequestDispatcher("//view//quiz.jsp").forward(request, response);
     }
 

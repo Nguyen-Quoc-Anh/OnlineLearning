@@ -25,7 +25,8 @@ public class Course {
     private int numberLesson;
     private int averageStar;
     private float percentOfComplete;
-
+    private Category category;
+    
     private int totalLession;
     private int totalLearned;
 
@@ -106,6 +107,25 @@ public class Course {
         this.numberRegister = numberRegister;
         this.numberLesson = numberLesson;
         this.averageStar = averageStar;
+    }
+
+    public Course(int courseID, String courseName, String description, String courseImage, double money, Date releasedDate, boolean status, Category category) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.money = money;
+        this.releasedDate = releasedDate;
+        this.status = status;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public int getAverageStar() {

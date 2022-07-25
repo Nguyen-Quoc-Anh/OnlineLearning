@@ -45,19 +45,8 @@ public class CourseDetails extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String courseID = request.getParameter("courseID");
         HttpSession session = request.getSession();
+        session.setAttribute("courseID", courseID);
         Student student = (Student) session.getAttribute("student");
-        //Check student enroll a course
-        EnrollDAO enrollDAO = new EnrollDAO();
-        RateDAO rateDAO = new RateDAO();
-        if (student != null) {
-            boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());//check if this student is registered for this course
-            request.setAttribute("isEnroll", isEnroll);
-            if (isEnroll) {// if registered then get his/her rate
-                request.setAttribute("rate", rateDAO.getRateByStudnetIdAndCourseId(student.getAccount().getAccountID(), Integer.parseInt(courseID)));
-            }
-        }else{
-            request.setAttribute("isEnroll", false);
-        }
         //Get a course by course ID from courseDAO
         CourseDAO courseDAO = new CourseDAO();
         Course course = courseDAO.getCourseById(courseID);
@@ -71,6 +60,7 @@ public class CourseDetails extends HttpServlet {
         List<Chapter> listChapter = chapterDAO.listChapterByCourse(courseID);
         request.setAttribute("listChapter", listChapter);
         //Get list rate of course by course ID from rateDAO
+        RateDAO rateDAO = new RateDAO();
         List<Rate> listRate = rateDAO.listRateByCourse(courseID);
         request.setAttribute("listRate", listRate);
         request.setAttribute("courseID", courseID);
@@ -120,6 +110,7 @@ public class CourseDetails extends HttpServlet {
             request.setAttribute("percentStarFive", 0);
         }
         //Check student enroll a course
+        EnrollDAO enrollDAO = new EnrollDAO();
         if (student != null) {
             boolean isEnroll = enrollDAO.isEnroll(courseID, student.getAccount().getAccountID());
             request.setAttribute("isEnroll", isEnroll);
@@ -130,8 +121,8 @@ public class CourseDetails extends HttpServlet {
             request.setAttribute("isEnroll", false);
         }
         //Get list course related with a course
-        List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
-        request.setAttribute("relatedCourse", relatedCourse);
+        //List<Course> relatedCourse = courseDAO.relatedCourse(courseID, listCategory.get(0).getCategoryID());
+        //request.setAttribute("relatedCourse", relatedCourse);
         request.getRequestDispatcher("//view//courseDetails.jsp").forward(request, response);
     }
 

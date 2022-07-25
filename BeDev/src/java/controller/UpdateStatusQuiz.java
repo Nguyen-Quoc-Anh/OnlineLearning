@@ -39,16 +39,8 @@ public class UpdateStatusQuiz extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        int quizID = Integer.parseInt(request.getParameter("quizID"));
-        QuizDAO dao = new QuizDAO();
-        if (dao.getQuizStatus(quizID)) {
-            System.out.println(dao.updateStatus(quizID, false));
-        }else{
-            System.out.println(dao.updateStatus(quizID, true));
-        }
-        HttpSession session = request.getSession();
-        String currentURL =session.getAttribute("currentURL").toString();
-        response.sendRedirect(currentURL);
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,7 +69,18 @@ public class UpdateStatusQuiz extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        int quizID = Integer.parseInt(request.getParameter("quizID"));
+        QuizDAO dao = new QuizDAO();
+        
+        if (dao.getQuizStatus(quizID)) {
+            System.out.println(dao.updateStatus(quizID, false));
+            response.getWriter().write("success");
+        }else{
+            System.out.println(dao.updateStatus(quizID, true));
+            response.getWriter().write("success");
+        }
+        
     }
 
     /**
