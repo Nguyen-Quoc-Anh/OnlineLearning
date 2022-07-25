@@ -33,6 +33,12 @@ public class Student {
         this.imageURL = imageURL;
     }
 
+    public Student(Account account) {
+        this.account = account;
+    }
+    
+    
+
     public Student(Account account, String name, String imageURL) {
         this.account = account;
         this.name = name;

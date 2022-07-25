@@ -41,6 +41,23 @@ public class QuizDAO extends DBContext {
         return null;
     }
 
+    public Quiz getQuizByIdandExpertId(int quizID, int eid) {
+        try {
+            String sql = "select q.quizID, q.quizName from Quiz q, Chapter ch, Course c\n"
+                    + "where q.chapterID = ch.chapterID and ch.courseID = c.courseID and q.quizID = ? and c.expertID = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, quizID);
+            stm.setInt(2, eid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                return new Quiz(rs.getInt(1), rs.getString(2), 0);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
     /**
      * This method insert a quiz record into database.
      *

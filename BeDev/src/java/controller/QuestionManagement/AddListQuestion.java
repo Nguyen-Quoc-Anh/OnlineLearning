@@ -5,29 +5,26 @@
  */
 package controller.QuestionManagement;
 
-import controller.*;
-import dao.CourseDAO;
-import dao.OptionDAO;
 import dao.QuestionDAO;
 import dao.QuizDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import modal.Expert;
-import modal.Question;
+import modal.Quiz;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name = "ManageQuestion", urlPatterns = {"/ManageQuestion"})
-public class ManageQuestion extends HttpServlet {
+@WebServlet(name = "AddListQuestion", urlPatterns = {"/AddListQuestion"})
+
+public class AddListQuestion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,7 +38,7 @@ public class ManageQuestion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("/view/manageQuestions.jsp").forward(request, response);
+        request.getRequestDispatcher("/view/addListQuestion.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -57,18 +54,18 @@ public class ManageQuestion extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        ArrayList<Question> listQuestion = new ArrayList<>();
-        QuestionDAO questionDAO = new QuestionDAO();
         QuizDAO quizDAO = new QuizDAO();
-        modal.Quiz quiz = new modal.Quiz();
-        int qid;
+        modal.Quiz quiz = new Quiz();
         try {
             if (session.getAttribute("account") != null) {  //check login with account session
                 if (session.getAttribute("expert") != null) {
-                    Expert expert = (Expert)session.getAttribute("expert");
-                    qid = Integer.parseInt(request.getParameter("qid"));
-                    listQuestion = questionDAO.getQuestionByQuiz(qid,expert.getExpertID());    //get question by id of the quiz
-                    quiz = quizDAO.getQuizByID(qid);  //get quiz by id of the quiz
+                    Expert expert = (Expert) session.getAttribute("expert");
+                    int qid = Integer.parseInt(request.getParameter("qid"));
+                    quiz = quizDAO.getQuizByIdandExpertId(qid, expert.getExpertID());
+                    if (quiz == null) {
+                        response.sendRedirect("Error");
+                        return;
+                    }
                 } else {
                     response.sendRedirect("HomeControl");
                     return;
@@ -78,13 +75,8 @@ public class ManageQuestion extends HttpServlet {
                 return;
             }
         } catch (Exception e) {
-            System.out.println(e);
-            response.sendRedirect("Error");
-            return;
         }
-        request.setAttribute("qid", qid);
         request.setAttribute("quiz", quiz);
-        request.setAttribute("listQuestion", listQuestion);
         processRequest(request, response);
     }
 
@@ -99,7 +91,19 @@ public class ManageQuestion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.setCharacterEncoding("UTF-8");
+        QuestionDAO questionDAO = new QuestionDAO();
+        try {
+            int qid = Integer.parseInt(request.getParameter("qid"));
+            String[] content = request.getParameter("content").trim().split("///");
+            for (String x : content) {
+                questionDAO.insertQuestion(x, qid);                         
+            }
+            response.sendRedirect("ManageQuestion?qid="+qid);  
+        } catch (Exception e) {
+            System.out.println(e);
+            response.sendRedirect("Error");
+        }
     }
 
     /**

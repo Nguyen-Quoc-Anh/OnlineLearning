@@ -51,7 +51,7 @@ public class ChangeStatus extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        QuestionDAO questionDAO = new QuestionDAO();
+        QuestionDAO questionDAO = new QuestionDAO();   
         if (session.getAttribute("account") != null) {  //check login with account session
             if (session.getAttribute("expert") != null) {
                 if (request.getParameter("action") != null && request.getParameter("quesID") != null && request.getParameter("qid") != null) {
@@ -59,6 +59,7 @@ public class ChangeStatus extends HttpServlet {
                     int qid = Integer.parseInt(request.getParameter("qid"));
                     if (request.getParameter("action").equalsIgnoreCase("Inactive")) {
                         questionDAO.inActiveQuestion(quesID, qid);  //update status is false of the question in database by question id
+                        System.out.println("noooo");
                     }
                     if (request.getParameter("action").equalsIgnoreCase("Active")) {
                         questionDAO.activeQuestion(quesID, qid);    //update status is true of the question in database by question id
@@ -66,7 +67,7 @@ public class ChangeStatus extends HttpServlet {
                     if (request.getParameter("action").equalsIgnoreCase("Delete")) {
                         questionDAO.deleteQuestion(quesID, qid);    //delete question in database by question id
                     }
-                    response.sendRedirect("ManageQuestion");
+                    response.sendRedirect("ManageQuestion?qid="+qid);
                 }
             } else {
                 response.sendRedirect("HomeControl");

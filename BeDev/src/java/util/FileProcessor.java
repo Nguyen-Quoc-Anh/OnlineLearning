@@ -29,6 +29,10 @@ public class FileProcessor {
     public String getFolderImage(HttpServletRequest request, String folder) {
         return request.getServletContext().getRealPath("view/dist/images").replace("build\\", "").concat("\\" + folder).trim();
     }
+    
+    public String getFolderTxt(HttpServletRequest request, String folder) {
+        return request.getServletContext().getRealPath("view/dist/").replace("build\\", "").concat("\\" + folder).trim();
+    }
 
     /**
      *

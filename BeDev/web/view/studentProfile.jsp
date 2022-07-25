@@ -6,6 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -380,138 +381,40 @@
 
                         <div class="tab-pane fade" id="nav-purchase" role="tabpanel" aria-labelledby="nav-purchase-tab">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="purchase-area">
-                                        <div class="purchase-area-close">
-                                            <a href="#">
-                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11 1L1 11" stroke="#F15C4C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M1 1L11 11" stroke="#F15C4C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="d-flex align-items-lg-center align-items-start flex-column flex-lg-row">
-                                            <div class="purchase-area-items">
-                                                <div class="purchase-area-items-start d-flex align-items-lg-center flex-column flex-lg-row">
-                                                    <div class="image">
-                                                        <a href="#">
-                                                            <img src="../BeDev/view/dist/images/courses/demo-img-03.png" alt="Image" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="text d-flex flex-column flex-lg-row">
-                                                        <div class="text-main">
-                                                            <h6>
-                                                                <a href="#">Advanced Digital Comic Coloring Concepts & Techniques</a>
-                                                            </h6>
-                                                            <p>By <a href="instructorcourses.html">Kevin Gilbert</a></p>
+                            <c:forEach items="${listTransaction}" var="tran">
+                                    <div class="col-lg-12">
+                                        <div class="purchase-area">
+                                            <div class="d-flex align-items-lg-center align-items-start flex-column flex-lg-row">
+                                                <div class="purchase-area-items">
+                                                    <div class="purchase-area-items-start d-flex align-items-lg-center flex-column flex-lg-row">
+                                                        <div class="image">
+                                                            <a href="#">
+                                                                <img src="${tran.getCourse().getCourseImage()}" alt="Image" />
+                                                            </a>
                                                         </div>
-                                                        <p>$87</p>
+                                                        <div class="text d-flex flex-column flex-lg-row">
+                                                            <div class="text-main">
+                                                                <h6>
+                                                                    <a href="CourseDetails?courseID=${tran.getCourse().getCourseID()}">${tran.getCourse().getCourseName()}</a>
+                                                                </h6>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="purchase-area-items-start d-flex align-items-lg-center flex-column flex-lg-row">
-                                                    <div class="image">
-                                                        <a href="#">
-                                                            <img src="../BeDev/view/dist/images/courses/demo-img-05.png" alt="Image" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="text d-flex flex-column flex-lg-row">
-                                                        <div class="text-main">
-                                                            <h6>
-                                                                <a href="#">Advanced Digital Comic Coloring Concepts & Techniques</a>
-                                                            </h6>
-                                                            <p>By <a href="instructorcourses.html">Kevin Gilbert</a></p>
-                                                        </div>
-                                                        <p>$25</p>
-                                                    </div>
+                                                <div class="purchase-area-items-end">
+                                                    <p>${tran.getTime().toString().substring(0,10)} &emsp; ${tran.getTime().toString().substring(11,19)}</p>                                       
+                                                    <dl class="row">
+                                                        <dt class="col-sm-4">Payment</dt>
+                                                        <dd class="col-sm-8">
+                                                            
+                                                            <fmt:formatNumber type="number" value="${tran.getAmount()}" /> VND
+                                                        </dd>
+                                                    </dl>
                                                 </div>
-                                                <div class="purchase-area-items-start mb-0 pb-2 d-flex align-items-lg-center flex-column flex-lg-row">
-                                                    <div class="image">
-                                                        <a href="#">
-                                                            <img src="../BeDev/view/dist/images/courses/8.jpg" alt="Image" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="text d-flex flex-column flex-lg-row">
-                                                        <div class="text-main">
-                                                            <h6>
-                                                                <a href="#">Adobe Illustrator CC – Advanced Training Course</a>
-                                                            </h6>
-                                                            <p>By <a href="instructorcourses.html">Kevin Gilbert</a></p>
-                                                        </div>
-                                                        <p>$14</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="purchase-area-items-end">
-                                                <p>11th Dec, 2020</p>
-                                                <dl class="row">
-                                                    <dt class="col-sm-4">Subtotal</dt>
-                                                    <dd class="col-sm-8">211 USD</dd>
-
-                                                    <dt class="col-sm-4">Total Courses</dt>
-                                                    <dd class="col-sm-8">
-                                                        03
-                                                    </dd>
-
-                                                    <dt class="col-sm-4">Payment Type</dt>
-                                                    <dd class="col-sm-8">
-                                                        Credit Card
-                                                    </dd>
-                                                </dl>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="row mt-3">
-                                <div class="col-lg-12">
-                                    <div class="purchase-area">
-                                        <div class="purchase-area-close">
-                                            <a href="#">
-                                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11 1L1 11" stroke="#F15C4C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M1 1L11 11" stroke="#F15C4C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                </svg>
-                                            </a>
-                                        </div>
-                                        <div class="d-flex align-items-lg-center align-items-start flex-column flex-lg-row">
-                                            <div class="purchase-area-items">
-                                                <div class="purchase-area-items-start mb-0 d-flex align-items-lg-center flex-column flex-lg-row">
-                                                    <div class="image">
-                                                        <a href="#">
-                                                            <img src="../BeDev/view/dist/images/courses/8.jpg" alt="Image" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="text d-flex flex-column flex-lg-row">
-                                                        <div class="text-main">
-                                                            <h6>
-                                                                <a href="#">Digital Art for Beginners - Unleash Your Creativity</a>
-                                                            </h6>
-                                                            <p>By <a href="instructorcourses.html">Kevin Gilbert</a></p>
-                                                        </div>
-                                                        <p>$14</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="purchase-area-items-end">
-                                                <p>3rd, 2021</p>
-                                                <dl class="row">
-                                                    <dt class="col-sm-4">Subtotal</dt>
-                                                    <dd class="col-sm-8">211 USD</dd>
-
-                                                    <dt class="col-sm-4">Total Courses</dt>
-                                                    <dd class="col-sm-8">
-                                                        03
-                                                    </dd>
-
-                                                    <dt class="col-sm-4">Payment Type</dt>
-                                                    <dd class="col-sm-8">
-                                                        Credit Card
-                                                    </dd>
-                                                </dl>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div>
                             <div class="row mt-lg-5 mt-4">
                                 <div class="col-lg-12 text-center">

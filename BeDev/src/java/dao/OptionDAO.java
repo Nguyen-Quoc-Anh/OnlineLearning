@@ -165,17 +165,19 @@ public class OptionDAO extends DBContext {
     }
 
     /**
-     * This method get list option of the question by id of the quesion
+     * This method get list option of the question by id of the question and expert id
+     * @param  eid  is expert id
      * @param questionID is question id
      * @return list option
      */
-    public ArrayList<Option> listOption(int questionID) {
+    public ArrayList<Option> listOption(int questionID, int eid) {
         ArrayList<Option> option = new ArrayList<>();
         try {
-            String sql = "select * from [Option]\n"
-                    + "where questionID = ?";
+            String sql = "select o.optionID, o.questionID, o.content, o.isTrue from [Option] o, Question qu, Quiz q, Chapter ch, Course c\n"
+                    + "where o.questionID = qu.questionID and qu.quizID =  q.quizID and q.chapterID = ch.chapterID and ch.courseID = c.courseID and qu.questionID = ? and c.expertID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, questionID);
+            stm.setInt(2, eid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 option.add(new Option(rs.getInt(1), new Question(rs.getInt(2)), rs.getString(3), rs.getBoolean(4)));
@@ -188,6 +190,7 @@ public class OptionDAO extends DBContext {
 
     /**
      * This method count number answered by question id
+     *
      * @param questionID is id of question
      * @return number of answered
      */
@@ -207,6 +210,11 @@ public class OptionDAO extends DBContext {
         return 0;
     }
 
+    /**
+     * This method allow update status of option in database
+     * @param questionID
+     * @param optionID 
+     */
     public void setTrueOption(int questionID, int optionID) {
         try {
             String sql = "update [Option]\n"
@@ -220,6 +228,11 @@ public class OptionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allow update status of option in database
+     * @param questionID is question id
+     * @param optionID is option id
+     */
     public void setFalseOption(int questionID, int optionID) {
         try {
             String sql = "update [Option]\n"
@@ -235,9 +248,10 @@ public class OptionDAO extends DBContext {
 
     /**
      * This method allows insert new option into database
+     *
      * @param questionID is id of question
      * @param content is content of new option
-     * @param check  is status of option (true or false)
+     * @param check is status of option (true or false)
      */
     public void insertOption(int questionID, String content, int check) {
         try {
@@ -252,6 +266,11 @@ public class OptionDAO extends DBContext {
         }
     }
 
+    /**
+     * This method allow delete option in database
+     * @param opID
+     * @param questionID 
+     */
     public void deleteOption(int opID, int questionID) {
         try {
             String sql = "delete from [Option]\n"
@@ -266,6 +285,7 @@ public class OptionDAO extends DBContext {
 
     /**
      * This method allows update option in database
+     *
      * @param content is new content will be update
      * @param opID is option id
      */

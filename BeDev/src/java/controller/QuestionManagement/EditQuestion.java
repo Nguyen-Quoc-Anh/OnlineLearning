@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modal.Expert;
 import modal.Question;
 
 /**
@@ -53,11 +54,23 @@ public class EditQuestion extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
         Question question;
         QuestionDAO questionDAO = new QuestionDAO();
         try {
-            int quesID = Integer.parseInt(request.getParameter("quesID"));
-            question = questionDAO.getQuestion(quesID); //get question by id of the question
+            if (session.getAttribute("account") != null) {  //check login with account session
+                if (session.getAttribute("expert") != null) {
+                    Expert expert = (Expert)session.getAttribute("expert");
+                    int quesID = Integer.parseInt(request.getParameter("quesID"));
+                    question = questionDAO.getQuestion(quesID,expert.getExpertID()); //get question by id of the question
+                } else {
+                    response.sendRedirect("HomeControl");
+                    return;
+                }
+            } else {
+                response.sendRedirect("SignIn");
+                return;
+            }
         } catch (Exception e) {
             System.out.println("Can not parse id");
             response.sendRedirect("Error");
@@ -97,12 +110,10 @@ public class EditQuestion extends HttpServlet {
                     doGet(request, response);
                 } else {
                     response.sendRedirect("HomeControl");
-                    return;
                 }
             } else {
                 response.sendRedirect("SignIn");
-                return;
-            }         
+            }
         } catch (Exception e) {
             System.out.println("Can not parse");
             response.sendRedirect("Error");

@@ -142,18 +142,21 @@ public class QuestionDAO extends DBContext {
     }
 
     /**
-     * This method get list of question by id of the quiz
+     * This method get list of question by id of the quiz and expert id
+     *
      * @param qid is quiz id
+     * @param eid is expert id
      * @return list of question
      */
-    public ArrayList<Question> getQuestionByQuiz(int qid) {
+    public ArrayList<Question> getQuestionByQuiz(int qid, int eid) {
         ArrayList<Question> questions = new ArrayList<>();
         OptionDAO optionDAO = new OptionDAO();
         try {
-            String sql = "select q.questionID, q.content, q.explaination, q.status from Question q\n"
-                    + "where q.quizID = ?";
+            String sql = "select qu.questionID, qu.content, qu.explaination, qu.status from Question qu, Quiz q, Chapter ch, Course c\n"
+                    + "where qu.quizID =  q.quizID and q.chapterID = ch.chapterID and ch.courseID = c.courseID and q.quizID = ? and c.expertID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, qid);
+            stm.setInt(2, eid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 questions.add(new Question(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getBoolean(4), optionDAO.checkQuestionCompleted(rs.getInt(1))));
@@ -166,6 +169,7 @@ public class QuestionDAO extends DBContext {
 
     /**
      * This method allows update status of question by id of the question
+     *
      * @param questionID is question id
      * @param qid is quiz id
      */
@@ -183,6 +187,7 @@ public class QuestionDAO extends DBContext {
 
     /**
      * This method allows update status of question by id of the question
+     *
      * @param questionID is question id
      * @param qid is quiz id
      */
@@ -200,10 +205,11 @@ public class QuestionDAO extends DBContext {
 
     /**
      * This method allows update the question in database
+     *
      * @param content is the new content will be update
      * @param explain is the new explain will be update
      * @param quesID is id of question
-     * @param qid  is id of quiz
+     * @param qid is id of quiz
      */
     public void editQuestion(String content, String explain, int quesID, int qid) {
         try {
@@ -222,9 +228,10 @@ public class QuestionDAO extends DBContext {
 
     /**
      * This method allows delete question in database by id of the question
+     *
      * @param questionID is question id
      * @param qid is quiz id
-     */ 
+     */
     public void deleteQuestion(int questionID, int qid) {
         try {
             String sql = "delete from [Option]\n"
@@ -240,17 +247,32 @@ public class QuestionDAO extends DBContext {
         }
     }
 
+    public void insertQuestion(String content, int qid) {
+        try {
+            String sql = "insert into Question values\n"
+                    + "(?,'',?,1)";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setNString(1, content);
+            stm.setInt(2, qid);
+            stm.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     /**
-     * This method get the question by the id of the question
+     * This method get the question by the id of the question and expert id
+     *
      * @param questionID is question id
+     * @param eid is expert id
      * @return a question
      */
-    public Question getQuestion(int questionID) {
+    public Question getQuestion(int questionID, int eid) {
         try {
-            String sql = "select q.questionID, q.content, q.explaination, q.quizID from Question q\n"
-                    + "where q.questionID = ?";
+            String sql = "select qu.questionID, qu.content, qu.explaination, qu.quizID from Question qu, Quiz q, Chapter ch, Course c\n"
+                    + "where qu.quizID =  q.quizID and q.chapterID = ch.chapterID and ch.courseID = c.courseID and qu.questionID = ? and c.expertID = ?";
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, questionID);
+            stm.setInt(2, eid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 return new Question(rs.getInt(1), rs.getString(2), rs.getString(3), new Quiz(rs.getInt(4)), true);
@@ -262,7 +284,5 @@ public class QuestionDAO extends DBContext {
 
     public static void main(String[] args) {
         QuestionDAO d = new QuestionDAO();
-        ArrayList<Question> list = d.getQuestionByQuiz(1);
-        System.out.println(list.size());
     }
 }

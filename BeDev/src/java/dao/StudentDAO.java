@@ -12,17 +12,24 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import modal.Account;
+import modal.Course;
+import modal.Expert;
+import modal.Option;
 import modal.Student;
+import modal.Transaction;
 
 /**
  *
  * @author ACER
  */
 public class StudentDAO extends DBContext {
-    
+
     /**
      * This method get information of a student from database
+     *
      * @param id is id of student
      * @return a student
      */
@@ -44,6 +51,7 @@ public class StudentDAO extends DBContext {
 
     /**
      * This method allows student update information and insert it to database
+     *
      * @param id is id of student
      * @param name is name updated
      */
@@ -125,6 +133,25 @@ public class StudentDAO extends DBContext {
         return null;
     }
     
+    public ArrayList<Transaction> listTransactionByStudent(int sid) {
+        ArrayList<Transaction> list = new ArrayList<>();
+        try {
+            String sql = "select th.*, c.courseImage, c.courseName, c.description, c.expertID, e.name from Transaction_History th, Course c, Expert e\n"
+                    + "where studentID = ? and th.courseID = c.courseID and c.expertID = e.expertID\n"
+                    + "order by [time] desc";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, sid);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                list.add(new Transaction(rs.getInt(1), new Student(new Account(rs.getInt(2))), rs.getTimestamp(3).toLocalDateTime(), 
+                        rs.getFloat(4), new Course(rs.getInt(5), rs.getString(7), rs.getString(8), rs.getString(6), null), new Expert(rs.getInt(9), rs.getString(10), null)));
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         StudentDAO dao = new StudentDAO();
         Student s = dao.profile(10);

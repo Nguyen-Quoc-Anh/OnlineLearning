@@ -181,6 +181,13 @@ public class Course {
         this.numberOfRating = numberOfRating;
     }
 
+    public Course(int courseID, String courseName, String description, String courseImage, Expert expert) {
+        this.courseID = courseID;
+        this.courseName = courseName;
+        this.description = description;
+        this.courseImage = courseImage;
+        this.expert = expert;
+    }     
     public Category getCategory() {
         return category;
     }
