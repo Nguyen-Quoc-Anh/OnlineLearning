@@ -17,8 +17,19 @@ public class Lesson {
     private boolean status;
     private int position;
     private int watched;
+    private Chapter chapter;
 
     public Lesson() {
+    }
+    
+    public Lesson(int lessonID, String lessonName, String video, String content, boolean status, int position, Chapter chapter) {
+        this.lessonID = lessonID;
+        this.lessonName = lessonName;
+        this.video = video;
+        this.content = content;
+        this.status = status;
+        this.position = position;
+        this.chapter = chapter;
     }
 
     public Lesson(int lessonID, String lessonName, String video, String content, boolean status, int position) {
@@ -49,6 +60,15 @@ public class Lesson {
         this.position = position;
         this.watched = watched;
     }
+
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
+    }
+    
     
     public int getWatched() {
         return watched;

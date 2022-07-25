@@ -23,6 +23,11 @@ public class Chapter {
     public Chapter() {
     }
 
+    public Chapter(int chapterID, String chapterName) {
+        this.chapterID = chapterID;
+        this.chapterName = chapterName;
+    }
+    
     public Chapter(int chapterID, String chapterName, Course course, int position, boolean status) {
         this.chapterID = chapterID;
         this.chapterName = chapterName;
