@@ -25,7 +25,7 @@ import modal.Quiz;
  *
  * @author ADMIN
  */
-@WebServlet(name = "EditQuiz", urlPatterns = {"/EditQuiz"})
+@WebServlet(name = "EditQuiz", urlPatterns = {"/expert/EditQuiz"})
 public class EditQuiz extends HttpServlet {
 
     /**
