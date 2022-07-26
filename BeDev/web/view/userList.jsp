@@ -15,6 +15,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Custom fonts for this template -->
         <link href="/BeDev/view/dist/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,13 +74,25 @@
                     Menu
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/course">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Course Manage</span></a>
+                    <a class="nav-link" href="/BeDev/admin/UserList">
+                        <i class="fa-solid fa-user"></i>
+                        <span>User Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/student">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Student Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/expert">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Expert Management</span></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/ExpertDashboard">
+                    <a class="nav-link" href="/BeDev/admin/AdminDashboard">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Dashboard</span></a>
                 </li>
@@ -186,22 +199,23 @@
                 </div>
             </div>
         </div>
+        <%@include file="footer.jsp" %>
         <!-- Bootstrap core JavaScript-->
-        <script src="../BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
-        <script src="../BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
+        <script src="/BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <!-- Core plugin JavaScript-->
-        <script src="../BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="/BeDev/view/dist/vendor/jquery-easing/jquery.easing.min.js"></script>
 
         <!-- Custom scripts for all pages-->
-        <script src="../BeDev/view/dist/js/sb-admin-2.min.js"></script>
+        <script src="/BeDev/view/dist/js/sb-admin-2.min.js"></script>
 
         <!-- Page level plugins -->
-        <script src="../BeDev/view/dist/vendor/datatables/jquery.dataTables.min.js"></script>
-        <script src="../BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+        <script src="/BeDev/view/dist/vendor/datatables/jquery.dataTables.min.js"></script>
+        <script src="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
         <!-- Page level custom scripts -->
-        <script src="../BeDev/view/dist/js/demo/datatables-demo.js"></script>
+        <script src="/BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script>
                             let editor2;
                             var currentStatus, accountID;

@@ -55,19 +55,19 @@
                 </div>
                 <li class="nav-item">
                     <a class="nav-link" href="/BeDev/admin/UserList">
-                        <i class="fa-solid fa-book-open"></i>
+                        <i class="fa-solid fa-user"></i>
                         <span>User Management</span></a>
                 </li>
                 
                 <li class="nav-item">
                     <a class="nav-link" href="/BeDev/admin/student">
-                        <i class="fa-solid fa-book-open"></i>
+                        <i class="fa-solid fa-user-graduate"></i>
                         <span>Student Management</span></a>
                 </li>
                 
                 <li class="nav-item">
                     <a class="nav-link" href="/BeDev/admin/expert">
-                        <i class="fa-solid fa-book-open"></i>
+                        <i class="fa-solid fa-user-tie"></i>
                         <span>Expert Management</span></a>
                 </li>
 

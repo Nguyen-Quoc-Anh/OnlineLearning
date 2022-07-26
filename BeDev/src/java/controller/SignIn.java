@@ -94,7 +94,7 @@ public class SignIn extends HttpServlet {
                 mess = " Please verify youre email.";
             } else {
                 if (!account.isStatus()) {
-                    mess ="You are banned.Contact admin for more information";
+                    mess ="You are banned. Contact admin for more information";
                 } else {
                     if (account.getRole().getRoleID() == 3) {// account is student
                         Student student = new Student();

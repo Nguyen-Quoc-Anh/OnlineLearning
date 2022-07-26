@@ -10,6 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
         <!-- Custom fonts for this template -->
         <link href="/BeDev/view/dist/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -67,13 +68,25 @@
                     Menu
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/course">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Course Manage</span></a>
+                    <a class="nav-link" href="/BeDev/admin/UserList">
+                        <i class="fa-solid fa-user"></i>
+                        <span>User Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/student">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Student Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/expert">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <span>Expert Management</span></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/ExpertDashboard">
+                    <a class="nav-link" href="/BeDev/admin/AdminDashboard">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Dashboard</span></a>
                 </li>
