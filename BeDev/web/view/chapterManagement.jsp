@@ -19,7 +19,7 @@
 
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
         <!-- Custom styles for this page -->
         <link href="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
@@ -343,116 +343,116 @@
         <!-- Page level custom scripts -->
         <script src="/BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-
+        <%@include file="footer.jsp" %>
 
         <script>
-                                var currentStatus, chapterID;
-                                function changeStatus(status, chapterId, chapterName) {
-                                    currentStatus = status;
-                                    chapterID = chapterId;
-                                    if (status) {
-                                        $('#header-status').text("Inactive");
-                                        $('#modal-body-status').text(`Do you want to inactive chapter ` + chapterName);
-                                        $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                            var currentStatus, chapterID;
+                            function changeStatus(status, chapterId, chapterName) {
+                                currentStatus = status;
+                                chapterID = chapterId;
+                                if (status) {
+                                    $('#header-status').text("Inactive");
+                                    $('#modal-body-status').text(`Do you want to inactive chapter ` + chapterName);
+                                    $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                                } else {
+                                    $('#header-status').text("Active");
+                                    $('#modal-body-status').text(`Do you want to active chapter ` + chapterName);
+                                    $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                }
+                            }
+                            function submitChangeStatus() {
+                                $.post("/BeDev/expert/changechapterstatus", {chapterId: chapterID, status: currentStatus}, (response) => {
+                                    $('#logoutModal').modal('toggle');
+                                    if (response == "success") {
+                                        showMessage(response, "Change status successfully", true);
                                     } else {
-                                        $('#header-status').text("Active");
-                                        $('#modal-body-status').text(`Do you want to active chapter ` + chapterName);
-                                        $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                        showMessage(response, "Change status failed", false);
                                     }
-                                }
-                                function submitChangeStatus() {
-                                    $.post("/BeDev/expert/changechapterstatus", {chapterId: chapterID, status: currentStatus}, (response) => {
-                                        $('#logoutModal').modal('toggle');
-                                        if (response == "success") {
-                                            showMessage(response, "Change status successfully", true);
+                                });
+                            }
+
+                            function changeInfoModalEdit(chapterId, chapterName, position, status) {
+                                $('#chapter-id').val(chapterId)
+                                $('#chapter-name').val(chapterName)
+                                $('#chapter-position').val(position)
+                                $('#chapter-status').prop('checked', status);
+                            }
+
+                            function changeInfoModalDelete(chapterId, courseName) {
+                                chapterID = chapterId;
+                                $('#modal-body-delete').text(`Do you want to delete chapter ` + courseName);
+                            }
+
+                            function showMessage(status, message, reload) {
+                                swal({
+                                    title: status == "success" ? "Success" : "Error",
+                                    text: message,
+                                    icon: status == "success" ? "success" : "error",
+                                    button: "OK",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                }).then(function () {
+                                    if (reload) {
+                                        if (status == "success") {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                            function deleteChapter() {
+                                $.ajax({
+                                    url: '/BeDev/expert/deletechapter?chapterId=' + chapterID,
+                                    type: 'POST',
+                                    success: function (result) {
+                                        if (result == 'success') {
+                                            showMessage(result, "Delete chapter successfully", true);
                                         } else {
-                                            showMessage(response, "Change status failed", false);
+                                            showMessage(result, result, false);
                                         }
-                                    });
-                                }
+                                    }
+                                });
+                            }
 
-                                function changeInfoModalEdit(chapterId, chapterName, position, status) {
-                                    $('#chapter-id').val(chapterId)
-                                    $('#chapter-name').val(chapterName)
-                                    $('#chapter-position').val(position)
-                                    $('#chapter-status').prop('checked', status);
-                                }
+                            function openAddChapterFailedAlert() {
 
-                                function changeInfoModalDelete(chapterId, courseName) {
-                                    chapterID = chapterId;
-                                    $('#modal-body-delete').text(`Do you want to delete chapter ` + courseName);
-                                }
-
-                                function showMessage(status, message, reload) {
-                                    swal({
-                                        title: status == "success" ? "Success" : "Error",
-                                        text: message,
-                                        icon: status == "success" ? "success" : "error",
-                                        button: "OK",
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                        allowEnterKey: false
-                                    }).then(function () {
-                                        if (reload) {
-                                            if (status == "success") {
-                                                window.location.reload();
-                                            }
-                                        }
-                                    });
-                                }
-                                function deleteChapter() {
-                                    $.ajax({
-                                        url: '/BeDev/expert/deletechapter?chapterId=' + chapterID,
-                                        type: 'POST',
-                                        success: function (result) {
-                                            if (result == 'success') {
-                                                showMessage(result, "Delete chapter successfully", true);
-                                            } else {
-                                                showMessage(result, result, false);
-                                            }
-                                        }
-                                    });
-                                }
-
-                                function openAddChapterFailedAlert() {
-
-                                    $('#addChapterSuccessAlert').hide();
-                                    $('#addChapterFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#addChapterFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openAddChapterSuccessAlert() {
-
+                                $('#addChapterSuccessAlert').hide();
+                                $('#addChapterFailedAlert').show();
+                                setTimeout(() => {
                                     $('#addChapterFailedAlert').hide();
-                                    $('#addChapterSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#addChapterSuccessAlert').hide();
-                                    }, 2500);
-                                }
+                                }, 2500);
+                            }
 
-                                function openEditChapterFailedAlert() {
+                            function openAddChapterSuccessAlert() {
 
-                                    $('#editSuccessAlert').hide();
-                                    $('#editFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#editFailedAlert').hide();
-                                    }, 2500);
-                                }
+                                $('#addChapterFailedAlert').hide();
+                                $('#addChapterSuccessAlert').show();
+                                setTimeout(() => {
+                                    $('#addChapterSuccessAlert').hide();
+                                }, 2500);
+                            }
 
-                                function openEditChapterSuccessAlert() {
+                            function openEditChapterFailedAlert() {
 
+                                $('#editSuccessAlert').hide();
+                                $('#editFailedAlert').show();
+                                setTimeout(() => {
                                     $('#editFailedAlert').hide();
-                                    $('#editSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#editSuccessAlert').hide();
-                                    }, 2500);
-                                }
-                                $(document).ready(function () {
+                                }, 2500);
+                            }
+
+                            function openEditChapterSuccessAlert() {
+
+                                $('#editFailedAlert').hide();
+                                $('#editSuccessAlert').show();
+                                setTimeout(() => {
+                                    $('#editSuccessAlert').hide();
+                                }, 2500);
+                            }
+                            $(document).ready(function () {
             ${addChapter == null ? "" : addChapter == "success" ? "openAddChapterSuccessAlert()" : addChapter == "failed" ? "openAddChapterFailedAlert()" : ""}
             ${editChapter == null ? "" : editChapter == "success" ? "openEditChapterSuccessAlert()" : editChapter == "failed" ? "openEditChapterFailedAlert()" : ""}
-                                });
+                            });
         </script>
     </body>
 </html>

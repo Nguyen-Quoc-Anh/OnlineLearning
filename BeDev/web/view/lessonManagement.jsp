@@ -19,7 +19,7 @@
 
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
-
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
         <!-- Custom styles for this page -->
         <link href="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
         <style>
@@ -356,118 +356,118 @@
         <!-- Page level custom scripts -->
         <script src="/BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-
+        <%@include file="footer.jsp" %>
 
         <script>
-                                var currentStatus, lessonID;
-                                function changeStatus(status, lessonId, lessonName) {
-                                    currentStatus = status;
-                                    lessonID = lessonId;
-                                    if (status) {
-                                        $('#header-status').text("Inactive");
-                                        $('#modal-body-status').text(`Do you want to inactive lesson ` + lessonName);
-                                        $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                            var currentStatus, lessonID;
+                            function changeStatus(status, lessonId, lessonName) {
+                                currentStatus = status;
+                                lessonID = lessonId;
+                                if (status) {
+                                    $('#header-status').text("Inactive");
+                                    $('#modal-body-status').text(`Do you want to inactive lesson ` + lessonName);
+                                    $('#btn-change-status').removeClass("btn-success").addClass("btn-danger").text("Inactive");
+                                } else {
+                                    $('#header-status').text("Active");
+                                    $('#modal-body-status').text(`Do you want to active lesson ` + lessonName);
+                                    $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                }
+                            }
+                            function submitChangeStatus() {
+                                $.post("/BeDev/expert/changelessonstatus", {lessonId: lessonID, status: currentStatus}, (response) => {
+                                    $('#logoutModal').modal('toggle');
+                                    if (response == "success") {
+                                        showMessage(response, "Change status successfully", true);
                                     } else {
-                                        $('#header-status').text("Active");
-                                        $('#modal-body-status').text(`Do you want to active lesson ` + lessonName);
-                                        $('#btn-change-status').removeClass("btn-danger").addClass("btn-success").text("Active");
+                                        showMessage(response, "Change status failed", false);
                                     }
-                                }
-                                function submitChangeStatus() {
-                                    $.post("/BeDev/expert/changelessonstatus", {lessonId: lessonID, status: currentStatus}, (response) => {
-                                        $('#logoutModal').modal('toggle');
-                                        if (response == "success") {
-                                            showMessage(response, "Change status successfully", true);
+                                });
+                            }
+
+                            function changeInfoModalEdit(lessonId, lessonName, video, content, position, status) {
+                                $('#lesson-id').val(lessonId);
+                                $('#lesson-name').val(lessonName);
+                                $('#lesson-video').val(video);
+                                $('#lesson-content').val(content);
+                                $('#lesson-position').val(position);
+                                $('#lesson-status').prop('checked', status);
+                            }
+
+                            function changeInfoModalDelete(lessonId, lessonName) {
+                                lessonID = lessonId;
+                                $('#modal-body-delete').text(`Do you want to delete lesson ` + lessonName);
+                            }
+
+                            function showMessage(status, message, reload) {
+                                swal({
+                                    title: status == "success" ? "Success" : "Error",
+                                    text: message,
+                                    icon: status == "success" ? "success" : "error",
+                                    button: "OK",
+                                    allowOutsideClick: false,
+                                    allowEscapeKey: false,
+                                    allowEnterKey: false
+                                }).then(function () {
+                                    if (reload) {
+                                        if (status == "success") {
+                                            window.location.reload();
+                                        }
+                                    }
+                                });
+                            }
+                            function deleteLesson() {
+                                $.ajax({
+                                    url: '/BeDev/expert/deletelesson?lessonId=' + lessonID,
+                                    type: 'POST',
+                                    success: function (result) {
+                                        if (result == 'success') {
+                                            showMessage(result, "Delete lesson successfully", true);
                                         } else {
-                                            showMessage(response, "Change status failed", false);
+                                            showMessage(result, result, false);
                                         }
-                                    });
-                                }
+                                    }
+                                });
+                            }
 
-                                function changeInfoModalEdit(lessonId, lessonName, video, content, position, status) {
-                                    $('#lesson-id').val(lessonId);
-                                    $('#lesson-name').val(lessonName);
-                                    $('#lesson-video').val(video);
-                                    $('#lesson-content').val(content);
-                                    $('#lesson-position').val(position);
-                                    $('#lesson-status').prop('checked', status);
-                                }
+                            function openAddLessonFailedAlert() {
 
-                                function changeInfoModalDelete(lessonId, lessonName) {
-                                    lessonID = lessonId;
-                                    $('#modal-body-delete').text(`Do you want to delete lesson ` + lessonName);
-                                }
-
-                                function showMessage(status, message, reload) {
-                                    swal({
-                                        title: status == "success" ? "Success" : "Error",
-                                        text: message,
-                                        icon: status == "success" ? "success" : "error",
-                                        button: "OK",
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                        allowEnterKey: false
-                                    }).then(function () {
-                                        if (reload) {
-                                            if (status == "success") {
-                                                window.location.reload();
-                                            }
-                                        }
-                                    });
-                                }
-                                function deleteLesson() {
-                                    $.ajax({
-                                        url: '/BeDev/expert/deletelesson?lessonId=' + lessonID,
-                                        type: 'POST',
-                                        success: function (result) {
-                                            if (result == 'success') {
-                                                showMessage(result, "Delete lesson successfully", true);
-                                            } else {
-                                                showMessage(result, result, false);
-                                            }
-                                        }
-                                    });
-                                }
-
-                                function openAddLessonFailedAlert() {
-
-                                    $('#addLessonSuccessAlert').hide();
-                                    $('#addLessonFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#addLessonFailedAlert').hide();
-                                    }, 2500);
-                                }
-
-                                function openAddLessonSuccessAlert() {
-
+                                $('#addLessonSuccessAlert').hide();
+                                $('#addLessonFailedAlert').show();
+                                setTimeout(() => {
                                     $('#addLessonFailedAlert').hide();
-                                    $('#addLessonSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#addLessonSuccessAlert').hide();
-                                    }, 2500);
-                                }
+                                }, 2500);
+                            }
 
-                                function openEditLessonFailedAlert() {
+                            function openAddLessonSuccessAlert() {
 
-                                    $('#editSuccessAlert').hide();
-                                    $('#editFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#editFailedAlert').hide();
-                                    }, 2500);
-                                }
+                                $('#addLessonFailedAlert').hide();
+                                $('#addLessonSuccessAlert').show();
+                                setTimeout(() => {
+                                    $('#addLessonSuccessAlert').hide();
+                                }, 2500);
+                            }
 
-                                function openEditLessonSuccessAlert() {
+                            function openEditLessonFailedAlert() {
 
+                                $('#editSuccessAlert').hide();
+                                $('#editFailedAlert').show();
+                                setTimeout(() => {
                                     $('#editFailedAlert').hide();
-                                    $('#editSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#editSuccessAlert').hide();
-                                    }, 2500);
-                                }
-                                $(document).ready(function () {
+                                }, 2500);
+                            }
+
+                            function openEditLessonSuccessAlert() {
+
+                                $('#editFailedAlert').hide();
+                                $('#editSuccessAlert').show();
+                                setTimeout(() => {
+                                    $('#editSuccessAlert').hide();
+                                }, 2500);
+                            }
+                            $(document).ready(function () {
             ${addLesson == null ? "" : addLesson == "success" ? "openAddLessonSuccessAlert()" : addLesson == "failed" ? "openAddLessonFailedAlert()" : ""}
             ${editLesson == null ? "" : editLesson == "success" ? "openEditLessonSuccessAlert()" : editLesson == "failed" ? "openEditLessonFailedAlert()" : ""}
-                                });
+                            });
         </script>
     </body>
 </html>

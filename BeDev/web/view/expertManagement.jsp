@@ -16,7 +16,7 @@
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -246,60 +246,60 @@
         <script src="/BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
-
+        <%@include file="footer.jsp" %>
         <script>
-                            function changeInfoModalEdit(expertId, expertName, image, phone, description) {
-                                $('#expert-id').val(expertId);
-                                $('#expert-name').val(expertName);
-                                $("#playlist--img2").attr("src", image);
-                                $('#expert-phone').val(phone);
-                                $("#expert-description").val(description);
-                            }
-                            function showMessage(status, message, reload) {
-                                swal({
-                                    title: status == "success" ? "Success" : "Error",
-                                    text: message,
-                                    icon: status == "success" ? "success" : "error",
-                                    button: "OK",
-                                    allowOutsideClick: false,
-                                    allowEscapeKey: false,
-                                    allowEnterKey: false
-                                }).then(function () {
-                                    if (reload) {
-                                        if (status == "success") {
-                                            window.location.reload();
-                                        }
-                                    }
-                                });
-                            }
-                            function openEditCourseFailedAlert() {
+                                                            function changeInfoModalEdit(expertId, expertName, image, phone, description) {
+                                                                $('#expert-id').val(expertId);
+                                                                $('#expert-name').val(expertName);
+                                                                $("#playlist--img2").attr("src", image);
+                                                                $('#expert-phone').val(phone);
+                                                                $("#expert-description").val(description);
+                                                            }
+                                                            function showMessage(status, message, reload) {
+                                                                swal({
+                                                                    title: status == "success" ? "Success" : "Error",
+                                                                    text: message,
+                                                                    icon: status == "success" ? "success" : "error",
+                                                                    button: "OK",
+                                                                    allowOutsideClick: false,
+                                                                    allowEscapeKey: false,
+                                                                    allowEnterKey: false
+                                                                }).then(function () {
+                                                                    if (reload) {
+                                                                        if (status == "success") {
+                                                                            window.location.reload();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
+                                                            function openEditCourseFailedAlert() {
 
-                                $('#editSuccessAlert').hide();
-                                $('#editFailedAlert').show();
-                                setTimeout(() => {
-                                    $('#editFailedAlert').hide();
-                                }, 2500);
-                            }
+                                                                $('#editSuccessAlert').hide();
+                                                                $('#editFailedAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#editFailedAlert').hide();
+                                                                }, 2500);
+                                                            }
 
-                            function openEditCourseSuccessAlert() {
+                                                            function openEditCourseSuccessAlert() {
 
-                                $('#editFailedAlert').hide();
-                                $('#editSuccessAlert').show();
-                                setTimeout(() => {
-                                    $('#editSuccessAlert').hide();
-                                }, 2500);
-                            }
-                            $('#file-upload123').change(() => {
-                                var img = $('#file-upload123')["0"].files["0"]
-                                $("#playlist--img").attr("src", URL.createObjectURL(img));
-                            });
-                            $('#file-upload123edit').change(() => {
-                                var img = $('#file-upload123edit')["0"].files["0"]
-                                $("#playlist--img2").attr("src", URL.createObjectURL(img));
-                            });
-                            $(document).ready(function () {
+                                                                $('#editFailedAlert').hide();
+                                                                $('#editSuccessAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#editSuccessAlert').hide();
+                                                                }, 2500);
+                                                            }
+                                                            $('#file-upload123').change(() => {
+                                                                var img = $('#file-upload123')["0"].files["0"]
+                                                                $("#playlist--img").attr("src", URL.createObjectURL(img));
+                                                            });
+                                                            $('#file-upload123edit').change(() => {
+                                                                var img = $('#file-upload123edit')["0"].files["0"]
+                                                                $("#playlist--img2").attr("src", URL.createObjectURL(img));
+                                                            });
+                                                            $(document).ready(function () {
             ${editExpert == null ? "" : editCourse == "success" ? "openEditCourseSuccessAlert()" : editCourse == "failed" ? "openEditCourseFailedAlert()" : ""}
-                            });
+                                                            });
         </script>
     </body>
 </html>

@@ -16,7 +16,7 @@
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
-
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -135,8 +135,8 @@
                                                     <td>
                                                         <a onclick="changeInfoModalEdit('${student.studentID}', '${student.name}', '${student.cashInWallet}', '${student.imageURL}')" 
                                                            data-toggle="modal" data-target="#editModal">Edit</a>
-                                                           |
-                                                           <a href="/BeDev/admin/beexpert?studentId=${student.studentID}">BeExpert</a>
+                                                        |
+                                                        <a href="/BeDev/admin/beexpert?studentId=${student.studentID}">BeExpert</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -314,80 +314,80 @@
         <script src="/BeDev/view/dist/js/demo/datatables-demo.js"></script>
         <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
 
-
+        <%@include file="footer.jsp" %>
         <script>
-                                function changeInfoModalEdit(studentId, studenName, cash, image) {
-                                    $('#student-id').val(studentId)
-                                    $('#student-name').val(studenName)
-                                    $('#cashInWallet2').val(cash)
-                                    $('#playlist--img2').attr("src", image);
-                                }
+                                                            function changeInfoModalEdit(studentId, studenName, cash, image) {
+                                                                $('#student-id').val(studentId)
+                                                                $('#student-name').val(studenName)
+                                                                $('#cashInWallet2').val(cash)
+                                                                $('#playlist--img2').attr("src", image);
+                                                            }
 
-                                function showMessage(status, message, reload) {
-                                    swal({
-                                        title: status == "success" ? "Success" : "Error",
-                                        text: message,
-                                        icon: status == "success" ? "success" : "error",
-                                        button: "OK",
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,
-                                        allowEnterKey: false
-                                    }).then(function () {
-                                        if (reload) {
-                                            if (status == "success") {
-                                                window.location.reload();
-                                            }
-                                        }
-                                    });
-                                }
+                                                            function showMessage(status, message, reload) {
+                                                                swal({
+                                                                    title: status == "success" ? "Success" : "Error",
+                                                                    text: message,
+                                                                    icon: status == "success" ? "success" : "error",
+                                                                    button: "OK",
+                                                                    allowOutsideClick: false,
+                                                                    allowEscapeKey: false,
+                                                                    allowEnterKey: false
+                                                                }).then(function () {
+                                                                    if (reload) {
+                                                                        if (status == "success") {
+                                                                            window.location.reload();
+                                                                        }
+                                                                    }
+                                                                });
+                                                            }
 
-                                function openAddStudentFailedAlert() {
+                                                            function openAddStudentFailedAlert() {
 
-                                    $('#addStudentSuccessAlert').hide();
-                                    $('#addStudentFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#addStudentFailedAlert').hide();
-                                    }, 2500);
-                                }
+                                                                $('#addStudentSuccessAlert').hide();
+                                                                $('#addStudentFailedAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#addStudentFailedAlert').hide();
+                                                                }, 2500);
+                                                            }
 
-                                function openAddStudentSuccessAlert() {
+                                                            function openAddStudentSuccessAlert() {
 
-                                    $('#addStudentFailedAlert').hide();
-                                    $('#addStudentSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#addStudentSuccessAlert').hide();
-                                    }, 2500);
-                                }
+                                                                $('#addStudentFailedAlert').hide();
+                                                                $('#addStudentSuccessAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#addStudentSuccessAlert').hide();
+                                                                }, 2500);
+                                                            }
 
-                                function openEditStudentFailedAlert() {
+                                                            function openEditStudentFailedAlert() {
 
-                                    $('#editSuccessAlert').hide();
-                                    $('#editFailedAlert').show();
-                                    setTimeout(() => {
-                                        $('#editFailedAlert').hide();
-                                    }, 2500);
-                                }
+                                                                $('#editSuccessAlert').hide();
+                                                                $('#editFailedAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#editFailedAlert').hide();
+                                                                }, 2500);
+                                                            }
 
-                                function openEditStudentSuccessAlert() {
+                                                            function openEditStudentSuccessAlert() {
 
-                                    $('#editFailedAlert').hide();
-                                    $('#editSuccessAlert').show();
-                                    setTimeout(() => {
-                                        $('#editSuccessAlert').hide();
-                                    }, 2500);
-                                }
-                                $('#file-upload123').change(() => {
-                                    var img = $('#file-upload123')["0"].files["0"]
-                                    $("#playlist--img").attr("src", URL.createObjectURL(img));
-                                });
-                                $('#file-upload123edit').change(() => {
-                                    var img = $('#file-upload123edit')["0"].files["0"]
-                                    $("#playlist--img2").attr("src", URL.createObjectURL(img));
-                                });
-                                $(document).ready(function () {
+                                                                $('#editFailedAlert').hide();
+                                                                $('#editSuccessAlert').show();
+                                                                setTimeout(() => {
+                                                                    $('#editSuccessAlert').hide();
+                                                                }, 2500);
+                                                            }
+                                                            $('#file-upload123').change(() => {
+                                                                var img = $('#file-upload123')["0"].files["0"]
+                                                                $("#playlist--img").attr("src", URL.createObjectURL(img));
+                                                            });
+                                                            $('#file-upload123edit').change(() => {
+                                                                var img = $('#file-upload123edit')["0"].files["0"]
+                                                                $("#playlist--img2").attr("src", URL.createObjectURL(img));
+                                                            });
+                                                            $(document).ready(function () {
             ${addStudent == null ? "" : addStudent == "success" ? "openAddStudentSuccessAlert()" : addCourse == "failed" ? "openAddStudentFailedAlert()" : ""}
             ${editStudent == null ? "" : editStudent == "success" ? "openEditStudentSuccessAlert()" : editCourse == "failed" ? "openEditStudentFailedAlert()" : ""}
-                                });
+                                                            });
         </script>
     </body>
 </html>

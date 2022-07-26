@@ -29,6 +29,10 @@
     margin: 0;
     padding: 0;
 }
+
+.badge {
+    width: 50px !important;
+}
 .slick-list:focus
 {
     outline: none;
