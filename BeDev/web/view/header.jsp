@@ -61,12 +61,12 @@
             <div class="collapse navbar-collapse d-none d-xl-block d-none d-xl-block" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="HomeControl">
+                        <a class="nav-link" aria-current="page" href="/BeDev/HomeControl">
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="CourseList">
+                        <a class="nav-link" aria-current="page" href="/BeDev/CourseList">
                             Course
                         </a>
                     </li>

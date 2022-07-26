@@ -729,7 +729,8 @@ public class CourseDAO extends DBContext {
             stm.setInt(1, eid);
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
-                listCourses.add(new Course(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5) == null ? 0 : rs.getDouble(5), rs.getString(6) != null ? 0 : rs.getInt(6), rs.getInt(7)));
+                Course course = new Course(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getInt(4), rs.getString(5) == null ? 0 : rs.getDouble(5), rs.getString(6) == null ? 0 : rs.getInt(6), rs.getInt(7));
+                listCourses.add(course);
             }
         } catch (Exception e) {
             System.out.println(e);
