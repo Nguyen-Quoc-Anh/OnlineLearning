@@ -22,7 +22,7 @@ import modal.Question;
  *
  * @author admin
  */
-@WebServlet(name = "EditQuestion", urlPatterns = {"/EditQuestion"})
+@WebServlet(name = "EditQuestion", urlPatterns = {"/expert/EditQuestion"})
 public class EditQuestion extends HttpServlet {
 
     /**
@@ -64,16 +64,16 @@ public class EditQuestion extends HttpServlet {
                     int quesID = Integer.parseInt(request.getParameter("quesID"));
                     question = questionDAO.getQuestion(quesID,expert.getExpertID()); //get question by id of the question
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                     return;
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
                 return;
             }
         } catch (Exception e) {
             System.out.println("Can not parse id");
-            response.sendRedirect("Error");
+            response.sendRedirect("/Error");
             return;
         }
         request.setAttribute("question", question);
@@ -109,14 +109,14 @@ public class EditQuestion extends HttpServlet {
                     questionDAO.editQuestion(content, explain, quesID, qid); //update the question with information of question contains content, explain
                     doGet(request, response);
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
             }
         } catch (Exception e) {
             System.out.println("Can not parse");
-            response.sendRedirect("Error");
+            response.sendRedirect("/Error");
         }
     }
 

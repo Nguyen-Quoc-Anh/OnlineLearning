@@ -67,10 +67,10 @@ public class ChangeStatus extends HttpServlet {
                     if (request.getParameter("action").equalsIgnoreCase("Delete")) {
                         questionDAO.deleteQuestion(quesID, qid);    //delete question in database by question id
                     }
-                    response.sendRedirect("ManageQuestion?qid="+qid);
+                    response.sendRedirect("/BeDev/expert/ManageQuestion?qid="+qid);
                 }
             } else {
-                response.sendRedirect("HomeControl");
+                response.sendRedirect("/HomeControl");
             }
         } else {
             response.sendRedirect("SignIn");

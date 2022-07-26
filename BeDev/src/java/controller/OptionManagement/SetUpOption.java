@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author quang
  */
-@WebServlet(name = "SetUpOption", urlPatterns = {"/SetUpOption"})
+@WebServlet(name = "SetUpOption", urlPatterns = {"/expert/SetUpOption"})
 public class SetUpOption extends HttpServlet {
 
     /**
@@ -64,9 +64,9 @@ public class SetUpOption extends HttpServlet {
                     optionDAO.deleteOption(opID, quesID);
                 }
                 if(request.getParameter("check")!=null){
-                    response.sendRedirect("EditOption?quesID="+quesID+"&check=true");
+                    response.sendRedirect("/BeDev/expert/EditOption?quesID="+quesID+"&check=true");
                 }else{
-                    response.sendRedirect("EditOption?quesID="+quesID);
+                    response.sendRedirect("/BeDev/expert/EditOption?quesID="+quesID);
                 }    
             }
         } catch (Exception e) {

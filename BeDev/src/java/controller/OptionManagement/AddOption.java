@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author admin
  */
-@WebServlet(name = "AddOption", urlPatterns = {"/AddOption"})
+@WebServlet(name = "AddOption", urlPatterns = {"/expert/AddOption"})
 public class AddOption extends HttpServlet {
 
     /**
@@ -80,15 +80,15 @@ public class AddOption extends HttpServlet {
                         optionDAO.insertOption(quesID, content, 0); //add new option into database with status is false
                     }
                     if (request.getParameter("check").isEmpty()) {
-                        response.sendRedirect("EditOption?quesID=" + quesID);
+                        response.sendRedirect("/BeDev/expert/EditOption?quesID=" + quesID);
                     } else {
-                        response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+                        response.sendRedirect("/BeDev/expert/EditOption?quesID=" + quesID + "&check=true");
                     }
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

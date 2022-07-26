@@ -22,7 +22,7 @@ import modal.Quiz;
  *
  * @author admin
  */
-@WebServlet(name = "AddListQuestion", urlPatterns = {"/AddListQuestion"})
+@WebServlet(name = "AddListQuestion", urlPatterns = {"/expert/AddListQuestion"})
 
 public class AddListQuestion extends HttpServlet {
 
@@ -63,15 +63,15 @@ public class AddListQuestion extends HttpServlet {
                     int qid = Integer.parseInt(request.getParameter("qid"));
                     quiz = quizDAO.getQuizByIdandExpertId(qid, expert.getExpertID());
                     if (quiz == null) {
-                        response.sendRedirect("Error");
+                        response.sendRedirect("/Error");
                         return;
                     }
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                     return;
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
                 return;
             }
         } catch (Exception e) {

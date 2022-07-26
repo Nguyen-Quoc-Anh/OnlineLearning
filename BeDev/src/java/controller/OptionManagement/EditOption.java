@@ -25,7 +25,7 @@ import modal.Question;
  *
  * @author quang
  */
-@WebServlet(name = "EditOption", urlPatterns = {"/EditOption"})
+@WebServlet(name = "EditOption", urlPatterns = {"/expert/EditOption"})
 public class EditOption extends HttpServlet {
 
     /**
@@ -72,11 +72,11 @@ public class EditOption extends HttpServlet {
                     question = questionDAO.getQuestion(quesID, expert.getExpertID()); //get question by id of the question
                     listOption = optionDAO.listOption(quesID, expert.getExpertID()); //get list option by the question id
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                     return;
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
                 return;
             }
         } catch (Exception e) {
@@ -128,9 +128,9 @@ public class EditOption extends HttpServlet {
             System.out.println("Khong parse duoc");
         }
         if (!request.getParameter("check").isEmpty()) {
-            response.sendRedirect("EditOption?quesID=" + quesID + "&check=true");
+            response.sendRedirect("/BeDev/expert/EditOption?quesID=" + quesID + "&check=true");
         } else {
-            response.sendRedirect("EditOption?quesID=" + quesID);
+            response.sendRedirect("/BeDev/expert/EditOption?quesID=" + quesID);
         }
     }
 

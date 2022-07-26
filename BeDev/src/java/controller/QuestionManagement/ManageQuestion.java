@@ -70,16 +70,16 @@ public class ManageQuestion extends HttpServlet {
                     listQuestion = questionDAO.getQuestionByQuiz(qid,expert.getExpertID());    //get question by id of the quiz
                     quiz = quizDAO.getQuizByID(qid);  //get quiz by id of the quiz
                 } else {
-                    response.sendRedirect("HomeControl");
+                    response.sendRedirect("/HomeControl");
                     return;
                 }
             } else {
-                response.sendRedirect("SignIn");
+                response.sendRedirect("/SignIn");
                 return;
             }
         } catch (Exception e) {
             System.out.println(e);
-            response.sendRedirect("Error");
+            response.sendRedirect("/Error");
             return;
         }
         request.setAttribute("qid", qid);

@@ -11,8 +11,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
-        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="/BeDev/view/dist/images/favicon/favicon.png" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <%@include file="/view/adminLink/adminHeader.jsp" %>
     </head>
@@ -99,7 +99,7 @@
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
-                        <form action="AddOption" method="post">
+                        <form action="/BeDev/expert/AddOption" method="post">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Create Option</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">

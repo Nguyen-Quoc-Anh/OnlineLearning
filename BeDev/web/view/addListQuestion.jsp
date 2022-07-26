@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Create Question</title>
-        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
-        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="/BeDev/view/dist/images/favicon/favicon.png" />
         <%@include file="/view/adminLink/adminHeader.jsp" %>
 
     </head>
@@ -46,7 +46,6 @@
                                     Question1 ? /// Question2 ? /// Question3  ? ///                                                                      
                                     Example : 
                                     JavaScript là ngôn ngữ xử lí ở đâu ? /// Biên dịch cú pháp sau: <strong>Quantrimang</strong> ? /// 
-                                                                       
                                     </textarea>
                                 </div>
                             </div> 
@@ -58,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-lg-between justify-content-center mt-2">
-                                <a class="button button-lg button--primary" href="ManageQuestion?qid=" >Return</a>
+                                <a class="button button-lg button--primary" href="/BeDev/expert/ManageQuestion?qid=" >Return</a>
                                 <button class="button button-lg button--primary" type="button" data-toggle="modal" data-target="#logoutModal" onclick="saveChange()">Save Changes</button>                          
                             </div>    
                             <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

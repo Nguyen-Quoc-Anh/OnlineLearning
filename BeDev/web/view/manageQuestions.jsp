@@ -21,6 +21,7 @@
         <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
 
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
@@ -28,21 +29,13 @@
         <!-- Custom styles for this page -->
         <link href="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     </head>
-    <body id="page-top">
+    <body id="page-top" onload="loader()">
 
         <!-- Page Wrapper -->
         <div id="wrapper">
 
             <!-- Sidebar -->
             <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                <!-- Sidebar - Brand -->
-                <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-                    <div class="sidebar-brand-icon rotate-n-15">
-                        <i class="fas fa-laugh-wink"></i>
-                    </div>
-                    <div class="sidebar-brand-text mx-3">ADMIN đây</div>
-                </a>
 
                 <!-- Divider -->
                 <hr class="sidebar-divider my-0">
@@ -53,26 +46,34 @@
 
                 <!-- Heading -->
                 <div class="sidebar-heading">
-                    Giao diện
+                    Menu
                 </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/expert/course">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Course Manage</span></a>
+                </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/expert/ExpertDashboard">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Dashboard</span></a>
+                </li>
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                        aria-expanded="true" aria-controls="collapseTwo">
                         <i class="fas fa-fw fa-cog"></i>
-                        <span>Quản lí</span>
+                        <span>Manage Question</span>
                     </a>
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
-                            <h6 class="collapse-header">Quản lí</h6>
-                            <a class="collapse-item" href="AddListQuestion?qid=${quiz.getQuizID()}">Create Question</a>
-                            <a class="collapse-item" href="ManageQuestion?qid=${quiz.getQuizID()}">Manage Question</a>
+                            <h6 class="collapse-header">Manage Question</h6>
+                            <a class="collapse-item" href="/BeDev/expert/AddListQuestion?qid=${quiz.getQuizID()}">Create Question</a>
+                            <a class="collapse-item" href="/BeDev/expert/ManageQuestion?qid=${quiz.getQuizID()}">Manage Question</a>
                         </div>
                     </div>
                 </li>
-
-
                 <!-- Divider -->
                 <hr class="sidebar-divider d-none d-md-block">
 
@@ -80,53 +81,15 @@
                 <div class="text-center d-none d-md-inline">
                     <button class="rounded-circle border-0" id="sidebarToggle"></button>
                 </div>
-
             </ul>
             <!-- End of Sidebar -->
-
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
 
                 <!-- Main Content -->
                 <div id="content">
 
-                    <!-- Topbar -->
-                    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                        <!-- Sidebar Toggle (Topbar) -->
-                        <form class="form-inline">
-                            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                        </form>
-
-
-                        <!-- Topbar Navbar -->
-                        <ul class="navbar-nav ml-auto">                      
-                            <div class="topbar-divider d-none d-sm-block"></div>
-                            <!-- Nav Item - User Information -->
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin đẹp zai</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="img/undraw_profile.svg">
-                                </a>
-                                <!-- Dropdown - User Information -->
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                     aria-labelledby="userDropdown">                             
-                                    <div class="dropdown-divider"></div>
-                                    <!-- Dropdown - User Information 
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        Logout
-                                    </a>
-                                    -->
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                    <!-- End of Topbar -->
+                    <%@include file="header.jsp" %>
 
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
@@ -162,13 +125,13 @@
                                                             <a href="" data-toggle="modal" data-target="#logoutModal" onclick="changeStatus(${ques.isStatus()},${qid},${ques.getQuestionID()})">Active | </a>
                                                         </c:if>
                                                         |
-                                                        <a href="EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
+                                                        <a href="/BeDev/expert/EditQuestion?qid=${qid}&quesID=${ques.getQuestionID()}">Edit</a>
                                                         |                                                  
                                                         <c:if test="${ques.getCheckQuestionCompleted()==0}">
-                                                            <a href="EditOption?quesID=${ques.getQuestionID()}&check=true">Edit Option</a>
+                                                            <a href="/BeDev/expert/EditOption?quesID=${ques.getQuestionID()}&check=true">Edit Option</a>
                                                         </c:if> 
                                                         <c:if test="${ques.getCheckQuestionCompleted()>0}">
-                                                            <a href="EditOption?quesID=${ques.getQuestionID()}">Edit Option</a>
+                                                            <a href="/BeDev/expert/EditOption?quesID=${ques.getQuestionID()}">Edit Option</a>
                                                         </c:if>
                                                         <c:if test="${ques.getCheckQuestionCompleted()==0}">
                                                             |
@@ -256,15 +219,15 @@
                                                                 function deleteQues(quesID) {
                                                                     document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
                                                                 }
-                                                                function changeStatus(status,qid,quesID){
-                                                                    if(status){
+                                                                function changeStatus(status, qid, quesID) {
+                                                                    if (status) {
                                                                         $('#exampleModalLabel').text("Inactive");
                                                                         $('#confirmQuestion').text("Do you want to Inactice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Inactive";
-                                                                    }else{                                                            
+                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Inactive";
+                                                                    } else {
                                                                         $('#exampleModalLabel').text("Actice");
                                                                         $('#confirmQuestion').text("Do you want to Actice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid="+qid+"&quesID="+quesID+"&action=Active";
+                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Active";
                                                                     }
                                                                 }
         </script>
