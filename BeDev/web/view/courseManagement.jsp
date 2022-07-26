@@ -445,8 +445,8 @@
 
                                 function changeInfoModalEdit(courseId) {
                                     $.get("/BeDev/expert/CourseInfo?courseId=" + courseId, (data) => {
-                                        data = JSON.parse(data);
                                         console.log(data);
+                                        data = JSON.parse(data);
                                         $('#course-id').val(courseId);
                                         $('#course-name').val(data.courseName);
                                         $('#course-price').val(data.money);
