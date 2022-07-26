@@ -156,6 +156,7 @@
                 </div>
             </div>
         </div>
+        <%@include file="footer.jsp" %>
         <!-- Bootstrap core JavaScript-->
         <script src="/BeDev/view/dist/vendor/jquery/jquery.min.js"></script>
         <script src="/BeDev/view/dist/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -189,7 +190,7 @@
                             }
 
                             function submitChangeStatus() {
-                                $.post("/BeDev/UpdateStatusQuiz", {quizID: quizID}, (response) => {
+                                $.post("/BeDev/expert/UpdateStatusQuiz", {quizID: quizID}, (response) => {
                                     $('#logoutModal').modal('toggle');
                                     if (response == "success") {
                                         showMessage(response, "Change status successfully", true);
@@ -224,7 +225,7 @@
                             }
                             function deleteQuiz() {
                                 $.ajax({
-                                    url: '/BeDev/DeleteQuiz?quizId=' + quizID,
+                                    url: '/BeDev/expert/DeleteQuiz?quizId=' + quizID,
                                     type: 'DELETE',
                                     success: function (result) {
                                         if (result == 'success') {
