@@ -178,14 +178,14 @@
                                         $('#confirmSet').text('Set Status');
                                         if (status) {
                                             $('#confirmOption').text('Do you want to set this option isFalse ?');
-                                            if (check === "1") {
+                                            if (check == "1") {
                                                 document.getElementById("yesButton").href = "SetUpOption?quesID=" + quesID + "&opID=" + opID + "&action=false&check=true";
                                             } else {
                                                 document.getElementById("yesButton").href = "SetUpOption?quesID=" + quesID + "&opID=" + opID + "&action=false";
                                             }
                                         } else {
                                             $('#confirmOption').text('Do you want to set this option isTrue ?');
-                                            if (check === "1") {
+                                            if (check == "1") {
                                                 document.getElementById("yesButton").href = "SetUpOption?quesID=" + quesID + "&opID=" + opID + "&action=true&check=true";
                                             } else {
                                                 document.getElementById("yesButton").href = "SetUpOption?quesID=" + quesID + "&opID=" + opID + "&action=true";
