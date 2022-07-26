@@ -80,5 +80,11 @@
         </div>
 
         <jsp:include page="footer.jsp"></jsp:include>
+        <script>
+            function saveChange() {
+                $('#exampleModalLabel').text("Confirm");
+                $('#confirmQuestion').text('Do you want to save ?');
+            }
+        </script>
     </body>
 </html>

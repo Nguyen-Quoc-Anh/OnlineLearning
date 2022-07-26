@@ -12,8 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Sign In</title>
-        <link rel="stylesheet" href="../BeDev/view/dist/main.css" />
-        <link rel="icon" type="image/png" href="../BeDev/view/dist/images/favicon/favicon.png" />
+        <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
+        <link rel="icon" type="image/png" href="/BeDev/view/dist/images/favicon/favicon.png" />
     </head>
 
     <body onload="loader()">
@@ -39,10 +39,10 @@
                                     <div class="form-element" id="passInput">
                                         <div class="d-flex justify-content-between">
                                             <label for="confirm-password">Password</label>
-                                            <a href="ResetPassword" class="text-primary fs-6">Forget Password</a>
+                                            <a href="/BeDev/ResetPassword" class="text-primary fs-6">Reset Password</a>
                                         </div>
                                         <div class="form-alert-input">
-                                            <input type="password" placeholder="Type here..." id="password" onblur="checkPassword()" name="password" />
+                                            <input type="password" placeholder="Type here." id="password" onblur="checkPassword()" name="password" />
                                             <div class="form-alert-icon" onclick="showPassword('password', this)">
                                                 <svg
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -74,7 +74,7 @@
                     </div>
                     <div class="col-xl-7 order-1 order-xl-0">
                         <div class="signup-area-image">
-                            <img width="500" style="margin-left: 120px;" src="../BeDev/view/dist/images/banner/banner-image-01.png" alt="Illustration Image" class="img-fluid" />
+                            <img width="500" style="margin-left: 120px;" src="/BeDev/view/dist/images/banner/banner-image-01.png" alt="Illustration Image" class="img-fluid" />
                         </div>
                     </div>
                 </div>

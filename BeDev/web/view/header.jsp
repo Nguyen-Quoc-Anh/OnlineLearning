@@ -117,8 +117,8 @@
                         </div>
                     </form>
                     <c:if test="${sessionScope.account==null}">
-                        <a href="SignIn" class="button button--text">Sign in</a>
-                        <a href="SignUp" class="button button--dark">Sign Up</a>
+                        <a href="/BeDev/SignIn" class="button button--text">Sign in</a>
+                        <a href="/BeDev/SignUp" class="button button--dark">Sign Up</a>
                     </c:if>
                     <c:if test="${sessionScope.account!=null && sessionScope.student!=null}">
                         <div class="dropdown">
@@ -126,9 +126,9 @@
                                 ${sessionScope.student.name}
                             </button>
                             <div class="dropdown-content" >
-                                <a class="dropdown-item" href="Profile">My Profile</a>
-                                <a class="dropdown-item" href="ChangePassword">Change password</a>
-                                <a class="dropdown-item" href="LogOut">Logout</a>
+                                <a class="dropdown-item" href="/BeDev/Profile">My Profile</a>
+                                <a class="dropdown-item" href="/BeDev/ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="/BeDev/LogOut">Logout</a>
                             </div>
                         </div>
                     </c:if>
@@ -138,9 +138,9 @@
                                 ${sessionScope.expert.expertName}
                             </button>
                             <div class="dropdown-content" >
-                                <a class="dropdown-item" href="Profile">My Profile</a>
-                                <a class="dropdown-item" href="ChangePassword">Change password</a>
-                                <a class="dropdown-item" href="LogOut">Logout</a>
+                                <a class="dropdown-item" href="/BeDev/Profile">My Profile</a>
+                                <a class="dropdown-item" href="/BeDev/ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="/BeDev/LogOut">Logout</a>
                             </div>
                         </div>
                     </c:if>
@@ -150,9 +150,9 @@
                                 ${sessionScope.admin.name}
                             </button>
                             <div class="dropdown-content" >
-                                <a class="dropdown-item" href="Profile">My Profile</a>
-                                <a class="dropdown-item" href="ChangePassword">Change password</a>
-                                <a class="dropdown-item" href="LogOut">Logout</a>
+                                <a class="dropdown-item" href="/BeDev/Profile">My Profile</a>
+                                <a class="dropdown-item" href="/BeDev/ChangePassword">Change password</a>
+                                <a class="dropdown-item" href="/BeDev/LogOut">Logout</a>
                             </div>
                         </div>
                     </c:if>

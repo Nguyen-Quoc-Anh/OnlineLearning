@@ -25,7 +25,7 @@ import modal.Account;
  *
  * @author ADMIN
  */
-@WebServlet(name = "UserList", urlPatterns = {"/UserList"})
+@WebServlet(name = "UserList", urlPatterns = {"/admin/UserList"})
 public class UserList extends HttpServlet {
 
     /**

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author admin
  */
-@WebServlet(name = "ChangeStatus", urlPatterns = {"/ChangeStatus"})
+@WebServlet(name = "ChangeStatus", urlPatterns = {"/expert/ChangeStatus"})
 public class ChangeStatus extends HttpServlet {
 
     /**

@@ -54,13 +54,25 @@
                     Menu
                 </div>
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/course">
+                    <a class="nav-link" href="/BeDev/admin/UserList">
                         <i class="fa-solid fa-book-open"></i>
-                        <span>Course Manage</span></a>
+                        <span>User Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/student">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Student Management</span></a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/BeDev/admin/expert">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Expert Management</span></a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/BeDev/expert/ExpertDashboard">
+                    <a class="nav-link" href="/BeDev/admin/AdminDashboard">
                         <i class="fas fa-fw fa-chart-area"></i>
                         <span>Dashboard</span></a>
                 </li>

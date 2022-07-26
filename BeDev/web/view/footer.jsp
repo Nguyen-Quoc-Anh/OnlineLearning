@@ -10,10 +10,10 @@
             <div class="col-lg-6">
                 <div class="footer__wrapper">
                     <div class="footer__wrapper_logo">
-                        <img src="../BeDev/view/dist/images/logo/footerlogo.png" alt="logo" class="img-fluid" />
+                        <img src="/BeDev/view/dist/images/logo/footerlogo.png" alt="logo" class="img-fluid" />
                     </div>
                     <p>
-                        Duis posuere maximus arcu eu tincidunt. Nam rutrum, nibh vitae tempus venenatis, ex tortor ultricies magna.
+                        Learn things and explore our courses
                     </p>
                     <div class="footer__wrapper_social d-none d-lg-block">
                         <ul>
@@ -81,39 +81,6 @@
                             </li>
                         </ul>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-2 col-sm-4 col-6">
-                <div class="footer__list">
-                    <h6>Company</h6>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="course-search.html">Courses</a></li>
-                        <li><a href="#">career</a></li>
-                        <li><a href="#">Affiliate</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-sm-4 col-6">
-                <div class="footer__list">
-                    <h6>Support</h6>
-                    <ul>
-                        <li><a href="#">Help &amp; Supports </a></li>
-                        <li><a href="#">Pravacy Polocy</a></li>
-                        <li><a href="faq.html">FAQs</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-2 col-sm-4 col-6">
-                <div class="footer__list">
-                    <h6>Quick Links</h6>
-                    <ul>
-                        <li><a href="event-search.html">Events</a></li>
-                        <li><a href="become-instructor.html">Become a Instructor</a></li>
-                        <li><a href="#">Partnerships</a></li>
-                        <li><a href="#">Get the app</a></li>
-                    </ul>
                 </div>
             </div>
             <div class="col-12 d-block d-lg-none">

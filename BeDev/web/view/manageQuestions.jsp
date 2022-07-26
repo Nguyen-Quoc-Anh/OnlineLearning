@@ -22,12 +22,35 @@
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
         <link rel="stylesheet" href="/BeDev/view/dist/main.css" />
-
         <!-- Custom styles for this template -->
         <link href="/BeDev/view/dist/css/sb-admin-2.min.css" rel="stylesheet">
 
         <!-- Custom styles for this page -->
         <link href="/BeDev/view/dist/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <style>
+            .modal-lg {
+                max-width: 60% !important;
+            }
+
+            input[type="file"] {
+                display: none;
+            }
+
+            .custom-file-upload {
+                border: 1px solid cornflowerblue;
+                display: inline-block;
+                padding: 6px 12px;
+                cursor: pointer;
+                color: #fff;
+                border-radius: 10px;
+                background-color: cornflowerblue;
+            }
+
+            .ck-editor__editable[role="textbox"] {
+                /* editing area */
+                min-height: 200px;
+            }
+        </style>
     </head>
     <body id="page-top" onload="loader()">
 
@@ -155,13 +178,7 @@
                 <!-- End of Main Content -->
 
                 <!-- Footer -->
-                <footer class="sticky-footer bg-white">
-                    <div class="container my-auto">
-                        <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Your Website 2020</span>
-                        </div>
-                    </div>
-                </footer>
+                
                 <!-- End of Footer -->
 
             </div>
@@ -186,7 +203,7 @@
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
-                    <div class="modal-body">Do you want to delete this ?</div>
+                    <div class="modal-body" id="confirmQuestion">Do you want to delete this ?</div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
                         <a id="deleteThis" class="btn btn-primary" href="">Yes</a>
@@ -194,7 +211,7 @@
                 </div>
             </div>
         </div>
-
+        <%@include file="footer.jsp" %>
 
 
 
@@ -217,17 +234,17 @@
 
         <script>
                                                                 function deleteQues(quesID) {
-                                                                    document.getElementById("deleteThis").href = "ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
+                                                                    document.getElementById("deleteThis").href = "/BeDev/expert/ChangeStatus?qid=${qid}&quesID=" + quesID + "&action=Delete";
                                                                 }
                                                                 function changeStatus(status, qid, quesID) {
                                                                     if (status) {
                                                                         $('#exampleModalLabel').text("Inactive");
                                                                         $('#confirmQuestion').text("Do you want to Inactice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Inactive";
+                                                                        document.getElementById("deleteThis").href = "/BeDev/expert/ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Inactive";
                                                                     } else {
                                                                         $('#exampleModalLabel').text("Actice");
                                                                         $('#confirmQuestion').text("Do you want to Actice this question");
-                                                                        document.getElementById("deleteThis").href = "ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Active";
+                                                                        document.getElementById("deleteThis").href = "/BeDev/expert/ChangeStatus?qid=" + qid + "&quesID=" + quesID + "&action=Active";
                                                                     }
                                                                 }
         </script>

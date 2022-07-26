@@ -92,8 +92,7 @@ public class AddOption extends HttpServlet {
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("khong parse duoc");
-            response.sendRedirect("Error");
+            response.sendRedirect("/Error");
         }
     }
 
