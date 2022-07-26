@@ -52,7 +52,7 @@ public class AddNewLesson extends HttpServlet {
             session.setAttribute("addLesson", "failed");
         }
         session.removeAttribute("editLesson");
-        response.sendRedirect("/BeDev/manage/lesson?chapterId=" + chapterId);
+        response.sendRedirect("/BeDev/expert/lesson?chapterId=" + chapterId);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
