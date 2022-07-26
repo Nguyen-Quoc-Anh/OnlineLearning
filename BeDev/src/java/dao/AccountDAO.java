@@ -65,7 +65,7 @@ public class AccountDAO extends DBContext {
             stm = connection.prepareStatement(sql);
             stm.setInt(1, student.getAccount().getAccountID());
             stm.setNString(2, student.getName());
-            stm.setNString(3, "../BeDev/view/dist/images/avatar/user_avatar.png");
+            stm.setNString(3, "/BeDev/view/dist/images/avatar/user_avatar.png");
             stm.executeUpdate();
             return true;
         } catch (Exception e) {

@@ -80,7 +80,7 @@ public class ResetPassword extends HttpServlet {
         if (session.getAttribute("step") == null || ((int) session.getAttribute("step") == 1)) {
             String email = request.getParameter("email");
             System.out.println(email);
-            boolean validEmail = !accountDAO.isEmailExist(email);
+            boolean validEmail = accountDAO.isEmailExist(email);
             if (validEmail) {
                 String verificationCode = generateRandomString(8);
                 boolean sendEmailSuccess = EmailSender.sendMail(email, "Your verification code", "Your verification code is: " + verificationCode);
@@ -109,7 +109,7 @@ public class ResetPassword extends HttpServlet {
             account.setPassword(password);
             boolean resetPasswordSuccess = accountDAO.resetPassword(account);
             if (resetPasswordSuccess) {
-                request.setAttribute("mess", "Reset password successfully.");
+                request.setAttribute("mess", "Reset password successfully. SignIn now.");
             } else {
                 request.setAttribute("mess", "Cannot reset password. Your old password is remain");
             }
